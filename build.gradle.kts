@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "3.1.0"
+    id("org.springframework.boot") version "3.1.4"
     id("io.spring.dependency-management") version "1.1.0"
     id("java")
     application
@@ -16,6 +16,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-rest")
+    implementation("org.postgresql:postgresql:42.6.0")
+//    runtimeOnly ("com.h2database:h2")
+//    implementation("org.xerial:sqlite-jdbc:3.36.0.3")
+//    implementation("com.github.gwenn:sqlite-dialect:0.1.4")
     implementation("com.google.guava:guava:32.1.2-jre")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
