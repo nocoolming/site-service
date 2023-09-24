@@ -1,4 +1,6 @@
 package com.ming.site.service;
 
-public interface RoleService {
+import com.ming.site.model.Role;
+
+public interface RoleService extends CrudService<Role, Long> {
 }

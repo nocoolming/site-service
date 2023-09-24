@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Note implements IdEntity{
     @Id
-    private Long id;
+    private long id;
     private String title;
     private String keywords;
     private String description;

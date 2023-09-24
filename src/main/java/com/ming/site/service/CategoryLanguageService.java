@@ -1,4 +1,7 @@
 package com.ming.site.service;
 
-public interface CategoryLanguageService {
+import com.ming.site.model.CategoryLanguage;
+
+public interface CategoryLanguageService
+        extends CrudService<CategoryLanguage, Long> {
 }

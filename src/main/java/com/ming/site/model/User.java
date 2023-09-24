@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "\"user\"")
-public class User {
+public class User implements IdEntity {
     @Id
     private long id;
     private String username;

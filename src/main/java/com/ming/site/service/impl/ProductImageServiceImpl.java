@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 public class ProductImageServiceImpl
-        extends AbstractService<ProductImage, Integer, ProductImageRepository>
+        extends AbstractService<ProductImage, Long, ProductImageRepository>
         implements ProductImageService {
     private static final Logger log = LoggerFactory.getLogger(ProductImageService.class);
 }

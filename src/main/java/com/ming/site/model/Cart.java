@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Cart implements IdEntity {
     @Id
-    private Long id;
+    private long id;
     private String title;
     private String content;
     private BigDecimal price;

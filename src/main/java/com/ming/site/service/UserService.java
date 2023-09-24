@@ -1,4 +1,7 @@
 package com.ming.site.service;
 
-public interface UserService {
+import com.ming.site.model.User;
+
+public interface UserService
+    extends CrudService<User, Long> {
 }

@@ -1,4 +1,7 @@
 package com.ming.site.service;
 
-public interface PermissionService {
+import com.ming.site.model.Permission;
+
+public interface PermissionService
+        extends CrudService<Permission, Long> {
 }

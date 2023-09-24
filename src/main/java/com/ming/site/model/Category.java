@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 public class Category implements IdEntity{
     @Id
-    private Long id;
+    private long id;
     private String title;
     private String code;
     private String parentCode;

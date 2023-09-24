@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class OrderDetail
         implements IdEntity {
     @Id
-    private Long id;
+    private long id;
 
     private String title;
     private String content;

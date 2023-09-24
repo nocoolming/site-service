@@ -1,4 +1,7 @@
 package com.ming.site.service;
 
-public interface NoteService {
+import com.ming.site.model.Note;
+
+public interface NoteService
+        extends CrudService<Note, Long> {
 }

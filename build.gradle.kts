@@ -27,9 +27,6 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.3.5")
     implementation("org.slf4j:slf4j-api:2.0.4")
 
-//    runtimeOnly ("com.h2database:h2")
-//    implementation("org.xerial:sqlite-jdbc:3.36.0.3")
-//    implementation("com.github.gwenn:sqlite-dialect:0.1.4")
     implementation("com.google.guava:guava:32.1.2-jre")
     implementation("xyz.downgoon:snowflake:1.0.0")
 

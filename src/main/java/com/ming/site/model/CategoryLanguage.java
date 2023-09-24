@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class CategoryLanguage
         implements IdEntity {
     @Id
-    private Long id;
+    private long id;
     private String title;
     private String language;
     private LocalDateTime createAt;

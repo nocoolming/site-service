@@ -11,7 +11,7 @@ import java.util.List;
 public class Order
         implements IdEntity {
     @Id
-    private Long id;
+    private long id;
     private BigDecimal orderTotal;
     private BigDecimal receivables;
     private BigDecimal actualPayments;

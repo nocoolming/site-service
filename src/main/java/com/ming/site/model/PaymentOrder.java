@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class PaymentOrder
 implements IdEntity{
     @Id
-    private Long id;
+    private long id;
     private String channel;
     private LocalDateTime createAt;
 
