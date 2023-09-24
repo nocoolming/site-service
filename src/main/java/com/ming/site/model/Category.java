@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class Category implements IdEntity{
+public class Category implements IdEntity {
     @Id
     private long id;
     private String title;
@@ -15,23 +15,23 @@ public class Category implements IdEntity{
     private LocalDateTime createAt;
 
     private LocalDateTime upgradeAt;
-    @ManyToOne
-    @JoinColumn(name="create_user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "create_user_id")
     private User createUser;
 
-    @ManyToOne
-    @JoinColumn(name="upgrade_user_id")
-    private  User upgradeUser;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "upgrade_user_id")
+    private User upgradeUser;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Note> notes;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Product> products;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<CategoryLanguage> categoryLanguages;
 
-    @ManyToOne
-    @JoinColumn(name="site_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "site_id")
     private Site site;
 
     public Long getId() {

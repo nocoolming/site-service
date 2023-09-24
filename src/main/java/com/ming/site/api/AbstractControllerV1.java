@@ -7,7 +7,6 @@ import com.ming.site.service.CrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +40,12 @@ public abstract class AbstractControllerV1<
     @GetMapping("{id}")
     Result<Optional<T>> get(@PathVariable ID id){
         Optional<T> value = service.findById(id);
+        return Result.success(value);
+    }
+
+    @GetMapping("all")
+    Result<Iterable<T>> all(){
+        Iterable<T> value = service.findAll();
         return Result.success(value);
     }
 

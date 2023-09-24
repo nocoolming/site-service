@@ -15,7 +15,7 @@ public class Site implements IdEntity{
 
     private String domain;
     private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime upgradeAt;
 
     @ManyToOne
     @JoinColumn(name="create_user_id")
@@ -133,11 +133,15 @@ public class Site implements IdEntity{
         this.createAt = createAt;
     }
 
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
+    public LocalDateTime getUpgradeAt() {
+        return upgradeAt;
+    }
+
+    public void setUpgradeAt(LocalDateTime upgradeAt) {
+        this.upgradeAt = upgradeAt;
     }
 }

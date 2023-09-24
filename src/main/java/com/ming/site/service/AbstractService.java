@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -15,6 +17,7 @@ public abstract class AbstractService<T extends IdEntity, ID , R extends CrudRep
     @Autowired
     R repository;
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public <S extends T> S save(S entity) {
         if (!this.existsById((ID) entity.getId())) {
             entity.setId(SnowflakeUtil.nextId());
@@ -40,6 +43,7 @@ public abstract class AbstractService<T extends IdEntity, ID , R extends CrudRep
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteById(ID id) {
         repository.deleteById(id);
     }
