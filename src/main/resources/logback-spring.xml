@@ -32,7 +32,7 @@
 
         <logger name="org.springframework" level="INFO"/>
         <logger name="com.ming" level="DEBUG"/>
-        <root level="ERROR">
+        <root level="DEBUG">
             <appender-ref ref="FILE-ROLLING"/>
         </root>
     </springProfile>

@@ -19,6 +19,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.postgresql:postgresql:42.6.0")
+
+    implementation ("com.zaxxer:HikariCP:5.0.1")
+
+    implementation("ch.qos.logback:logback-core:1.3.5")
+    implementation("ch.qos.logback:logback-classic:1.3.5")
+    implementation("org.slf4j:slf4j-api:2.0.4")
+
 //    runtimeOnly ("com.h2database:h2")
 //    implementation("org.xerial:sqlite-jdbc:3.36.0.3")
 //    implementation("com.github.gwenn:sqlite-dialect:0.1.4")

@@ -1,16 +1,21 @@
 package com.ming.site.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class ProductImage {
+    @Id
     private int id;
+
     private String url;
     private String alt;
-    private String localPath;
     private int productId;
 
     private String createUserId;
-        private LocalDateTime createAt;
+    private LocalDateTime createAt;
 
     public int getId() {
         return id;
@@ -34,14 +39,6 @@ public class ProductImage {
 
     public void setAlt(String alt) {
         this.alt = alt;
-    }
-
-    public String getLocalPath() {
-        return localPath;
-    }
-
-    public void setLocalPath(String localPath) {
-        this.localPath = localPath;
     }
 
     public int getProductId() {

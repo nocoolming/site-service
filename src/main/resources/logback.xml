@@ -9,11 +9,11 @@
         </layout>
     </appender>
 
-    <logger name="com.ming" level="error" additivity="false">
+    <logger name="com.ming" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 
-    <root level="error">
+    <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
     </root>
 
