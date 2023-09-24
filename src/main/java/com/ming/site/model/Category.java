@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 public class Category implements IdEntity{
     @Id
-    private long id;
+    private Long id;
     private String title;
     private String code;
     private String parentCode;
@@ -34,11 +34,11 @@ public class Category implements IdEntity{
     @JoinColumn(name="site_id")
     private Site site;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

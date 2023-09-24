@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Note implements IdEntity{
     @Id
-    private long id;
+    private Long id;
     private String title;
     private String keywords;
     private String description;
@@ -33,11 +33,11 @@ public class Note implements IdEntity{
     @JoinColumn(name="category_id")
     private  Category category;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

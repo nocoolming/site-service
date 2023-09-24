@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class CategoryLanguage
         implements IdEntity {
     @Id
-    private long id;
+    private Long id;
     private String title;
     private String language;
     private LocalDateTime createAt;
@@ -29,11 +29,11 @@ public class CategoryLanguage
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

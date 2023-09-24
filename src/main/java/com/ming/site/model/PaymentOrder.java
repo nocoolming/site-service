@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class PaymentOrder
 implements IdEntity{
     @Id
-    private long id;
+    private Long id;
     private String channel;
     private LocalDateTime createAt;
 
@@ -22,11 +22,11 @@ implements IdEntity{
     @JoinColumn(name="site_id")
     private Site site;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

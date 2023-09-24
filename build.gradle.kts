@@ -9,6 +9,7 @@ group = "com.ming.site"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -30,6 +31,8 @@ dependencies {
 //    implementation("org.xerial:sqlite-jdbc:3.36.0.3")
 //    implementation("com.github.gwenn:sqlite-dialect:0.1.4")
     implementation("com.google.guava:guava:32.1.2-jre")
+    implementation("xyz.downgoon:snowflake:1.0.0")
+
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
