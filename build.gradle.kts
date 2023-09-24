@@ -26,6 +26,10 @@ dependencies {
     implementation ("org.hibernate:hibernate-hikaricp:6.3.1.Final")
     implementation ("com.zaxxer:HikariCP:5.0.1")
 
+    implementation("ch.qos.logback:logback-core:1.3.5")
+    implementation("ch.qos.logback:logback-classic:1.3.5")
+    implementation("org.slf4j:slf4j-api:2.0.4")
+
 
     implementation("org.postgresql:postgresql:42.6.0")
 //    runtimeOnly ("com.h2database:h2")
@@ -34,6 +38,8 @@ dependencies {
     implementation("com.google.guava:guava:32.1.2-jre")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    // JPA Metamodel Generator
+    annotationProcessor("org.hibernate.orm:hibernate-jpamodelgen:6.3.0.Final")
 }
 java {
     toolchain {

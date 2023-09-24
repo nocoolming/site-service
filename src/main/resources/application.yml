@@ -15,7 +15,7 @@ spring:
 #    driver-class-name: org.sqlite.JDBC
 #    url: jdbc:mysql://10.0.0.8:3306/goods_db?serverTimezone=Asia/Shanghai
 #    url: jdbc:mysql://localhost:3306/goods_db?serverTimezone=Asia/Shanghai
-    url: jdbc:postgresql://localhost:5432/site
+    url: jdbc:postgresql://localhost:5432/site_db
     username: postgres
     password: a
     validationQuery: SELECT 1
