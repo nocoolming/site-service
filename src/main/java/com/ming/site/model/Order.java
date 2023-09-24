@@ -1,15 +1,15 @@
 package com.ming.site.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "\"order\"")
-public class Order {
+public class Order
+        implements IdEntity {
     @Id
     private long id;
 
@@ -28,6 +28,20 @@ public class Order {
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
     private long siteId;
+
+    @ManyToOne
+    @JoinColumn(name = "create_user_id", nullable = true)
+    private User createUser;
+
+    @ManyToOne
+    @JoinColumn(name = "site_id", nullable = true)
+    private Site site;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id", nullable = false)
+    private PaymentOrder paymentOrder;
+
+    @OneToMany(mappedBy = "order_detail")
+    private List<OrderDetail> orderDetailList;
 
     public long getId() {
         return id;
@@ -155,5 +169,37 @@ public class Order {
 
     public void setSiteId(long siteId) {
         this.siteId = siteId;
+    }
+
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
+    }
+
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
+
+    public PaymentOrder getPaymentOrder() {
+        return paymentOrder;
+    }
+
+    public void setPaymentOrder(PaymentOrder paymentOrder) {
+        this.paymentOrder = paymentOrder;
+    }
+
+    public List<OrderDetail> getOrderDetailList() {
+        return orderDetailList;
+    }
+
+    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
     }
 }

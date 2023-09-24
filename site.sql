@@ -172,7 +172,7 @@ create table note (
    keywords VARCHAR(256) null,
    description VARCHAR(1024) null,
    content VARCHAR(4096) null,
-    language VARCHAR(128) NULL,
+   language VARCHAR(128) NULL,
    create_at DATE null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    upgrade_at DATE null,
@@ -243,5 +243,11 @@ create table role_permission (
    permission_id BIGINT not null references permission(id) on delete set null,
    constraint PK_ROLE_PERMISSION primary key (role_id,
 permission_id)
+);
+
+create table user_role (
+    user_id BIGINT not null references "user"(id) on delete set null,
+    role_id BIGINT not null references role(id) on delete set null,
+    constraint PK_USER_ROLE primary key(user_id, role_id)
 );
 

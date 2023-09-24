@@ -1,12 +1,12 @@
 package com.ming.site.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-public class Category {
+public class Category implements IdEntity{
     @Id
     private long id;
     private String title;
@@ -15,8 +15,23 @@ public class Category {
     private long siteId;
     private LocalDateTime createAt;
     private long createUserId;
+
     private LocalDateTime upgradeAt;
     private long upgradeUserId;
+    @ManyToOne
+    @JoinColumn(name="create_user_id", nullable=true)
+    private User createUser;
+
+    @ManyToOne
+    @JoinColumn(name="upgrade_user_id", nullable=true)
+    private  User upgradeUser;
+
+    @OneToMany(mappedBy = "note")
+    private List<Note> notes;
+    @OneToMany(mappedBy = "product")
+    private List<Product> products;
+    @OneToMany(mappedBy = "category_language")
+    private List<CategoryLanguage> categoryLanguages;
 
     public long getId() {
         return id;
@@ -88,5 +103,45 @@ public class Category {
 
     public void setUpgradeUserId(long upgradeUserId) {
         this.upgradeUserId = upgradeUserId;
+    }
+
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
+    }
+
+    public User getUpgradeUser() {
+        return upgradeUser;
+    }
+
+    public void setUpgradeUser(User upgradeUser) {
+        this.upgradeUser = upgradeUser;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<CategoryLanguage> getCategoryLanguages() {
+        return categoryLanguages;
+    }
+
+    public void setCategoryLanguages(List<CategoryLanguage> categoryLanguages) {
+        this.categoryLanguages = categoryLanguages;
     }
 }

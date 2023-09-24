@@ -2,13 +2,15 @@ package com.ming.site.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class ProductImage {
+public class ProductImage implements IdEntity {
     @Id
-    private int id;
+    private long id;
 
     private String url;
     private String alt;
@@ -17,13 +19,42 @@ public class ProductImage {
     private String createUserId;
     private LocalDateTime createAt;
 
-    public int getId() {
+    @Override
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    @Override
+    public void setId(long id) {
         this.id = id;
     }
+
+    @ManyToOne
+    @JoinColumn(name="create_user_id", nullable = true)
+    private User createUser;
+
+    @ManyToOne
+    @JoinColumn(name="site_id", nullable = false)
+    private Site site;
+
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
+    }
+
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
+
+
+
 
     public String getUrl() {
         return url;

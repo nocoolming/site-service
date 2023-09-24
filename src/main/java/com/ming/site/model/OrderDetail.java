@@ -2,17 +2,20 @@ package com.ming.site.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-public class OrderDetail {
+public class OrderDetail
+        implements IdEntity {
     @Id
     private long id;
 
     private String title;
-    private  String content;
+    private String content;
     private BigDecimal price;
     private int count;
 
@@ -22,6 +25,17 @@ public class OrderDetail {
     private LocalDateTime upgradeAt;
     private long createUserId;
     private long upgradeUserId;
+    @ManyToOne
+    @JoinColumn(name="create_user_id", nullable=true)
+    private User createUser;
+
+    @ManyToOne
+    @JoinColumn(name="upgrade_user_id", nullable=true)
+    private  User upgradeUser;
+
+    @ManyToOne
+    @JoinColumn(name="order_id", nullable = false)
+    private Order order;
 
     public long getId() {
         return id;
@@ -109,5 +123,29 @@ public class OrderDetail {
 
     public void setUpgradeUserId(long upgradeUserId) {
         this.upgradeUserId = upgradeUserId;
+    }
+
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
+    }
+
+    public User getUpgradeUser() {
+        return upgradeUser;
+    }
+
+    public void setUpgradeUser(User upgradeUser) {
+        this.upgradeUser = upgradeUser;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

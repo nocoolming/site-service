@@ -2,12 +2,15 @@ package com.ming.site.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-public class Product {
+public class Product
+implements IdEntity{
     @Id
     private long id;
     private String categoryId;
@@ -23,6 +26,43 @@ public class Product {
     private long createUserId;
     private long upgradeUserId;
     private long siteId;
+
+
+    @ManyToOne
+    @JoinColumn(name="create_user_id", nullable=true)
+    private User createUser;
+
+    @ManyToOne
+    @JoinColumn(name="upgrade_user_id", nullable=true)
+    private  User upgradeUser;
+
+    @ManyToOne
+    @JoinColumn(name="site_id", nullable = true)
+    private Site site;
+
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
+    }
+
+    public User getUpgradeUser() {
+        return upgradeUser;
+    }
+
+    public void setUpgradeUser(User upgradeUser) {
+        this.upgradeUser = upgradeUser;
+    }
+
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
 
     public long getId() {
         return id;

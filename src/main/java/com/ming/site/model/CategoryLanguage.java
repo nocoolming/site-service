@@ -2,11 +2,14 @@ package com.ming.site.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class CategoryLanguage {
+public class CategoryLanguage
+        implements IdEntity {
     @Id
     private long id;
     private String title;
@@ -16,6 +19,18 @@ public class CategoryLanguage {
     private long createUserId;
     private LocalDateTime upgradeAt;
     private long upgradeUserid;
+
+    @ManyToOne
+    @JoinColumn(name = "create_user_id", nullable = true)
+    private User createUser;
+
+    @ManyToOne
+    @JoinColumn(name = "upgrade_user_id", nullable = true)
+    private User upgradeUser;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     public long getId() {
         return id;
@@ -79,5 +94,13 @@ public class CategoryLanguage {
 
     public void setUpgradeUserid(long upgradeUserid) {
         this.upgradeUserid = upgradeUserid;
+    }
+
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
     }
 }

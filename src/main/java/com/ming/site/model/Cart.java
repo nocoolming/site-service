@@ -1,13 +1,12 @@
 package com.ming.site.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-public class Cart {
+public class Cart implements IdEntity {
     @Id
     private long id;
     private String title;
@@ -19,6 +18,13 @@ public class Cart {
     private LocalDateTime upgradeAt;
     private long createUserId;
     private long upgradeUserId;
+    @ManyToOne
+    @JoinColumn(name="create_user_id", nullable=true)
+    private User createUser;
+
+    @ManyToOne
+    @JoinColumn(name="upgrade_user_id", nullable=true)
+    private  User upgradeUser;
 
     public long getId() {
         return id;
@@ -98,5 +104,22 @@ public class Cart {
 
     public void setUpgradeUserId(long upgradeUserId) {
         this.upgradeUserId = upgradeUserId;
+    }
+
+
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
+    }
+
+    public User getUpgradeUser() {
+        return upgradeUser;
+    }
+
+    public void setUpgradeUser(User upgradeUser) {
+        this.upgradeUser = upgradeUser;
     }
 }
