@@ -15,16 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductImageControllerV1 {
     private static final Logger log = LoggerFactory.getLogger(ProductImageControllerV1.class);
 
-    @Autowired
-    ProductImageRepository productImageRepository;
-
-    @PostMapping("save")
-    ProductImage save(@RequestBody ProductImage productImage){
-        ProductImage result = productImageRepository.save(productImage);
-
-        return result;
-    }
-    Iterable<ProductImage> all(){
-        return productImageRepository.findAll();
-    }
+//    @Autowired
+//    ProductImageRepository productImageRepository;
+//
+//    @PostMapping("save")
+//    ProductImage save(@RequestBody ProductImage productImage){
+//        ProductImage result = productImageRepository.save(productImage);
+//
+//        return result;
+//    }
+//    Iterable<ProductImage> all(){
+//        return productImageRepository.findAll();
+//    }
 }

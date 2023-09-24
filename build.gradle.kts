@@ -16,8 +16,17 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-test")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-data-rest")
+
+    // the GOAT ORM
+    implementation ("org.hibernate.orm:hibernate-core:6.3.0.Final")
+
+    // Hibernate Validator
+    implementation ("org.hibernate.validator:hibernate-validator:8.0.0.Final")
+    implementation ("org.glassfish:jakarta.el:4.0.2")
+    implementation ("org.hibernate:hibernate-hikaricp:6.3.1.Final")
+    implementation ("com.zaxxer:HikariCP:5.0.1")
+
+
     implementation("org.postgresql:postgresql:42.6.0")
 //    runtimeOnly ("com.h2database:h2")
 //    implementation("org.xerial:sqlite-jdbc:3.36.0.3")
