@@ -16,25 +16,21 @@ public class Note implements IdEntity{
     private String language;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-    private long createUserId;
-    private long upgradeUserId;
-    private long siteId;
-    private long categoryId;
 
     @ManyToOne
-    @JoinColumn(name="create_user_id", nullable=true)
+    @JoinColumn(name="create_user_id")
     private User createUser;
 
     @ManyToOne
-    @JoinColumn(name="upgrade_user_id", nullable=true)
+    @JoinColumn(name="upgrade_user_id")
     private  User upgradeUser;
 
     @ManyToOne
-    @JoinColumn(name="site_id", nullable=true)
+    @JoinColumn(name="site_id")
     private  Site site;
 
     @ManyToOne
-    @JoinColumn(name="category_id", nullable=true)
+    @JoinColumn(name="category_id")
     private  Category category;
 
     public long getId() {
@@ -101,38 +97,6 @@ public class Note implements IdEntity{
         this.upgradeAt = upgradeAt;
     }
 
-    public long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public long getUpgradeUserId() {
-        return upgradeUserId;
-    }
-
-    public void setUpgradeUserId(long upgradeUserId) {
-        this.upgradeUserId = upgradeUserId;
-    }
-
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
-    }
-
-    public long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(long categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public User getCreateUser() {
         return createUser;
     }
@@ -164,4 +128,6 @@ public class Note implements IdEntity{
     public void setCategory(Category category) {
         this.category = category;
     }
+
+
 }

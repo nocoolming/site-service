@@ -12,26 +12,27 @@ public class Category implements IdEntity{
     private String title;
     private String code;
     private String parentCode;
-    private long siteId;
     private LocalDateTime createAt;
-    private long createUserId;
 
     private LocalDateTime upgradeAt;
-    private long upgradeUserId;
     @ManyToOne
-    @JoinColumn(name="create_user_id", nullable=true)
+    @JoinColumn(name="create_user_id")
     private User createUser;
 
     @ManyToOne
-    @JoinColumn(name="upgrade_user_id", nullable=true)
+    @JoinColumn(name="upgrade_user_id")
     private  User upgradeUser;
 
-    @OneToMany(mappedBy = "note")
+    @OneToMany(mappedBy = "category")
     private List<Note> notes;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "category")
     private List<Product> products;
-    @OneToMany(mappedBy = "category_language")
+    @OneToMany(mappedBy = "category")
     private List<CategoryLanguage> categoryLanguages;
+
+    @ManyToOne
+    @JoinColumn(name="site_id")
+    private Site site;
 
     public long getId() {
         return id;
@@ -65,14 +66,6 @@ public class Category implements IdEntity{
         this.parentCode = parentCode;
     }
 
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
-    }
-
     public LocalDateTime getCreateAt() {
         return createAt;
     }
@@ -81,28 +74,12 @@ public class Category implements IdEntity{
         this.createAt = createAt;
     }
 
-    public long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(long createUserId) {
-        this.createUserId = createUserId;
-    }
-
     public LocalDateTime getUpgradeAt() {
         return upgradeAt;
     }
 
     public void setUpgradeAt(LocalDateTime upgradeAt) {
         this.upgradeAt = upgradeAt;
-    }
-
-    public long getUpgradeUserId() {
-        return upgradeUserId;
-    }
-
-    public void setUpgradeUserId(long upgradeUserId) {
-        this.upgradeUserId = upgradeUserId;
     }
 
     public User getCreateUser() {
@@ -144,4 +121,6 @@ public class Category implements IdEntity{
     public void setCategoryLanguages(List<CategoryLanguage> categoryLanguages) {
         this.categoryLanguages = categoryLanguages;
     }
+
+
 }

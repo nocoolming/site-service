@@ -18,23 +18,19 @@ public class OrderDetail
     private String content;
     private BigDecimal price;
     private int count;
-
     private BigDecimal subtotal;
-    private long orderId;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-    private long createUserId;
-    private long upgradeUserId;
     @ManyToOne
-    @JoinColumn(name="create_user_id", nullable=true)
+    @JoinColumn(name="create_user_id")
     private User createUser;
 
     @ManyToOne
-    @JoinColumn(name="upgrade_user_id", nullable=true)
+    @JoinColumn(name="upgrade_user_id")
     private  User upgradeUser;
 
     @ManyToOne
-    @JoinColumn(name="order_id", nullable = false)
+    @JoinColumn(name="order_id")
     private Order order;
 
     public long getId() {
@@ -85,14 +81,6 @@ public class OrderDetail
         this.subtotal = subtotal;
     }
 
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
     public LocalDateTime getCreateAt() {
         return createAt;
     }
@@ -109,21 +97,6 @@ public class OrderDetail
         this.upgradeAt = upgradeAt;
     }
 
-    public long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public long getUpgradeUserId() {
-        return upgradeUserId;
-    }
-
-    public void setUpgradeUserId(long upgradeUserId) {
-        this.upgradeUserId = upgradeUserId;
-    }
 
     public User getCreateUser() {
         return createUser;
@@ -148,4 +121,6 @@ public class OrderDetail
     public void setOrder(Order order) {
         this.order = order;
     }
+
+
 }

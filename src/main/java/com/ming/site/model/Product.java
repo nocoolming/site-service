@@ -13,7 +13,6 @@ public class Product
 implements IdEntity{
     @Id
     private long id;
-    private String categoryId;
     private String title;
     private String keywords;
     private String description;
@@ -23,21 +22,21 @@ implements IdEntity{
     private String language;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-    private long createUserId;
-    private long upgradeUserId;
-    private long siteId;
-
 
     @ManyToOne
-    @JoinColumn(name="create_user_id", nullable=true)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name="create_user_id")
     private User createUser;
 
     @ManyToOne
-    @JoinColumn(name="upgrade_user_id", nullable=true)
+    @JoinColumn(name="upgrade_user_id")
     private  User upgradeUser;
 
     @ManyToOne
-    @JoinColumn(name="site_id", nullable = true)
+    @JoinColumn(name="site_id")
     private Site site;
 
     public User getCreateUser() {
@@ -70,14 +69,6 @@ implements IdEntity{
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
     }
 
     public String getTitle() {
@@ -136,6 +127,14 @@ implements IdEntity{
         this.language = language;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public LocalDateTime getCreateAt() {
         return createAt;
     }
@@ -150,29 +149,5 @@ implements IdEntity{
 
     public void setUpgradeAt(LocalDateTime upgradeAt) {
         this.upgradeAt = upgradeAt;
-    }
-
-    public long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public long getUpgradeUserId() {
-        return upgradeUserId;
-    }
-
-    public void setUpgradeUserId(long upgradeUserId) {
-        this.upgradeUserId = upgradeUserId;
-    }
-
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
     }
 }

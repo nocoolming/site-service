@@ -14,17 +14,7 @@ public class Cart implements IdEntity {
     private BigDecimal price;
     private String unit;
     private int count;
-    private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-    private long createUserId;
-    private long upgradeUserId;
-    @ManyToOne
-    @JoinColumn(name="create_user_id", nullable=true)
-    private User createUser;
-
-    @ManyToOne
-    @JoinColumn(name="upgrade_user_id", nullable=true)
-    private  User upgradeUser;
 
     public long getId() {
         return id;
@@ -74,52 +64,11 @@ public class Cart implements IdEntity {
         this.count = count;
     }
 
-    public LocalDateTime getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
-    }
-
     public LocalDateTime getUpgradeAt() {
         return upgradeAt;
     }
 
     public void setUpgradeAt(LocalDateTime upgradeAt) {
         this.upgradeAt = upgradeAt;
-    }
-
-    public long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public long getUpgradeUserId() {
-        return upgradeUserId;
-    }
-
-    public void setUpgradeUserId(long upgradeUserId) {
-        this.upgradeUserId = upgradeUserId;
-    }
-
-
-    public User getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(User createUser) {
-        this.createUser = createUser;
-    }
-
-    public User getUpgradeUser() {
-        return upgradeUser;
-    }
-
-    public void setUpgradeUser(User upgradeUser) {
-        this.upgradeUser = upgradeUser;
     }
 }

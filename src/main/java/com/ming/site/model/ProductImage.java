@@ -14,9 +14,6 @@ public class ProductImage implements IdEntity {
 
     private String url;
     private String alt;
-    private int productId;
-
-    private String createUserId;
     private LocalDateTime createAt;
 
     @Override
@@ -30,11 +27,11 @@ public class ProductImage implements IdEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name="create_user_id", nullable = true)
+    @JoinColumn(name="create_user_id")
     private User createUser;
 
     @ManyToOne
-    @JoinColumn(name="site_id", nullable = false)
+    @JoinColumn(name="site_id")
     private Site site;
 
     public User getCreateUser() {
@@ -71,23 +68,6 @@ public class ProductImage implements IdEntity {
     public void setAlt(String alt) {
         this.alt = alt;
     }
-
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(String createUserId) {
-        this.createUserId = createUserId;
-    }
-
     public LocalDateTime getCreateAt() {
         return createAt;
     }

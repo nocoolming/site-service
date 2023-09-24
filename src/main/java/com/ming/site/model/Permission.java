@@ -15,24 +15,21 @@ implements IdEntity{
     private boolean isMenu;
     private boolean isUrl;
     private String url;
-    private long createUserId;
-    private long upgradeUserId;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-    private long siteId;
 
     @ManyToOne
-    @JoinColumn(name="create_user_id", nullable=true)
+    @JoinColumn(name="create_user_id")
     private User createUser;
 
     @ManyToOne
-    @JoinColumn(name="upgrade_user_id", nullable=true)
+    @JoinColumn(name="upgrade_user_id")
     private  User upgradeUser;
 
     @ManyToOne
-    @JoinColumn(name="site_id", nullable = true)
+    @JoinColumn(name="site_id")
     private Site site;
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "permissions")
     private List<Role> roles;
 
     public long getId() {
@@ -82,23 +79,6 @@ implements IdEntity{
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public long getUpgradeUserId() {
-        return upgradeUserId;
-    }
-
-    public void setUpgradeUserId(long upgradeUserId) {
-        this.upgradeUserId = upgradeUserId;
-    }
-
     public LocalDateTime getCreateAt() {
         return createAt;
     }
@@ -113,14 +93,6 @@ implements IdEntity{
 
     public void setUpgradeAt(LocalDateTime upgradeAt) {
         this.upgradeAt = upgradeAt;
-    }
-
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
     }
 
     public User getCreateUser() {

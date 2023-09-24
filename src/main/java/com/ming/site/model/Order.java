@@ -12,7 +12,6 @@ public class Order
         implements IdEntity {
     @Id
     private long id;
-
     private BigDecimal orderTotal;
     private BigDecimal receivables;
     private BigDecimal actualPayments;
@@ -23,24 +22,21 @@ public class Order
     private String country;
     private String province;
     private String street;
-    private String paymentId;
-    private long createUserId;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-    private long siteId;
 
     @ManyToOne
-    @JoinColumn(name = "create_user_id", nullable = true)
+    @JoinColumn(name = "create_user_id")
     private User createUser;
 
     @ManyToOne
-    @JoinColumn(name = "site_id", nullable = true)
+    @JoinColumn(name = "site_id")
     private Site site;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id", nullable = false)
+    @JoinColumn(name = "payment_id")
     private PaymentOrder paymentOrder;
 
-    @OneToMany(mappedBy = "order_detail")
+    @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetailList;
 
     public long getId() {
@@ -131,22 +127,6 @@ public class Order
         this.street = street;
     }
 
-    public String getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(long createUserId) {
-        this.createUserId = createUserId;
-    }
-
     public LocalDateTime getCreateAt() {
         return createAt;
     }
@@ -161,14 +141,6 @@ public class Order
 
     public void setUpgradeAt(LocalDateTime upgradeAt) {
         this.upgradeAt = upgradeAt;
-    }
-
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
     }
 
     public User getCreateUser() {
@@ -202,4 +174,6 @@ public class Order
     public void setOrderDetailList(List<OrderDetail> orderDetailList) {
         this.orderDetailList = orderDetailList;
     }
+
+
 }

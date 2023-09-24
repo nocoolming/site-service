@@ -16,27 +16,25 @@ public class Site implements IdEntity{
     private String domain;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
-    private long createUserId;
-    private long upgradeUserId;
 
     @ManyToOne
-    @JoinColumn(name="create_user_id", nullable=true)
+    @JoinColumn(name="create_user_id")
     private User createUser;
 
     @ManyToOne
-    @JoinColumn(name="upgrade_user_id", nullable=true)
+    @JoinColumn(name="upgrade_user_id")
     private  User upgradeUser;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "site")
     private List<Product> products;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "site")
     private List<User> users;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "site")
     private List<Category> categories;
 
-    @OneToMany(mappedBy = "note")
+    @OneToMany(mappedBy = "site")
     private List<Note> notes;
 
     public User getCreateUser() {
@@ -141,21 +139,5 @@ public class Site implements IdEntity{
 
     public void setUpdateAt(LocalDateTime updateAt) {
         this.updateAt = updateAt;
-    }
-
-    public long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public long getUpgradeUserId() {
-        return upgradeUserId;
-    }
-
-    public void setUpgradeUserId(long upgradeUserId) {
-        this.upgradeUserId = upgradeUserId;
     }
 }

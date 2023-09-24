@@ -14,14 +14,12 @@ implements IdEntity{
     private long id;
     private String channel;
     private LocalDateTime createAt;
-    private long orderId;
-    private long siteId;
 
     @ManyToOne
-    @JoinColumn(name="order_id", nullable = false)
+    @JoinColumn(name="order_id")
     private Order order;
     @ManyToOne
-    @JoinColumn(name="site_id", nullable = true)
+    @JoinColumn(name="site_id")
     private Site site;
 
     public long getId() {
@@ -46,22 +44,6 @@ implements IdEntity{
 
     public void setCreateAt(LocalDateTime createAt) {
         this.createAt = createAt;
-    }
-
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
     }
 
     public Order getOrder() {

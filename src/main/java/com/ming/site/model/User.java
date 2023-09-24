@@ -17,25 +17,21 @@ public class User {
     private String lastName;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
-    private long siteId;
 
     @ManyToOne
-    @JoinColumn(name="site_id", nullable = false)
+    @JoinColumn(name="site_id")
     private Site site;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "createUser")
     private List<Product> products;
 
-    @OneToMany(mappedBy = "user")
-    private List<User> users;
-
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "createUser")
     private List<Category> categories;
 
-    @OneToMany(mappedBy = "note")
+    @OneToMany(mappedBy = "createUser")
     private List<Note> notes;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "createUser")
     private List<Order> orders;
 
     @ManyToMany
@@ -111,14 +107,6 @@ public class User {
         this.updateAt = updateAt;
     }
 
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
-    }
-
     public Site getSite() {
         return site;
     }
@@ -133,14 +121,6 @@ public class User {
 
     public void setProducts(List<Product> products) {
         this.products = products;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     public List<Category> getCategories() {

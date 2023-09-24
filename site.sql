@@ -77,7 +77,7 @@ create table "order" (
 );
 
 alter table payment_order
-    add constraint fd_payment_order
+    add constraint fk_payment_order
        foreign key(order_id) references "order"(id)
        on delete set null;
 
@@ -212,9 +212,9 @@ create table permission (
    is_menu BOOL null,
    is_url BOOL null,
    url VARCHAR(1024) null,
-   create_user_id BIGINT null references "user"(id) on delete set null,
    create_at DATE null,
    upgrade_at DATE null,
+   create_user_id BIGINT null references "user"(id) on delete set null,
    upgrade_user_id BIGINT null references "user"(id) on delete set null,
    site_id BIGINT null references site(id) on delete set null,
    constraint PK_PERMISSION primary key (id)
