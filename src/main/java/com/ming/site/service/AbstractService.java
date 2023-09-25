@@ -15,11 +15,11 @@ public abstract class AbstractService<T extends IdEntity, ID , R extends CrudRep
     private static final Logger log = LoggerFactory.getLogger(AbstractService.class);
 
     @Autowired
-    R repository;
+    protected R repository;
 
     @Transactional(propagation = Propagation.REQUIRED)
     public <S extends T> S save(S entity) {
-        if (!this.existsById((ID) entity.getId())) {
+        if (entity.getId() <= 0 || !this.existsById((ID) entity.getId())) {
             entity.setId(SnowflakeUtil.nextId());
         }
 //        entity.setId();

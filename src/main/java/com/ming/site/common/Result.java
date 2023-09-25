@@ -22,6 +22,10 @@ public class Result<R> {
         return new Result<R>(r);
     }
 
+    public static <R> Result<R> ok(R r) {
+        return success(r);
+    }
+
     public static Result error(String errorMessage) {
         Result result = new Result();
         result.setErrorMessage(errorMessage);

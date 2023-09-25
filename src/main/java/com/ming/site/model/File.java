@@ -18,8 +18,10 @@ public class File
     private long id;
     private String logicalName;
     private String physicalName;
+    private String alt;
+    private String url;
     private String extension;
-    private long site;
+    private long size;
     private LocalDateTime createAt;
 
     @ManyToOne
@@ -51,6 +53,22 @@ public class File
         this.physicalName = physicalName;
     }
 
+    public String getAlt() {
+        return alt;
+    }
+
+    public void setAlt(String alt) {
+        this.alt = alt;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getExtension() {
         return extension;
     }
@@ -59,12 +77,12 @@ public class File
         this.extension = extension;
     }
 
-    public long getSite() {
-        return site;
+    public long getSize() {
+        return size;
     }
 
-    public void setSite(long site) {
-        this.site = site;
+    public void setSize(long size) {
+        this.size = size;
     }
 
     public LocalDateTime getCreateAt() {

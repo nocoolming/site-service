@@ -252,6 +252,8 @@ create table user_role (
 
 create table file (
     id BIGINT not null primary key,
+    url varchar(1024) null,
+    alt varchar(256) null,
     logical_name varchar(256) null,
     physical_name varchar(256) null,
     extension varchar(32) null,

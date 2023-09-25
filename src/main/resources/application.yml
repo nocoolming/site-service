@@ -35,6 +35,11 @@ spring:
     serialization:
       write_dates_as_timestamps: false
 
+upload:
+  size: 6
+  path: "/Users/lmm/Downloads/uploads"
+  types: ".jpg|.png|.gif|.jpeg|.webp"
+  token: "jaioscamidamaej"
 
 logging:
   level:

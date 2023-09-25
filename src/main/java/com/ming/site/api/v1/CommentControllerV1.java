@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("site/v1/file")
+@RequestMapping("site/v1/comment")
 public class CommentControllerV1
         extends AbstractControllerV1<Comment, Long, CommentService> {
     private static final Logger log = LoggerFactory.getLogger(CommentControllerV1.class);
