@@ -10,7 +10,6 @@ create table "user" (
    mail VARCHAR(1024) null,
    first_name VARCHAR(256) null,
    last_name VARCHAR(256) null,
-   language VARCHAR(128) NOT NULL,
    create_at DATE null,
    upgrade_at DATE null,
    site_id BIGINT null ,

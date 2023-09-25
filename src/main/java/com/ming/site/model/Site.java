@@ -13,6 +13,7 @@ public class Site implements IdEntity{
     private String keywords;
     private String description;
 
+    private String language;
     private String domain;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
@@ -123,6 +124,14 @@ public class Site implements IdEntity{
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public LocalDateTime getCreateAt() {
