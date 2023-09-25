@@ -250,3 +250,22 @@ create table user_role (
     constraint PK_USER_ROLE primary key(user_id, role_id)
 );
 
+create table file (
+    id BIGINT not null primary key,
+    logical_name varchar(256) null,
+    physical_name varchar(256) null,
+    extension varchar(32) null,
+    size bigint null,
+    create_at date null default now(),
+    create_user_id  bigint null references "user"(id) on delete set null
+);
+
+create table comment (
+    id BIGINT not null primary key,
+    content varchar(2048) null,
+    create_at date null default now(),
+    create_user_id bigint null references "user"(id) on delete set null,
+    note_id bigint null references note(id) on delete set null,
+    product_id bigint null references product(id) on delete set null,
+    comment_id bigint null references comment(id) on delete set null
+);

@@ -1,0 +1,10 @@
+package com.ming.site.repository;
+
+import com.ming.site.model.File;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource(collectionResourceRel = "file", path="file")
+public interface FileRepository
+        extends CrudRepository<File, Long> {
+}
