@@ -5,7 +5,7 @@
     <springProfile name="default">
         <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
@@ -31,8 +31,8 @@
         </appender>
 
         <logger name="org.springframework" level="INFO"/>
-        <logger name="com.ming" level="DEBUG"/>
-        <root level="DEBUG">
+        <logger name="com.ming" level="INFO"/>
+        <root level="INFO">
             <appender-ref ref="FILE-ROLLING"/>
         </root>
     </springProfile>

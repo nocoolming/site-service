@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("site/v1/category")
-public class CategoryControllerV1
+public class  CategoryControllerV1
         extends AbstractControllerV1<
         Category,
         Long,
