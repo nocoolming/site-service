@@ -1,5 +1,6 @@
 package com.ming.site.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -30,6 +31,7 @@ public class Category implements IdEntity {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<CategoryLanguage> categoryLanguages;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id")
     private Site site;
@@ -122,5 +124,11 @@ public class Category implements IdEntity {
         this.categoryLanguages = categoryLanguages;
     }
 
+    public Site getSite() {
+        return site;
+    }
 
+    public void setSite(Site site) {
+        this.site = site;
+    }
 }

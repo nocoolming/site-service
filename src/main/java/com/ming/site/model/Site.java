@@ -1,14 +1,24 @@
 package com.ming.site.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class Site implements IdEntity{
+//@JsonIgnoreProperties({
+//        "notes",
+//        "categories",
+//        "createAt",
+//        "upgradeUser",
+//        "products",
+//        "users"
+//})
+public class Site implements IdEntity {
     @Id
-    private  long id;
+    private long id;
     private String title;
     private String keywords;
     private String description;
@@ -18,24 +28,30 @@ public class Site implements IdEntity{
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @ManyToOne
-    @JoinColumn(name="create_user_id")
+    @JsonIgnoreProperties(value={"create_user_id"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "create_user_id")
     private User createUser;
 
-    @ManyToOne
-    @JoinColumn(name="upgrade_user_id")
-    private  User upgradeUser;
+    @JsonIgnoreProperties(value={"upgrade_user_id"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "upgrade_user_id")
+    private User upgradeUser;
 
-    @OneToMany(mappedBy = "site")
+    @JsonIgnoreProperties(value={"site"})
+    @OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
     private List<Product> products;
 
-    @OneToMany(mappedBy = "site")
+    @JsonIgnoreProperties(value={"site"})
+    @OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
     private List<User> users;
 
-    @OneToMany(mappedBy = "site")
+    @JsonIgnoreProperties(value={"categories"})
+    @OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
     private List<Category> categories;
 
-    @OneToMany(mappedBy = "site")
+    @JsonIgnoreProperties(value={"notes"})
+    @OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
     private List<Note> notes;
 
     public User getCreateUser() {
@@ -153,4 +169,6 @@ public class Site implements IdEntity{
     public void setUpgradeAt(LocalDateTime upgradeAt) {
         this.upgradeAt = upgradeAt;
     }
+
+
 }

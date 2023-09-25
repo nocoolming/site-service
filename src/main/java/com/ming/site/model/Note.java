@@ -1,11 +1,12 @@
 package com.ming.site.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class Note implements IdEntity{
+public class Note implements IdEntity {
     @Id
     private long id;
     private String title;
@@ -16,22 +17,22 @@ public class Note implements IdEntity{
     private String language;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-
-    @ManyToOne
-    @JoinColumn(name="create_user_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "create_user_id")
     private User createUser;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "upgrade_user_id")
+    private User upgradeUser;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "site_id")
+    private Site site;
 
-    @ManyToOne
-    @JoinColumn(name="upgrade_user_id")
-    private  User upgradeUser;
-
-    @ManyToOne
-    @JoinColumn(name="site_id")
-    private  Site site;
-
-    @ManyToOne
-    @JoinColumn(name="category_id")
-    private  Category category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Long getId() {
         return id;

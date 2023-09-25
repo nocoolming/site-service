@@ -47,7 +47,7 @@ upload:
 
 logging:
   level:
-    org.hibernate: DEBUG
+    org.hibernate: INFO
     org.springframework: INFO
     com.ming: INFO
   pattern:

@@ -1,5 +1,6 @@
 package com.ming.site.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -18,27 +19,27 @@ public class User implements IdEntity {
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @ManyToOne
-    @JoinColumn(name="site_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "site_id")
     private Site site;
 
-    @OneToMany(mappedBy = "createUser")
+    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Product> products;
 
-    @OneToMany(mappedBy = "createUser")
+    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Category> categories;
-
-    @OneToMany(mappedBy = "createUser")
+    @JsonIgnore
+    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Note> notes;
 
-    @OneToMany(mappedBy = "createUser")
+    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Order> orders;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name="user_role",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="role_id")
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
 
