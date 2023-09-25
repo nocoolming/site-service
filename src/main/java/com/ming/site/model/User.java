@@ -1,6 +1,7 @@
 package com.ming.site.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -19,22 +20,27 @@ public class User implements IdEntity {
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "site_id")
-    private Site site;
 
+
+    //    @JsonIgnoreProperties(value={"products"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Product> products;
 
+    //    @JsonIgnoreProperties(value={"categories"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Category> categories;
+
+//    @JsonIgnoreProperties(value = {"notes"})
     @JsonIgnore
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Note> notes;
 
+    //    @JsonIgnoreProperties(value={"orders"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Order> orders;
 
+
+    //    @JsonIgnoreProperties(value={"roles"})
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_role",
@@ -112,13 +118,6 @@ public class User implements IdEntity {
         this.id = id;
     }
 
-    public Site getSite() {
-        return site;
-    }
-
-    public void setSite(Site site) {
-        this.site = site;
-    }
 
     public List<Product> getProducts() {
         return products;

@@ -13,7 +13,7 @@ implements IdEntity{
     private String title;
     private String summary;
     private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime upgradeAt;
     @ManyToOne
     @JoinColumn(name="create_user_id")
     private User createUser;
@@ -67,12 +67,12 @@ implements IdEntity{
         this.createAt = createAt;
     }
 
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
+    public LocalDateTime getUpgradeAt() {
+        return upgradeAt;
     }
 
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
+    public void setUpgradeAt(LocalDateTime upgradeAt) {
+        this.upgradeAt = upgradeAt;
     }
 
     public User getCreateUser() {

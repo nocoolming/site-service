@@ -28,8 +28,6 @@ create table site (
    language VARCHAR(128) NOT NULL,
    create_at DATE null,
    upgrade_at DATE null,
-   create_user_id BIGINT null references "user"(id) on delete set null,
-   upgrade_user_id BIGINT null references "user"(id) on delete set null,
    constraint PK_SITE primary key (id)
 );
 
