@@ -1,7 +1,9 @@
 package com.ming.site.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Entity
 //@JsonIgnoreProperties(value={"orderDetails"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product
         implements IdEntity {
     public Product(){
@@ -30,17 +33,17 @@ public class Product
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @JsonIgnoreProperties(value = {"products"})
+//    @JsonIgnoreProperties(value = {"propertyducts"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @JsonIgnoreProperties(value = {"productsOfCreateUser"})
+//    @JsonIgnoreProperties(value = {"productsOfCreateUser"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "create_user_id")
     private User createUser;
 
-    @JsonIgnoreProperties(value = {"productsOfCreateUser"})
+//    @JsonIgnoreProperties(value = {"productsOfCreateUser"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "upgrade_user_id")
     private User upgradeUser;
@@ -49,11 +52,11 @@ public class Product
     @JoinColumn(name = "site_id")
     private Site site;
 
-    @JsonIgnoreProperties(value = {"product"})
+//    @JsonIgnoreProperties(value = {"product"})
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductImage> productImageList;
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<OrderDetail> orderDetails;
 

@@ -13,8 +13,7 @@ import java.util.Set;
 @Entity
 @JsonIgnoreProperties(value = {
         "createUser",
-        "upgradeUser",
-        "site"
+        "upgradeUser"
 })
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Role

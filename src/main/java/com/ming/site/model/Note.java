@@ -1,12 +1,15 @@
 package com.ming.site.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Note implements IdEntity {
     public Note(){
         this.createAt = this.upgradeAt = LocalDateTime.now();
@@ -22,21 +25,21 @@ public class Note implements IdEntity {
     private String icon;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-    @JsonIgnoreProperties(value = {"notesOfCreateUser"})
+//    @JsonIgnoreProperties(value = {"notesOfCreateUser"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "create_user_id")
     private User createUser;
-    @JsonIgnoreProperties(value = {"notesOfUpgradeUser"})
+//    @JsonIgnoreProperties(value = {"notesOfUpgradeUser"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "upgrade_user_id")
     private User upgradeUser;
     //    @JsonIgnore
-    @JsonIgnoreProperties(value = {"notes"})
+//    @JsonIgnoreProperties(value = {"notes"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id")
     private Site site;
 
-    @JsonIgnoreProperties(value = {"notes"})
+//    @JsonIgnoreProperties(value = {"notes"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
