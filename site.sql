@@ -79,6 +79,23 @@ alter table payment_order
        on delete set null;
 
 /*==============================================================*/
+/* Table: order_detail                                          */
+/*==============================================================*/
+create table order_detail (
+   id BIGINT not null,
+   title VARCHAR(256) not null,
+   content VARCHAR(4096) not null,
+   price DECIMAL null,
+   count INT4 null,
+   subtotal DECIMAL null,
+   order_id BIGINT null references "order"(id) on delete set null,
+   create_at timestamp null,
+   upgrade_at timestamp null,
+   create_user_id BIGINT null references "user"(id) on delete set null,
+   upgrade_user_id BIGINT null references "user"(id) on delete set null,
+   constraint PK_ORDER_DETAIL primary key (id)
+);
+/*==============================================================*/
 /* Table: Role                                                  */
 /*==============================================================*/
 create table role (
@@ -162,6 +179,20 @@ create table product (
    constraint PK_PRODUCT primary key (id)
 );
 
+
+/*==============================================================*/
+/* Table: product_image                                         */
+/*==============================================================*/
+create table product_image (
+   id BIGINT not null,
+   alt VARCHAR(256) null,
+   url VARCHAR(1024) not null,
+   product_id BIGINT null references product(id) on delete set null,
+   create_at timestamp null,
+   create_user_id BIGINT null references "user"(id) on delete set null,
+   constraint PK_PRODUCT_IMAGE primary key (id)
+);
+
 /*==============================================================*/
 /* Table: note                                                  */
 /*==============================================================*/
@@ -185,25 +216,6 @@ create table note (
 
 
 /*==============================================================*/
-/* Table: order_detail                                          */
-/*==============================================================*/
-create table order_detail (
-   id BIGINT not null,
-   title VARCHAR(256) not null,
-   content VARCHAR(4096) not null,
-   price DECIMAL null,
-   count INT4 null,
-   subtotal DECIMAL null,
-   order_id BIGINT null references "order"(id) on delete set null,
-   create_at timestamp null,
-   upgrade_at timestamp null,
-   create_user_id BIGINT null references "user"(id) on delete set null,
-   upgrade_user_id BIGINT null references "user"(id) on delete set null,
-   constraint PK_ORDER_DETAIL primary key (id)
-);
-
-
-/*==============================================================*/
 /* Table: permission                                            */
 /*==============================================================*/
 create table permission (
@@ -219,20 +231,6 @@ create table permission (
    upgrade_user_id BIGINT null references "user"(id) on delete set null,
    site_id BIGINT null references site(id) on delete set null,
    constraint PK_PERMISSION primary key (id)
-);
-
-
-/*==============================================================*/
-/* Table: product_image                                         */
-/*==============================================================*/
-create table product_image (
-   id BIGINT not null,
-   alt VARCHAR(256) null,
-   url VARCHAR(1024) not null,
-   product_id BIGINT null references product(id) on delete set null,
-   create_at timestamp null,
-   create_user_id BIGINT null references "user"(id) on delete set null,
-   constraint PK_PRODUCT_IMAGE primary key (id)
 );
 
 
