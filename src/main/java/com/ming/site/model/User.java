@@ -19,7 +19,7 @@ import java.util.Set;
         "orders",
         "productImageList"
 })
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements IdEntity {
     @Id
     private long id;

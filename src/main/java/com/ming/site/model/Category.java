@@ -19,6 +19,9 @@ public class Category implements IdEntity {
     private String title;
     private String code;
     private String parentCode;
+    private boolean isMenu;
+    private String url;
+    private String icon;
     private LocalDateTime createAt;
 
     private LocalDateTime upgradeAt;
@@ -41,7 +44,6 @@ public class Category implements IdEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id")
     private Site site;
-
 
     public Long getId() {
         return id;
@@ -73,6 +75,30 @@ public class Category implements IdEntity {
 
     public void setParentCode(String parentCode) {
         this.parentCode = parentCode;
+    }
+
+    public boolean isMenu() {
+        return isMenu;
+    }
+
+    public void setMenu(boolean menu) {
+        isMenu = menu;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public LocalDateTime getCreateAt() {
@@ -138,4 +164,7 @@ public class Category implements IdEntity {
     public void setSite(Site site) {
         this.site = site;
     }
+
+
+
 }
