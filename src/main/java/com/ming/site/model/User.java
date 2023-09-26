@@ -1,11 +1,11 @@
 package com.ming.site.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "\"user\"")
@@ -17,8 +17,9 @@ import java.util.List;
         "categories",
         "products",
         "orders",
-        "productImageList",
+        "productImageList"
 })
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements IdEntity {
     @Id
     private long id;
@@ -55,14 +56,14 @@ public class User implements IdEntity {
     private List<Order> orders;
 
 
-    @JsonIgnoreProperties(value = {"users"})
+//    @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles;
+    private Set<Role> roles;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id")
@@ -187,11 +188,11 @@ public class User implements IdEntity {
         this.orders = orders;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

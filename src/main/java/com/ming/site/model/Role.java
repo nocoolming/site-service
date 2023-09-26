@@ -1,13 +1,28 @@
 package com.ming.site.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties(value = {
+        "createUser",
+        "upgradeUser",
+        "site"
+})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Role
-implements IdEntity{
+        implements IdEntity {
+    public Role() {
+        this.createAt = this.upgradeAt = LocalDateTime.now();
+    }
+
     @Id
     private long id;
     private String title;
@@ -15,15 +30,15 @@ implements IdEntity{
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
     @ManyToOne
-    @JoinColumn(name="create_user_id")
+    @JoinColumn(name = "create_user_id")
     private User createUser;
 
     @ManyToOne
-    @JoinColumn(name="upgrade_user_id")
-    private  User upgradeUser;
+    @JoinColumn(name = "upgrade_user_id")
+    private User upgradeUser;
 
     @ManyToOne
-    @JoinColumn(name="site_id")
+    @JoinColumn(name = "site_id")
     private Site site;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -34,7 +49,9 @@ implements IdEntity{
 
 
     @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+//    @JsonBackReference
+    private Set<User> users;
+
     public Long getId() {
         return id;
     }
@@ -107,11 +124,11 @@ implements IdEntity{
         this.permissions = permissions;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 }
