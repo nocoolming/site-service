@@ -1,5 +1,6 @@
 package com.ming.site.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -8,6 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "\"order\"")
+@JsonIgnoreProperties({""
+})
 public class Order
         implements IdEntity {
     @Id
@@ -36,8 +39,8 @@ public class Order
     @JoinColumn(name = "payment_id")
     private PaymentOrder paymentOrder;
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderDetail> orderDetailList;
+    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
+    private List<OrderDetail> orderDetails;
 
     public Long getId() {
         return id;
@@ -167,13 +170,11 @@ public class Order
         this.paymentOrder = paymentOrder;
     }
 
-    public List<OrderDetail> getOrderDetailList() {
-        return orderDetailList;
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
     }
 
-    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
-        this.orderDetailList = orderDetailList;
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
-
-
 }

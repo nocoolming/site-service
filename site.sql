@@ -89,10 +89,10 @@ create table order_detail (
    count INT4 null,
    subtotal DECIMAL null,
    order_id BIGINT null references "order"(id) on delete set null,
+   product_id BIGINT null references product(id) on delete set null,
    create_at timestamp null,
    upgrade_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
-   upgrade_user_id BIGINT null references "user"(id) on delete set null,
    constraint PK_ORDER_DETAIL primary key (id)
 );
 /*==============================================================*/

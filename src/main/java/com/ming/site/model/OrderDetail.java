@@ -1,9 +1,8 @@
 package com.ming.site.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,26 +10,30 @@ import java.time.LocalDateTime;
 @Entity
 public class OrderDetail
         implements IdEntity {
+    public OrderDetail(){
+        this.createAt = this.upgradeAt = LocalDateTime.now();
+    }
     @Id
     private long id;
 
     private String title;
-    private String content;
     private BigDecimal price;
     private int count;
     private BigDecimal subtotal;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="create_user_id")
     private User createUser;
 
-    @ManyToOne
-    @JoinColumn(name="upgrade_user_id")
-    private  User upgradeUser;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="product_id")
+    @JsonIgnoreProperties(value={"orderDetails"})
+    private Product product;
     @ManyToOne
     @JoinColumn(name="order_id")
+    @JsonIgnoreProperties(value = {"orderDetails"})
     private Order order;
 
     public Long getId() {
@@ -49,13 +52,6 @@ public class OrderDetail
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
 
     public BigDecimal getPrice() {
         return price;
@@ -97,7 +93,6 @@ public class OrderDetail
         this.upgradeAt = upgradeAt;
     }
 
-
     public User getCreateUser() {
         return createUser;
     }
@@ -106,20 +101,20 @@ public class OrderDetail
         this.createUser = createUser;
     }
 
-    public User getUpgradeUser() {
-        return upgradeUser;
-    }
-
-    public void setUpgradeUser(User upgradeUser) {
-        this.upgradeUser = upgradeUser;
-    }
-
     public Order getOrder() {
         return order;
     }
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
 

@@ -1,5 +1,6 @@
 package com.ming.site.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+//@JsonIgnoreProperties(value={"orderDetails"})
 public class Product
         implements IdEntity {
     public Product(){
@@ -50,6 +52,10 @@ public class Product
     @JsonIgnoreProperties(value = {"product"})
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ProductImage> productImageList;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<OrderDetail> orderDetails;
 
     public User getCreateUser() {
         return createUser;
@@ -185,5 +191,13 @@ public class Product
 
     public void setProductImageList(List<ProductImage> productImageList) {
         this.productImageList = productImageList;
+    }
+
+    public List<OrderDetail> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }
