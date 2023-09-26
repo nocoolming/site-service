@@ -19,6 +19,7 @@ public class Note implements IdEntity {
     private String content;
  private  String slateContent;
     private String language;
+    private String icon;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
     @JsonIgnoreProperties(value = {"notesOfCreateUser"})
@@ -86,6 +87,14 @@ public class Note implements IdEntity {
 
     public void setSlateContent(String slateContent) {
         this.slateContent = slateContent;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getLanguage() {

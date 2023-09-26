@@ -151,6 +151,7 @@ create table product (
    content VARCHAR(4096) not null,
    slate_content varchar(4096) null,
    price DECIMAL null,
+   icon varchar(1024) null,
    count INT4 null,
    language VARCHAR(128) NULL,
    create_at timestamp null,
@@ -171,7 +172,8 @@ create table note (
    description VARCHAR(1024) null,
    content VARCHAR(4096) null,
    slate_content varchar(4096) null,
-   language VARCHAR(128) NULL,
+   language VARCHAR(128) NULL
+   icon varchar(1024) null,
    create_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    upgrade_at timestamp null,

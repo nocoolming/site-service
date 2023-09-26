@@ -24,6 +24,7 @@ public class Product
     private BigDecimal price;
     private int count;
     private String language;
+    private String icon;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
@@ -64,6 +65,14 @@ public class Product
 
     public void setUpgradeUser(User upgradeUser) {
         this.upgradeUser = upgradeUser;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Site getSite() {
