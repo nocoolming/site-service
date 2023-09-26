@@ -8,6 +8,9 @@ import java.util.List;
 
 @Entity
 public class Category implements IdEntity {
+    public Category(){
+        this.upgradeAt = this.createAt = LocalDateTime.now();
+    }
     @Id
     private long id;
     private String title;
@@ -31,10 +34,11 @@ public class Category implements IdEntity {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<CategoryLanguage> categoryLanguages;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id")
     private Site site;
+
 
     public Long getId() {
         return id;

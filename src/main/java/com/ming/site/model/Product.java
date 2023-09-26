@@ -1,43 +1,54 @@
 package com.ming.site.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Product
-implements IdEntity{
+        implements IdEntity {
+    public Product(){
+        this.createAt = this.upgradeAt = LocalDateTime.now();
+    }
     @Id
     private long id;
     private String title;
     private String keywords;
     private String description;
     private String content;
+
+    private String slateContent;
     private BigDecimal price;
     private int count;
     private String language;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @ManyToOne
+    @JsonIgnoreProperties(value = {"products"})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name="create_user_id")
+    @JsonIgnoreProperties(value = {"productsOfCreateUser"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "create_user_id")
     private User createUser;
 
-    @ManyToOne
-    @JoinColumn(name="upgrade_user_id")
-    private  User upgradeUser;
+    @JsonIgnoreProperties(value = {"productsOfCreateUser"})
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "upgrade_user_id")
+    private User upgradeUser;
 
-    @ManyToOne
-    @JoinColumn(name="site_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "site_id")
     private Site site;
+
+    @JsonIgnoreProperties(value = {"product"})
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private List<ProductImage> productImageList;
 
     public User getCreateUser() {
         return createUser;
@@ -103,6 +114,14 @@ implements IdEntity{
         this.content = content;
     }
 
+    public String getSlateContent() {
+        return slateContent;
+    }
+
+    public void setSlateContent(String slateContent) {
+        this.slateContent = slateContent;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -149,5 +168,13 @@ implements IdEntity{
 
     public void setUpgradeAt(LocalDateTime upgradeAt) {
         this.upgradeAt = upgradeAt;
+    }
+
+    public List<ProductImage> getProductImageList() {
+        return productImageList;
+    }
+
+    public void setProductImageList(List<ProductImage> productImageList) {
+        this.productImageList = productImageList;
     }
 }

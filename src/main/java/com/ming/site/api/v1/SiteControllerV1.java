@@ -27,8 +27,8 @@ public class SiteControllerV1
     @GetMapping("domain/{domain}")
     Site findByDomain(@PathVariable String domain){
         Site site = service.findByDomain(domain).get();
-        Optional.ofNullable(site.getCategories().toString());
-        Optional.ofNullable(site.getNotes().toString());
+//        Optional.ofNullable(site.getCategories().toString());
+//        Optional.ofNullable(site.getNotes().toString());
 
         return site;
     }

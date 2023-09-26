@@ -9,6 +9,16 @@ import java.util.List;
 
 @Entity
 @Table(name = "\"user\"")
+@JsonIgnoreProperties({
+        "notesOfCreateUser",
+        "notesOfUpgradeUser",
+        "productsOfCreateUser",
+        "productsOfUpgradeUser",
+        "categories",
+        "products",
+        "orders",
+        "productImageList",
+})
 public class User implements IdEntity {
     @Id
     private long id;
@@ -21,26 +31,31 @@ public class User implements IdEntity {
     private LocalDateTime upgradeAt;
 
 
-
-    //    @JsonIgnoreProperties(value={"products"})
+//    @JsonIgnoreProperties(value = {"createUser"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
-    private List<Product> products;
+    private List<Product> productsOfCreateUser;
+//    @JsonIgnoreProperties(value = {"upgradeUser"})
+    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
+    private List<Product> productsOfUpgradeUser;
 
-    //    @JsonIgnoreProperties(value={"categories"})
+//    @JsonIgnoreProperties(value = {"createUser"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Category> categories;
 
-//    @JsonIgnoreProperties(value = {"notes"})
-    @JsonIgnore
+//    @JsonIgnoreProperties(value = {"createUser"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
-    private List<Note> notes;
+    private List<Note> notesOfCreateUser;
 
-    //    @JsonIgnoreProperties(value={"orders"})
+//    @JsonIgnoreProperties(value = {"upgradeUser"})
+    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
+    private List<Note> notesOfUpgradeUser;
+
+//    @JsonIgnoreProperties(value = {"createUser"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Order> orders;
 
 
-    //    @JsonIgnoreProperties(value={"roles"})
+    @JsonIgnoreProperties(value = {"users"})
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_role",
@@ -49,6 +64,12 @@ public class User implements IdEntity {
     )
     private List<Role> roles;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "site_id")
+    private Site site;
+
+    @OneToMany(mappedBy = "createUser", fetch = FetchType.EAGER)
+    private List<ProductImage> productImageList;
 
     public Long getId() {
         return id;
@@ -118,13 +139,20 @@ public class User implements IdEntity {
         this.id = id;
     }
 
-
-    public List<Product> getProducts() {
-        return products;
+    public List<Product> getProductsOfCreateUser() {
+        return productsOfCreateUser;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProductsOfCreateUser(List<Product> productsOfCreateUser) {
+        this.productsOfCreateUser = productsOfCreateUser;
+    }
+
+    public List<Product> getProductsOfUpgradeUser() {
+        return productsOfUpgradeUser;
+    }
+
+    public void setProductsOfUpgradeUser(List<Product> productsOfUpgradeUser) {
+        this.productsOfUpgradeUser = productsOfUpgradeUser;
     }
 
     public List<Category> getCategories() {
@@ -135,12 +163,20 @@ public class User implements IdEntity {
         this.categories = categories;
     }
 
-    public List<Note> getNotes() {
-        return notes;
+    public List<Note> getNotesOfCreateUser() {
+        return notesOfCreateUser;
     }
 
-    public void setNotes(List<Note> notes) {
-        this.notes = notes;
+    public void setNotesOfCreateUser(List<Note> notesOfCreateUser) {
+        this.notesOfCreateUser = notesOfCreateUser;
+    }
+
+    public List<Note> getNotesOfUpgradeUser() {
+        return notesOfUpgradeUser;
+    }
+
+    public void setNotesOfUpgradeUser(List<Note> notesOfUpgradeUser) {
+        this.notesOfUpgradeUser = notesOfUpgradeUser;
     }
 
     public List<Order> getOrders() {
@@ -157,5 +193,13 @@ public class User implements IdEntity {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
     }
 }

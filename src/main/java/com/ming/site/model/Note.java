@@ -1,35 +1,41 @@
 package com.ming.site.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 public class Note implements IdEntity {
+    public Note(){
+        this.createAt = this.upgradeAt = LocalDateTime.now();
+    }
     @Id
     private long id;
     private String title;
     private String keywords;
     private String description;
     private String content;
-
+ private  String slateContent;
     private String language;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-    @JsonIgnore
+    @JsonIgnoreProperties(value = {"notesOfCreateUser"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "create_user_id")
     private User createUser;
-    @JsonIgnore
+    @JsonIgnoreProperties(value = {"notesOfUpgradeUser"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "upgrade_user_id")
     private User upgradeUser;
-    @JsonIgnore
+    //    @JsonIgnore
+    @JsonIgnoreProperties(value = {"notes"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id")
     private Site site;
 
+    @JsonIgnoreProperties(value = {"notes"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
@@ -72,6 +78,14 @@ public class Note implements IdEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getSlateContent() {
+        return slateContent;
+    }
+
+    public void setSlateContent(String slateContent) {
+        this.slateContent = slateContent;
     }
 
     public String getLanguage() {

@@ -10,8 +10,8 @@ create table "user" (
    mail VARCHAR(1024) null,
    first_name VARCHAR(256) null,
    last_name VARCHAR(256) null,
-   create_at DATE null,
-   upgrade_at DATE null,
+   create_at timestamp null,
+   upgrade_at timestamp null,
    site_id BIGINT null ,
    constraint Pk_USER primary key (id)
 );
@@ -26,8 +26,8 @@ create table site (
    description VARCHAR(256) null,
    domain VARCHAR(128) null,
    language VARCHAR(128) NOT NULL,
-   create_at DATE null,
-   upgrade_at DATE null,
+   create_at timestamp null,
+   upgrade_at timestamp null,
    constraint PK_SITE primary key (id)
 );
 
@@ -43,7 +43,7 @@ create table payment_order (
    id VARCHAR(128) not null,
    channel VARCHAR(1024) null,
    total DECIMAL null,
-   create_at DATE null,
+   create_at timestamp null,
    order_id BIGINT null ,
    site_id BIGINT null references site(id) on delete set null,
    constraint PK_PAYMENT_ORDER primary key (id)
@@ -67,8 +67,8 @@ create table "order" (
    street VARCHAR(1024) null,
    payment_id VARCHAR(128) references payment_order(id) on delete set null,
    create_user_id BIGINT not null  references "user"(id) on delete set null,
-   create_at DATE null,
-   upgrade_at DATE null,
+   create_at timestamp null,
+   upgrade_at timestamp null,
    site_id BIGINT null references site(id) on delete set null,
    constraint PK_ORDER primary key (id)
 );
@@ -86,8 +86,8 @@ create table role (
    title VARCHAR(256) null,
    summary VARCHAR(1024) null,
    create_user_id BIGINT null  references "user"(id) on delete set null,
-   create_at DATE null,
-   upgrade_at DATE null,
+   create_at timestamp null,
+   upgrade_at timestamp null,
    upgrade_user_id BIGINT null,
    site_id BIGINT null references site(id) on delete set null,
    constraint PK_ROLE primary key (id)
@@ -103,9 +103,9 @@ create table category (
    code VARCHAR(1024) not null,
    parent_code VARCHAR(1024) null,
    site_id BIGINT null references site(id),
-   create_at DATE null,
+   create_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
-   upgrade_at DATE null,
+   upgrade_at timestamp null,
    upgrade_user_id BIGINT null references "user"(id) on delete set null,
    constraint PK_CATEGORY primary key (id)
 );
@@ -115,9 +115,9 @@ create table category_language(
     title VARCHAR(256) NOT NULL,
     language VARCHAR(128) NOT NULL,
     category_id BIGINT not null,
-    create_at DATE null,
+    create_at timestamp null,
     create_user_id BIGINT null references "user"(id) on delete set null,
-    upgrade_at DATE null,
+    upgrade_at timestamp null,
     upgrade_user_id BIGINT null references "user"(id) on delete set null
 );
 
@@ -133,8 +133,8 @@ create table cart (
    price DECIMAL null,
    unit VARCHAR(256) null,
    count INT4 null,
-   create_at DATE null,
-   upgrade_at DATE null,
+   create_at timestamp null,
+   upgrade_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    upgrade_user_id BIGINT null references "user"(id) on delete set null
 );
@@ -149,11 +149,12 @@ create table product (
    keywords VARCHAR(256) not null,
    description VARCHAR(1024) not null,
    content VARCHAR(4096) not null,
+   slate_content varchar(4096) null,
    price DECIMAL null,
    count INT4 null,
    language VARCHAR(128) NULL,
-   create_at DATE null,
-   upgrade_at DATE null,
+   create_at timestamp null,
+   upgrade_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    upgrade_user_id BIGINT null references "user"(id) on delete set null,
    site_id BIGINT null references site(id) on delete set null,
@@ -169,10 +170,11 @@ create table note (
    keywords VARCHAR(256) null,
    description VARCHAR(1024) null,
    content VARCHAR(4096) null,
+   slate_content varchar(4096) null,
    language VARCHAR(128) NULL,
-   create_at DATE null,
+   create_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
-   upgrade_at DATE null,
+   upgrade_at timestamp null,
    upgrade_user_id BIGINT null references "user"(id) on delete set null,
    category_id BIGINT null references category(id) on delete set null,
    site_id BIGINT null references site(id) on delete set null,
@@ -191,8 +193,8 @@ create table order_detail (
    count INT4 null,
    subtotal DECIMAL null,
    order_id BIGINT null references "order"(id) on delete set null,
-   create_at DATE null,
-   upgrade_at DATE null,
+   create_at timestamp null,
+   upgrade_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    upgrade_user_id BIGINT null references "user"(id) on delete set null,
    constraint PK_ORDER_DETAIL primary key (id)
@@ -209,8 +211,8 @@ create table permission (
    is_menu BOOL null,
    is_url BOOL null,
    url VARCHAR(1024) null,
-   create_at DATE null,
-   upgrade_at DATE null,
+   create_at timestamp null,
+   upgrade_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    upgrade_user_id BIGINT null references "user"(id) on delete set null,
    site_id BIGINT null references site(id) on delete set null,
@@ -226,7 +228,7 @@ create table product_image (
    alt VARCHAR(256) null,
    url VARCHAR(1024) not null,
    product_id BIGINT null references product(id) on delete set null,
-   create_at DATE null,
+   create_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    constraint PK_PRODUCT_IMAGE primary key (id)
 );

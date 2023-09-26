@@ -8,14 +8,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-//@JsonIgnoreProperties({
-//        "notes",
-//        "categories",
-//        "createAt",
-//        "upgradeUser",
-//        "products",
-//        "users"
-//})
+@JsonIgnoreProperties({
+        "notes",
+        "categories",
+        "products",
+        "users",
+})
 public class Site implements IdEntity {
     @Id
     private long id;
@@ -28,18 +26,21 @@ public class Site implements IdEntity {
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @JsonIgnoreProperties(value={"site"})
+//    @JsonIgnoreProperties(value={"site"})
     @OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
     private List<Product> products;
 
 
-    @JsonIgnoreProperties(value={"categories"})
+//    @JsonIgnoreProperties(value={"categories"})
     @OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
     private List<Category> categories;
 
-    @JsonIgnoreProperties(value={"notes"})
+//    @JsonIgnoreProperties(value={"notes"})
     @OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
     private List<Note> notes;
+
+    @OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
+    private List<User> users;
 
     public List<Product> getProducts() {
         return products;
@@ -134,5 +135,11 @@ public class Site implements IdEntity {
         this.upgradeAt = upgradeAt;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
 
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 }

@@ -37,6 +37,7 @@ spring:
     # Locale used for formatting
     time-zone: "GMT+8"
     serialization:
+      FAIL_ON_EMPTY_BEANS: false
       write_dates_as_timestamps: false
 
 upload:
