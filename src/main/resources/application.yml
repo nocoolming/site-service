@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  main:
+    allow-circular-references: true
   application:
     name: site-service
   jpa:
@@ -48,7 +50,7 @@ upload:
 
 logging:
   level:
-    org.hibernate: INFO
+    org.hibernate: DEBUG
     org.springframework: INFO
     com.ming: INFO
   pattern:

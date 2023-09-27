@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties({
-        "notes",
-        "categories",
-        "products",
-        "users",
-})
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIgnoreProperties({
+//        "notes",
+//        "categories",
+//        "products",
+//        "users",
+//})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Site implements IdEntity {
     @Id
     private long id;

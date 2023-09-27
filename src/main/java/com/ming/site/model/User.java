@@ -9,17 +9,20 @@ import java.util.Set;
 
 @Entity
 @Table(name = "\"user\"")
-@JsonIgnoreProperties({
-        "notesOfCreateUser",
-        "notesOfUpgradeUser",
-        "productsOfCreateUser",
-        "productsOfUpgradeUser",
-        "categories",
-        "products",
-        "orders",
-        "productImageList"
-})
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIgnoreProperties({
+//        "notesOfCreateUser",
+//        "notesOfUpgradeUser",
+//        "productsOfCreateUser",
+//        "productsOfUpgradeUser",
+//        "categories",
+//        "products",
+//        "orders",
+//        "productImageList",
+//        "roles",
+//        "site"
+//})
+//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@iid")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements IdEntity {
     @Id
     private long id;
@@ -32,32 +35,33 @@ public class User implements IdEntity {
     private LocalDateTime upgradeAt;
 
 
-//    @JsonIgnoreProperties(value = {"createUser"})
+    //    @JsonIgnoreProperties(value = {"createUser"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Product> productsOfCreateUser;
-//    @JsonIgnoreProperties(value = {"upgradeUser"})
+    //    @JsonIgnoreProperties(value = {"upgradeUser"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Product> productsOfUpgradeUser;
 
-//    @JsonIgnoreProperties(value = {"createUser"})
+    //    @JsonIgnoreProperties(value = {"createUser"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Category> categories;
 
-//    @JsonIgnoreProperties(value = {"createUser"})
+    //    @JsonIgnoreProperties(value = {"createUser"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Note> notesOfCreateUser;
 
-//    @JsonIgnoreProperties(value = {"upgradeUser"})
+    //    @JsonIgnoreProperties(value = {"upgradeUser"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Note> notesOfUpgradeUser;
 
-//    @JsonIgnoreProperties(value = {"createUser"})
+    //    @JsonIgnoreProperties(value = {"createUser"})
     @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Order> orders;
 
 
-//    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY)
+    //    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+//    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
