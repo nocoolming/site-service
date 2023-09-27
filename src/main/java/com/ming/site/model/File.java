@@ -1,20 +1,13 @@
 package com.ming.site.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
 import java.time.LocalDateTime;
 
-@Entity
 public class File
-        implements IdEntity {
+        implements IdLongPrimaryKey {
     public File() {
         this.createAt = LocalDateTime.now();
     }
 
-    @Id
     private long id;
     private String logicalName;
     private String physicalName;
@@ -24,8 +17,7 @@ public class File
     private long size;
     private LocalDateTime createAt;
 
-    @ManyToOne
-    @JoinColumn(name = "create_user_id")
+
     private User createUser;
 
     @Override

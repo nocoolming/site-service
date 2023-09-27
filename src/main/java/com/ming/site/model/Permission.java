@@ -1,17 +1,12 @@
 package com.ming.site.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Permission
-        implements IdEntity {
-    @Id
+        implements IdLongPrimaryKey {
+
     private long id;
     private String title;
     private String summary;
@@ -21,18 +16,12 @@ public class Permission
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @ManyToOne
-    @JoinColumn(name = "create_user_id")
     private User createUser;
 
-    @ManyToOne
-    @JoinColumn(name = "upgrade_user_id")
     private User upgradeUser;
 
-    @ManyToOne
-    @JoinColumn(name = "site_id")
     private Site site;
-    @ManyToMany(mappedBy = "permissions")
+
     private List<Role> roles;
 
     public Long getId() {

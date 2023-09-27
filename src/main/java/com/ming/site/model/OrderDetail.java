@@ -1,22 +1,15 @@
 package com.ming.site.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class OrderDetail
-        implements IdEntity {
+        implements IdLongPrimaryKey {
     public OrderDetail(){
         this.createAt = this.upgradeAt = LocalDateTime.now();
     }
-    @Id
+
     private long id;
 
     private String title;
@@ -25,18 +18,11 @@ public class OrderDetail
     private BigDecimal subtotal;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-    @ManyToOne
-    @JsonIgnore
-//    @JoinColumn(name="create_user_id")
+
     private User createUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="product_id")
-//    @JsonIgnoreProperties(value={"orderDetails"})
     private Product product;
-    @ManyToOne
-    @JoinColumn(name="order_id")
-//    @JsonIgnoreProperties(value = {"orderDetails"})
+
     private Order order;
 
     public Long getId() {

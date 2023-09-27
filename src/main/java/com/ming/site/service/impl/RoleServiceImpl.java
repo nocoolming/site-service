@@ -26,14 +26,14 @@ public class RoleServiceImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void assignRoleToUser(long userId, long roleId) {
-        User user = userService.findById(userId).orElse(null);
-        Role role = repository.findById(roleId).orElse(null);
+        User user = userService.findById(userId);
+        Role role = repository.selectById(roleId);
 
         if(user != null && role != null){
             user.getRoles().add(role);
             user.setUpgradeAt(LocalDateTime.now());
 
-            userService.save(user);
+            userService.update(user);
         }
 
     }

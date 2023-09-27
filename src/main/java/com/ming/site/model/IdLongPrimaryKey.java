@@ -1,8 +1,6 @@
 package com.ming.site.model;
 
-import jakarta.persistence.Id;
-
-public interface IdEntity {
+public interface IdLongPrimaryKey {
     Long getId();
 
     void setId(Long id);

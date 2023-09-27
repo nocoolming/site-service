@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CartServiceImpl
-        extends AbstractService<Cart, Long, CartRepository>
+public  class CartServiceImpl
+        extends AbstractService<Cart, Long,  CartRepository>
         implements CartService {
     private static final Logger log = LoggerFactory.getLogger(CartServiceImpl.class);
 

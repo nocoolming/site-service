@@ -1,22 +1,12 @@
 package com.ming.site.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "\"order\"")
-//@JsonIgnoreProperties({""
-//})
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Order
-        implements IdEntity {
-    @Id
+        implements IdLongPrimaryKey {
+
     private long id;
     private BigDecimal orderTotal;
     private BigDecimal receivables;
@@ -31,18 +21,12 @@ public class Order
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @ManyToOne
-    @JoinColumn(name = "create_user_id")
     private User createUser;
 
-    @ManyToOne
-    @JoinColumn(name = "site_id")
     private Site site;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id")
+
     private PaymentOrder paymentOrder;
 
-    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
     private List<OrderDetail> orderDetails;
 
     public Long getId() {

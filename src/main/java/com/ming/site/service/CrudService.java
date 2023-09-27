@@ -1,20 +1,24 @@
 package com.ming.site.service;
 
-import java.util.Optional;
+import com.ming.site.model.IdLongPrimaryKey;
 
-public interface CrudService<T, ID>  {
-    <S extends  T> S save(S entity);
+import java.util.List;
 
-    Optional<T> findById(ID id);
+public interface CrudService<T extends IdLongPrimaryKey, I> {
+    int insert(T e);
 
-    boolean existsById(ID id);
+    int update(T e);
 
-    Iterable<T> findAll();
+    T findById(long id);
+
+    boolean existsById(long id);
+
+    List<T> findAll();
 
     long count();
 
-    void deleteById(ID id);
+    void deleteById(long id);
 
-
+    String getRepositoryString();
 
 }

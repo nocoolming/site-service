@@ -1,22 +1,12 @@
 package com.ming.site.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
 import java.time.LocalDateTime;
 
-@Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class ProductImage implements IdEntity {
+public class ProductImage implements IdLongPrimaryKey {
     public ProductImage() {
         this.createAt = LocalDateTime.now();
     }
 
-    @Id
     private long id;
 
     private String url;
@@ -33,13 +23,8 @@ public class ProductImage implements IdEntity {
         this.id = id;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "create_user_id")
     private User createUser;
 
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
     private Product product;
 
     public User getCreateUser() {

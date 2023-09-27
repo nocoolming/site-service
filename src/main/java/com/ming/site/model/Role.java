@@ -1,57 +1,40 @@
 package com.ming.site.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.*;
+import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@JsonIgnoreProperties(value = {
-        "createUser",
-        "upgradeUser",
-        "site"
-})
-
-//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@iid")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Role
-        implements IdEntity {
+        implements IdLongPrimaryKey {
     public Role() {
         this.createAt = this.upgradeAt = LocalDateTime.now();
     }
 
-    @Id
     private long id;
     private String title;
     private String summary;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-    @ManyToOne
-    @JoinColumn(name = "create_user_id")
+
+    private long createUserId;
+    private long upgradeUserId;
+    private long siteId;
+
+    @TableField(exist = false)
     private User createUser;
 
-    @ManyToOne
-    @JoinColumn(name = "upgrade_user_id")
+    @TableField(exist = false)
     private User upgradeUser;
 
-    @ManyToOne
-    @JoinColumn(name = "site_id")
+    @TableField(exist = false)
     private Site site;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "role_permission",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id"))
+
+    @TableField(exist = false)
     private List<Permission> permissions;
 
-
-    @ManyToMany(mappedBy = "roles")
-//    @JsonBackReference
+    @TableField(exist = false)
     private Set<User> users;
 
     public Long getId() {
@@ -92,6 +75,34 @@ public class Role
 
     public void setUpgradeAt(LocalDateTime upgradeAt) {
         this.upgradeAt = upgradeAt;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public long getUpgradeUserId() {
+        return upgradeUserId;
+    }
+
+    public void setUpgradeUserId(long upgradeUserId) {
+        this.upgradeUserId = upgradeUserId;
+    }
+
+    public long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
     }
 
     public User getCreateUser() {

@@ -46,7 +46,7 @@ public class FileServiceImpl
         f.setUrl(path);
         f.setAlt(alt);
 
-        this.save(f);
+        this.insert(f);
 
         return path;
 

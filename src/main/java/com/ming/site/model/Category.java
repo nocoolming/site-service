@@ -1,20 +1,13 @@
 package com.ming.site.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Category implements IdEntity {
+public class Category implements IdLongPrimaryKey {
     public Category(){
         this.upgradeAt = this.createAt = LocalDateTime.now();
     }
-    @Id
+
     private long id;
     private String title;
     private String code;
@@ -25,24 +18,13 @@ public class Category implements IdEntity {
     private LocalDateTime createAt;
 
     private LocalDateTime upgradeAt;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "create_user_id")
     private User createUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "upgrade_user_id")
     private User upgradeUser;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Note> notes;
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Product> products;
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<CategoryLanguage> categoryLanguages;
-
-//    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "site_id")
     private Site site;
 
     public Long getId() {

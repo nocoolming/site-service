@@ -1,30 +1,20 @@
 package com.ming.site.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
 import java.time.LocalDateTime;
 
-@Entity
-public class Comment implements IdEntity {
-    @Id
+public class Comment implements IdLongPrimaryKey {
+
     private  long id;
     private String content;
     private LocalDateTime createAt;
 
-    @ManyToOne
-    @JoinColumn(name = "create_user_id")
+
     private User createUser;
-    @ManyToOne
-    @JoinColumn(name="note_id")
+
     private Note note;
-    @ManyToOne
-    @JoinColumn(name="product_id")
+
     private Product product;
-    @ManyToOne
-    @JoinColumn(name="comment_id")
+
     private Comment comment;
 
     public Long getId() {

@@ -1,28 +1,18 @@
 package com.ming.site.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 
-@Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class PaymentOrder
-        implements IdEntity {
-    @Id
+        implements IdLongPrimaryKey {
+
     private long id;
     private String channel;
     private LocalDateTime createAt;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
+
     private Order order;
-    @ManyToOne
-    @JoinColumn(name = "site_id")
+
     private Site site;
 
     public Long getId() {

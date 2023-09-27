@@ -1,12 +1,9 @@
 package com.ming.site.repository;
 
-import com.ming.site.model.Permission;
-import com.ming.site.model.Product;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource(collectionResourceRel = "product", path = "product")
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ming.site.model.Product;
+
 public interface ProductRepository
-        extends PagingAndSortingRepository<Product, Long>, CrudRepository<Product, Long> {
+        extends BaseMapper<Product> {
 }

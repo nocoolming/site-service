@@ -1,50 +1,69 @@
 package com.ming.site.service;
 
-import com.ming.site.model.IdEntity;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ming.site.model.IdLongPrimaryKey;
 import com.ming.site.util.SnowflakeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
-public abstract class AbstractService<T extends IdEntity, ID , R extends CrudRepository<T, ID>> implements CrudService<T, ID> {
+public abstract class AbstractService<
+        T extends IdLongPrimaryKey, I,
+        R extends BaseMapper<T>>
+        implements CrudService<T, I> {
     private static final Logger log = LoggerFactory.getLogger(AbstractService.class);
 
     @Autowired
     protected R repository;
 
+    public String getRepositoryString(){
+        return this.repository.toString();
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
-    public <S extends T> S save(S entity) {
-        if (entity.getId() <= 0 || !this.existsById((ID) entity.getId())) {
+    public int insert(T entity) {
+        if (entity.getId() <= 0 || !this.existsById(entity.getId())) {
             entity.setId(SnowflakeUtil.nextId());
         }
 //        entity.setId();
-        return repository.save(entity);
+        return repository.insert(entity);
     }
 
-    public Optional<T> findById(ID id) {
-        return repository.findById(id);
+    @Transactional(propagation = Propagation.REQUIRED)
+    public int update(T e) {
+        return repository.updateById(e);
     }
 
-    public boolean existsById(ID id) {
-        return repository.existsById(id);
+    public T findById(long id) {
+        return repository.selectById(id);
     }
 
-    public Iterable<T> findAll() {
-        return repository.findAll();
+    public boolean existsById(long id) {
+        QueryWrapper<T> query = new QueryWrapper<>();
+        query.eq("id", id);
+        return repository.exists(query);
+    }
+
+    public List<T> findAll() {
+        QueryWrapper<T> query = new QueryWrapper<>();
+        List<T> result = repository.selectList(query);
+
+        return result;
     }
 
     public long count() {
-        return repository.count();
+
+        QueryWrapper<T> query = new QueryWrapper<>();
+        return repository.selectCount(query);
     }
 
-    @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteById(ID id) {
+    public void deleteById(long id) {
         repository.deleteById(id);
     }
 }

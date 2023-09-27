@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("site/v1/role")
-public class RoleControllerV1 extends AbstractControllerV1<Role, Long, RoleService> {
+public class RoleControllerV1
+        extends AbstractControllerV1<Role, Long, RoleService> {
     private static final Logger log = LoggerFactory.getLogger(RoleControllerV1.class);
 
     @PostMapping("assignUser")
     Result<String> assignUser(@RequestBody AssignUser assignUser) {
-         service.assignRoleToUser(assignUser.getUserId(), assignUser.getRoleId());
+        service.assignRoleToUser(assignUser.getUserId(), assignUser.getRoleId());
         return Result.ok("done");
     }
 }

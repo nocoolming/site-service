@@ -1,10 +1,9 @@
 package com.ming.site.repository;
 
-import com.ming.site.model.Comment;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource(collectionResourceRel = "comment", path = "comment")
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ming.site.model.Comment;
+
 public interface CommentRepository
-        extends CrudRepository<Comment, Long> {
+        extends BaseMapper<Comment> {
 }

@@ -1,13 +1,9 @@
 package com.ming.site.model;
 
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-public class Cart implements IdEntity {
-    @Id
+public class Cart implements IdLongPrimaryKey {
     private long id;
     private String title;
     private String content;

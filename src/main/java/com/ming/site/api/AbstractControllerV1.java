@@ -1,8 +1,7 @@
 package com.ming.site.api;
 
 import com.ming.site.common.Result;
-import com.ming.site.model.IdEntity;
-import com.ming.site.service.AbstractService;
+import com.ming.site.model.IdLongPrimaryKey;
 import com.ming.site.service.CrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,30 +15,32 @@ import java.util.Optional;
 
 
 public abstract class AbstractControllerV1<
-        T extends IdEntity,
-        ID,
-        S extends CrudService<T, ID>> {
+        T extends IdLongPrimaryKey,
+        I,
+        S extends CrudService<T, Long>> {
     private static final Logger log = LoggerFactory.getLogger(AbstractControllerV1.class);
 
     @Autowired
     protected S service;
 
 
-    @PostMapping("save")
-    Result<T> save(@RequestBody T param){
-        T value = service.save(param);
-        return Result.success(value);
+    @PostMapping("insert")
+    Result<Integer> insert(@RequestBody T o){
+
+        log.debug(service.getRepositoryString());
+        int i = service.insert(o);
+        return Result.success(i);
     }
 
     @PostMapping("remove")
-    Result remove(@RequestBody ID id){
+    Result remove(@RequestBody long id){
         service.deleteById(id);
         return Result.success(null);
     }
 
     @GetMapping("{id}")
-    Result<Optional<T>> get(@PathVariable ID id){
-        Optional<T> value = service.findById(id);
+    Result<T> get(@PathVariable long id){
+        T value = service.findById(id);
         return Result.success(value);
     }
 

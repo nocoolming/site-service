@@ -1,32 +1,20 @@
 package com.ming.site.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
 import java.time.LocalDateTime;
 
-@Entity
 public class CategoryLanguage
-        implements IdEntity {
-    @Id
+        implements IdLongPrimaryKey {
+
     private long id;
     private String title;
     private String language;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @ManyToOne
-    @JoinColumn(name = "create_user_id")
     private User createUser;
 
-    @ManyToOne
-    @JoinColumn(name = "upgrade_user_id")
     private User upgradeUser;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
     private Category category;
 
     public Long getId() {

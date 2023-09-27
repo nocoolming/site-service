@@ -1,30 +1,12 @@
 package com.ming.site.model;
 
-import com.fasterxml.jackson.annotation.*;
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "\"user\"")
-//@JsonIgnoreProperties({
-//        "notesOfCreateUser",
-//        "notesOfUpgradeUser",
-//        "productsOfCreateUser",
-//        "productsOfUpgradeUser",
-//        "categories",
-//        "products",
-//        "orders",
-//        "productImageList",
-//        "roles",
-//        "site"
-//})
-//@JsonIdentityInfo(generator=ObjectIdGenerators.UUIDGenerator.class, property="@iid")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class User implements IdEntity {
-    @Id
+public class User implements IdLongPrimaryKey {
+
     private long id;
     private String username;
     private String password;
@@ -34,46 +16,22 @@ public class User implements IdEntity {
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-
-    //    @JsonIgnoreProperties(value = {"createUser"})
-    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Product> productsOfCreateUser;
-    //    @JsonIgnoreProperties(value = {"upgradeUser"})
-    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
+
     private List<Product> productsOfUpgradeUser;
 
-    //    @JsonIgnoreProperties(value = {"createUser"})
-    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Category> categories;
 
-    //    @JsonIgnoreProperties(value = {"createUser"})
-    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Note> notesOfCreateUser;
 
-    //    @JsonIgnoreProperties(value = {"upgradeUser"})
-    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Note> notesOfUpgradeUser;
 
-    //    @JsonIgnoreProperties(value = {"createUser"})
-    @OneToMany(mappedBy = "createUser", fetch = FetchType.LAZY)
     private List<Order> orders;
 
-
-    //    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
     private Set<Role> roles;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "site_id")
     private Site site;
 
-    @OneToMany(mappedBy = "createUser", fetch = FetchType.EAGER)
     private List<ProductImage> productImageList;
 
     public Long getId() {
