@@ -32,6 +32,8 @@ dependencies {
 	implementation 'com.google.guava:guava:32.1.2-jre'
 	implementation 'xyz.downgoon:snowflake:1.0.0'
 
+	implementation 'org.apache.commons:commons-collections4:4.4'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
 }

@@ -21,7 +21,7 @@ public abstract class AbstractService<
     @Autowired
     protected R repository;
 
-    public String getRepositoryString(){
+    public String getRepositoryString() {
         return this.repository.toString();
     }
 
@@ -30,8 +30,8 @@ public abstract class AbstractService<
         if (entity.getId() <= 0 || !this.existsById(entity.getId())) {
             entity.setId(SnowflakeUtil.nextId());
         }
-//        entity.setId();
-         repository.insert(entity);
+
+        repository.insert(entity);
 
         return entity;
     }
