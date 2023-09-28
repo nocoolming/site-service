@@ -35,6 +35,9 @@ public class Category implements IdLongPrimaryKey {
     @TableField(exist = false)
     private Site site;
 
+    @TableField(exist = false)
+    private List<Category> children;
+
     private long createUserId;
     private long upgradeUserId;
     private long siteId;
@@ -181,5 +184,13 @@ public class Category implements IdLongPrimaryKey {
 
     public void setSiteId(long siteId) {
         this.siteId = siteId;
+    }
+
+    public List<Category> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Category> children) {
+        this.children = children;
     }
 }

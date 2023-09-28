@@ -15,6 +15,7 @@ public class User implements IdLongPrimaryKey {
     private String username;
     private String password;
     private String mail;
+
     private String firstName;
     private String lastName;
     private LocalDateTime createAt;
