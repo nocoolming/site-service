@@ -25,11 +25,10 @@ public class SiteControllerV1
     private static final Logger log = LoggerFactory.getLogger(SiteControllerV1.class);
 
     @GetMapping("domain/{domain}")
-    Site findByDomain(@PathVariable String domain){
-        Site site = service.findByDomain(domain).get();
-//        Optional.ofNullable(site.getCategories().toString());
-//        Optional.ofNullable(site.getNotes().toString());
+    Result<Site> findByDomain(@PathVariable String domain){
+        Site site = service.findByDomain(domain);
 
-        return site;
+
+        return Result.ok(site);
     }
 }

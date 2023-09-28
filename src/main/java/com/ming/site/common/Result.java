@@ -9,9 +9,9 @@ public class Result<R> {
     private static final Logger log = LoggerFactory.getLogger(Result.class);
 
     public Result(R r) {
-        this.setResult(r);
+        this.setValue(r);
         this.setCreateAt(LocalDateTime.now());
-        this.setMode("success");
+        this.setStatus("success");
     }
 
     public Result() {
@@ -29,21 +29,21 @@ public class Result<R> {
     public static Result error(String errorMessage) {
         Result result = new Result();
         result.setErrorMessage(errorMessage);
-        result.setMode("error");
+        result.setStatus("error");
         return result;
     }
 
-    private R result;
+    private R value;
     private LocalDateTime createAt;
-    private String mode;
+    private String status;
     private String errorMessage;
 
-    public R getResult() {
-        return result;
+    public R getValue() {
+        return value;
     }
 
-    public void setResult(R result) {
-        this.result = result;
+    public void setValue(R value) {
+        this.value = value;
     }
 
     public LocalDateTime getCreateAt() {
@@ -54,12 +54,12 @@ public class Result<R> {
         this.createAt = createAt;
     }
 
-    public String getMode() {
-        return mode;
+    public String getStatus() {
+        return status;
     }
 
-    public void setMode(String mode) {
-        this.mode = mode;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getErrorMessage() {

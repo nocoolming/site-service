@@ -16,6 +16,7 @@ import java.util.Optional;
 
 public abstract class AbstractControllerV1<
         T extends IdLongPrimaryKey,
+        // 这个是没有用到， 但是由于此版本从spring data jpa重构，所有的controller and service都有，所以先不删 了。
         I,
         S extends CrudService<T, Long>> {
     private static final Logger log = LoggerFactory.getLogger(AbstractControllerV1.class);

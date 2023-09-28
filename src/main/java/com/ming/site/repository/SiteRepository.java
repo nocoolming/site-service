@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface SiteRepository
         extends BaseMapper<Site> {
-    Optional<Site> findByDomain(String domain);
+//    Optional<Site> findByDomain(String domain);
 }
