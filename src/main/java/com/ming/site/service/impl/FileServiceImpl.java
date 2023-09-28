@@ -45,6 +45,7 @@ public class FileServiceImpl
         f.setCreateAt(LocalDateTime.now());
         f.setUrl(path);
         f.setAlt(alt);
+        f.setCreateUserId(userId);
 
         this.insert(f);
 
