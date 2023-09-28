@@ -26,12 +26,14 @@ public abstract class AbstractService<
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public int insert(T entity) {
+    public T insert(T entity) {
         if (entity.getId() <= 0 || !this.existsById(entity.getId())) {
             entity.setId(SnowflakeUtil.nextId());
         }
 //        entity.setId();
-        return repository.insert(entity);
+         repository.insert(entity);
+
+        return entity;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -51,6 +53,9 @@ public abstract class AbstractService<
 
     public List<T> findAll() {
         QueryWrapper<T> query = new QueryWrapper<>();
+
+        query.orderByAsc("id");
+
         List<T> result = repository.selectList(query);
 
         return result;

@@ -5,7 +5,7 @@ import com.ming.site.model.IdLongPrimaryKey;
 import java.util.List;
 
 public interface CrudService<T extends IdLongPrimaryKey, I> {
-    int insert(T e);
+    T insert(T e);
 
     int update(T e);
 

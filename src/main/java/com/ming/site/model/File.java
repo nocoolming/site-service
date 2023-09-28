@@ -1,5 +1,7 @@
 package com.ming.site.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.time.LocalDateTime;
 
 public class File
@@ -18,7 +20,18 @@ public class File
     private LocalDateTime createAt;
 
 
+    @TableField(exist = false)
     private User createUser;
+
+    private long createUserId;
+
+    public long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(long createUserId) {
+        this.createUserId = createUserId;
+    }
 
     @Override
     public Long getId() {

@@ -1,5 +1,7 @@
 package com.ming.site.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.time.LocalDateTime;
 
 public class ProductImage implements IdLongPrimaryKey {
@@ -13,6 +15,33 @@ public class ProductImage implements IdLongPrimaryKey {
     private String alt;
     private LocalDateTime createAt;
 
+
+    @TableField(exist = false)
+    private User createUser;
+
+    @TableField(exist = false)
+    private Product product;
+
+    private long createUserId;
+
+    private long productId;
+
+    public long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
+
     @Override
     public Long getId() {
         return id;
@@ -22,10 +51,6 @@ public class ProductImage implements IdLongPrimaryKey {
     public void setId(Long id) {
         this.id = id;
     }
-
-    private User createUser;
-
-    private Product product;
 
     public User getCreateUser() {
         return createUser;

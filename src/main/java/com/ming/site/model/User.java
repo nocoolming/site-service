@@ -1,10 +1,13 @@
 package com.ming.site.model;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+@TableName("\"user\"")
 public class User implements IdLongPrimaryKey {
 
     private long id;

@@ -1,6 +1,8 @@
 package com.ming.site.model;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -19,11 +21,43 @@ public class OrderDetail
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
+    @TableField(exist = false)
     private User createUser;
 
+    @TableField(exist = false)
     private Product product;
 
+    @TableField(exist = false)
     private Order order;
+
+
+    private long createUserId;
+    private long productId;
+    private long orderId;
+
+    public long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
 
     public Long getId() {
         return id;

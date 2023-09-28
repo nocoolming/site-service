@@ -25,11 +25,19 @@ public abstract class AbstractControllerV1<
 
 
     @PostMapping("insert")
-    Result<Integer> insert(@RequestBody T o){
+    Result<T> insert(@RequestBody T o){
 
         log.debug(service.getRepositoryString());
-        int i = service.insert(o);
-        return Result.success(i);
+        T r = service.insert(o);
+        return Result.success(r);
+    }
+
+    @PostMapping("update")
+    Result<T> update(@RequestBody T o){
+
+        log.debug(service.getRepositoryString());
+         service.update(o);
+        return Result.success(o);
     }
 
     @PostMapping("remove")

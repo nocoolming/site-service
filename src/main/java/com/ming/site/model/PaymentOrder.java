@@ -1,6 +1,8 @@
 package com.ming.site.model;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.time.LocalDateTime;
 
 public class PaymentOrder
@@ -11,9 +13,30 @@ public class PaymentOrder
     private LocalDateTime createAt;
 
 
+    @TableField(exist = false)
     private Order order;
 
+    @TableField(exist = false)
     private Site site;
+
+    private long orderId;
+    private long siteId;
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
+
+    public long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
+    }
 
     public Long getId() {
         return id;
