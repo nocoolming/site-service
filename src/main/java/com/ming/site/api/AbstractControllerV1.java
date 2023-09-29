@@ -2,6 +2,7 @@ package com.ming.site.api;
 
 import com.ming.site.common.Result;
 import com.ming.site.model.IdLongPrimaryKey;
+import com.ming.site.model.Product;
 import com.ming.site.service.CrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -54,8 +56,8 @@ public abstract class AbstractControllerV1<
     }
 
     @GetMapping("all")
-    Result<Iterable<T>> all(){
-        Iterable<T> value = service.findAll();
+    Result<List<T>> all(){
+        List<T> value = service.findAll();
         return Result.success(value);
     }
 

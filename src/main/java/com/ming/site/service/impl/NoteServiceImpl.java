@@ -44,7 +44,7 @@ public class NoteServiceImpl
         return this.loadForeign(notes);
     }
 
-    List<Note> loadForeign(List<Note> notes) {
+    public List<Note> loadForeign(List<Note> notes) {
         if (notes == null || notes.isEmpty()) {
             return null;
         }
@@ -55,7 +55,7 @@ public class NoteServiceImpl
         return notes;
     }
 
-    Note loadForeignField(Note note) {
+    public Note loadForeignField(Note note) {
         if (note == null) {
             return note;
         }
