@@ -1,11 +1,8 @@
 package com.ming.site.api.model;
 
-public class SignOnModel {
+public class SignInModel {
     private String username;
     private String password;
-    private String mail;
-    private String mobile;
-
     private long siteId;
 
     public String getUsername() {
@@ -22,22 +19,6 @@ public class SignOnModel {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 
     public long getSiteId() {

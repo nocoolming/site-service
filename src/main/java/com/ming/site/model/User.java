@@ -10,7 +10,9 @@ import java.util.Set;
 
 @TableName("\"user\"")
 public class User implements IdLongPrimaryKey {
-
+    public User(){
+        this.createAt = upgradeAt = LocalDateTime.now();
+    }
     private long id;
     private String username;
     private String password;
@@ -20,6 +22,8 @@ public class User implements IdLongPrimaryKey {
     private String lastName;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
+
+    private long siteId;
 
     @TableField(exist = false)
     private List<Product> productsOfCreateUser;
@@ -186,5 +190,13 @@ public class User implements IdLongPrimaryKey {
 
     public void setProductImageList(List<ProductImage> productImageList) {
         this.productImageList = productImageList;
+    }
+
+    public long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
     }
 }
