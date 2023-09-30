@@ -3,6 +3,7 @@ package com.ming.site.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ming.site.model.Category;
+import com.ming.site.model.Product;
 import com.ming.site.repository.CategoryRepository;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.CategoryService;
@@ -20,6 +21,15 @@ public class CategoryServiceImpl
 
 
     @Override
+    public Category getCategoryBySiteIdAndTitle(long siteId, String title) {
+        QueryWrapper<Category> query = new QueryWrapper<>();
+        query.eq("site_id", siteId)
+                .eq("title", title);
+
+        return repository.selectOne(query);
+    }
+
+    @Override
     public List<Category> getCategoriesTreeBySiteId(long siteId) {
         QueryWrapper<Category> query = new QueryWrapper<>();
         query.eq("site_id", siteId);
@@ -31,6 +41,31 @@ public class CategoryServiceImpl
                         .filter(
                                 c -> c.getParentCode() == null || c.getParentCode().isEmpty()).toList();
 
+
+        roots.forEach(root -> {
+            List<Category> children =
+                    this.filterChildren(categories, root.getCode());
+            root.setChildren(children);
+        });
+        return roots;
+    }
+
+    @Override
+    public List<Category> getCategoriesTreeBySiteIdAndTitle(long siteId, String title) {
+        Category category = this.getCategoryBySiteIdAndTitle(siteId, title);
+
+        QueryWrapper<Category> query = new QueryWrapper<>();
+        query.eq("site_id", siteId);
+//                .like("parent_code", category.getCode() );
+
+        List<Category> categories = repository.selectList(query);
+
+        List<Category> childrenOfProductCategories =
+                categories.stream().filter(c -> c.getParentCode().startsWith(category.getCode())).toList();
+
+        List<Category> roots =
+                childrenOfProductCategories.stream()
+                        .filter(c -> c.getParentCode().equals(category.getCode()) ).toList();
 
         roots.forEach(root -> {
             List<Category> children =

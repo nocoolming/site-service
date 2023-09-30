@@ -41,4 +41,21 @@ public class  CategoryControllerV1
         return Result.ok(roots);
     }
 
+    @GetMapping("tree/siteId/{siteId}/title/{title}")
+    Result<List<Category>> getCategoriesTreeBySiteIdAndTitle(
+            @PathVariable long siteId,
+            @PathVariable String title){
+        List<Category> roots = service.getCategoriesTreeBySiteIdAndTitle(siteId, title);
+
+        return Result.ok(roots);
+    }
+
+    @GetMapping("/siteId/{siteId}/title/{title}")
+    Result<Category> getCategoryBySiteIdAndTitle(
+            @PathVariable long siteId,
+            @PathVariable String title){
+        Category category = service.getCategoryBySiteIdAndTitle(siteId, title);
+
+        return Result.ok(category);
+    }
 }
