@@ -27,12 +27,13 @@ public class FileControllerV1
     public Result<String> upload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("alt") String alt,
+            @RequestParam("userId") long userId,
             HttpServletRequest req)
             throws Exception {
         log.info(alt);
 
 
-        String path = service.store(file, alt, 0);
+        String path = service.store(file, alt, userId);
 
 
         return Result.ok("file/v1/download" + path);
