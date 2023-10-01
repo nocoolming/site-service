@@ -24,7 +24,7 @@ public class LocalPathProcess implements PathProcess {
     @Override
     public String processPath(String filename)
             throws Exception {
-//        String ext = ExtensionUtil.getExt(filename);
+        String ext = ExtensionUtil.getExt(filename);
 
         StringBuffer path = new StringBuffer();
         LocalDateTime now =LocalDateTime.now();
@@ -51,8 +51,8 @@ public class LocalPathProcess implements PathProcess {
             file.mkdirs();
         }
 
-        path.append(filename);
-//        path.append(ext);
+        path.append(SnowflakeUtil.nextId());
+        path.append(ext);
 
         return path.toString();
     }
