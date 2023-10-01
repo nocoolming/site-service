@@ -2,7 +2,7 @@ package com.ming.site.api.model;
 
 import java.io.Serializable;
 
-public class AssignUser implements Serializable {
+public class AssignUserModel implements Serializable {
     private long userId;
     private long roleId;
 

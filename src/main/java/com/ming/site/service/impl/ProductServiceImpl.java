@@ -8,12 +8,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl extends AbstractService<Product, Long, ProductRepository> implements ProductService {
+public class ProductServiceImpl
+        extends AbstractService<Product, Long, ProductRepository>
+        implements ProductService {
     private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     @Autowired
@@ -82,6 +86,21 @@ public class ProductServiceImpl extends AbstractService<Product, Long, ProductRe
         product.setSite(site);
         product.setProductImageList(images);
 
+        return product;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.NESTED)
+    public Product setIcon(long id, String icon) throws ProductNotFoundException {
+        Product product = this.findById(id);
+
+        if(product == null){
+            throw new ProductNotFoundException();
+        }
+        product.setUpgradeAt(LocalDateTime.now());
+        product.setIcon(icon);
+
+        this.update(product);
         return product;
     }
 }

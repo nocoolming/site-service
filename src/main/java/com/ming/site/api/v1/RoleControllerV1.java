@@ -1,7 +1,7 @@
 package com.ming.site.api.v1;
 
 import com.ming.site.api.AbstractControllerV1;
-import com.ming.site.api.model.AssignUser;
+import com.ming.site.api.model.AssignUserModel;
 import com.ming.site.common.Result;
 import com.ming.site.model.Role;
 import com.ming.site.service.RoleService;
@@ -19,7 +19,7 @@ public class RoleControllerV1
     private static final Logger log = LoggerFactory.getLogger(RoleControllerV1.class);
 
     @PostMapping("assignUser")
-    Result<String> assignUser(@RequestBody AssignUser assignUser) {
+    Result<String> assignUser(@RequestBody AssignUserModel assignUser) {
         service.assignRoleToUser(assignUser.getUserId(), assignUser.getRoleId());
         return Result.ok("done");
     }

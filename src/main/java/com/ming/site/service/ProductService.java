@@ -12,4 +12,6 @@ public interface ProductService
     List<Product> loadForeign(List<Product> products);
 
     Product loadForeignField(Product product);
+
+    Product setIcon(long id, String icon) throws ProductNotFoundException;
 }
