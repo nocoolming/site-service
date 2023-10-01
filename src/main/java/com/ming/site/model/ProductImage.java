@@ -24,7 +24,7 @@ public class ProductImage implements IdLongPrimaryKey {
 
     private long createUserId;
 
-    private long productId;
+    private Long productId;
 
     public long getCreateUserId() {
         return createUserId;
@@ -92,5 +92,7 @@ public class ProductImage implements IdLongPrimaryKey {
         this.product = product;
     }
 
-
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
 }

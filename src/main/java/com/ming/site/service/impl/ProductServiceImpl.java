@@ -25,6 +25,14 @@ public class ProductServiceImpl extends AbstractService<Product, Long, ProductRe
     @Autowired
     ProductImageService productImageService;
 
+
+    @Override
+    public Product findById(long id) {
+        Product product = super.findById(id);
+
+        return this.loadForeignField(product);
+    }
+
     @Override
     public List<Product> findAll() {
         return this.loadForeign(super.findAll());
@@ -42,6 +50,7 @@ public class ProductServiceImpl extends AbstractService<Product, Long, ProductRe
 
         return this.loadForeign(products);
     }
+
 
     @Override
     public List<Product> loadForeign(List<Product> products) {
@@ -65,12 +74,13 @@ public class ProductServiceImpl extends AbstractService<Product, Long, ProductRe
         User createUser = userService.findById(product.getCreateUserId());
         User upgradeUser = userService.findById(product.getUpgradeUserId());
         Site site = siteService.findById(product.getSiteId());
-//        List<ProductImage> images = productImageService.
+        List<ProductImage> images = productImageService.getImagesByProductId(product.getId());
 
         product.setCategory(category);
         product.setCreateUser(createUser);
         product.setUpgradeUser(upgradeUser);
         product.setSite(site);
+        product.setProductImageList(images);
 
         return product;
     }

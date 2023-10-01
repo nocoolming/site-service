@@ -15,10 +15,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ProductImageServiceImpl
-        extends AbstractService<ProductImage, Long, ProductImageRepository>
-        implements ProductImageService {
+public class ProductImageServiceImpl extends AbstractService<ProductImage, Long, ProductImageRepository> implements ProductImageService {
     private static final Logger log = LoggerFactory.getLogger(ProductImageService.class);
 
 
+    @Override
+    public List<ProductImage> getImagesByProductId(long productId) {
+        QueryWrapper<ProductImage> query = new QueryWrapper<>();
+        query.eq("product_id", productId);
+
+        List<ProductImage> images = repository.selectList(query);
+
+
+        return images;
+    }
 }
