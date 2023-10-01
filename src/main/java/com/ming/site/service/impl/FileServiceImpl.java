@@ -64,7 +64,7 @@ public class FileServiceImpl extends AbstractService<File, Long, FileRepository>
 
     @Override
     @Transactional(propagation = Propagation.NESTED)
-    public File storeProductImage(MultipartFile file, String alt, long userId, long productId) throws Exception {
+    public ProductImage storeProductImage(MultipartFile file, String alt, long userId, long productId) throws Exception {
         File returnFile = this.store(file, alt, userId);
 
         ProductImage productImage = new ProductImage();
@@ -74,7 +74,7 @@ public class FileServiceImpl extends AbstractService<File, Long, FileRepository>
         productImage.setUrl(returnFile.getUrl());
 
         productImageService.insert(productImage);
-        return returnFile;
+        return productImage;
     }
 
     @Override

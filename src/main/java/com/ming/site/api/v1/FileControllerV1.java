@@ -3,6 +3,7 @@ package com.ming.site.api.v1;
 import com.ming.site.api.AbstractControllerV1;
 import com.ming.site.common.Result;
 import com.ming.site.model.File;
+import com.ming.site.model.ProductImage;
 import com.ming.site.service.FileService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -43,7 +44,7 @@ public class FileControllerV1
     }
 
     @PostMapping("uploadProductImage")
-    public Result<File> uploadProductImage(
+    public Result<ProductImage> uploadProductImage(
             @RequestParam("file") MultipartFile file,
             @RequestParam("alt") String alt,
             @RequestParam("userId") long userId,
@@ -53,7 +54,7 @@ public class FileControllerV1
         log.info(alt);
 
 
-        File returnFile= service.storeProductImage(file, alt,  userId, productId);
+        ProductImage returnFile= service.storeProductImage(file, alt,  userId, productId);
 
 
         return Result.ok(returnFile);
