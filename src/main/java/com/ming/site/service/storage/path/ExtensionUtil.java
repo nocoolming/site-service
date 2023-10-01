@@ -1,7 +1,7 @@
 package com.ming.site.service.storage.path;
 
 public class ExtensionUtil {
-    public final static String EXTENSIONS = ".jpg|.png|.gif|.jpeg";
+    public final static String EXTENSIONS = ".jpg|.png|.gif|.jpeg|.webp";
 
     public static String getExt(String filename) throws Exception {
         if (filename == null || filename.isEmpty()) {

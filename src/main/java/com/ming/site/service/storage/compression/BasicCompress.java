@@ -1,6 +1,7 @@
 package com.ming.site.service.storage.compression;
 
 import com.ming.site.config.UploadConfig;
+import com.ming.site.service.storage.path.ExtensionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ public class BasicCompress implements Compress {
     private UploadConfig uploadConfig;
 
     @Override
-    public String compress(InputStream input, String compressedPath) throws IOException {
+    public String compress(InputStream input, String compressedPath) throws Exception {
         OutputStream outputStream = null;
         ImageOutputStream ios = null;
         ImageWriter writer = null;
@@ -32,11 +33,15 @@ public class BasicCompress implements Compress {
 
             File compressedImageFile = new File(compressedPath);
 
+            String ext = ExtensionUtil.getExt(compressedPath)
+                    .replace(".", "");
+
             String filePath = uploadConfig.getPath() + compressedPath;
 //            String ext = ExtensionUtil.getExt(compressedPath).replace(".","");
             outputStream = new FileOutputStream(filePath);
 //            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(ext);
-            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(ext);
+//            Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
 
             writer = (ImageWriter) writers.next();
 

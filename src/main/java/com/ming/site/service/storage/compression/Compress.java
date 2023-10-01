@@ -5,5 +5,5 @@ import java.io.InputStream;
 
 public interface Compress {
 
-    String compress(InputStream input, String compressedPath) throws IOException;
+    String compress(InputStream input, String compressedPath) throws Exception;
 }
