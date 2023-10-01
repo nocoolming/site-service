@@ -27,7 +27,7 @@ public abstract class AbstractService<
 
     @Transactional(propagation = Propagation.REQUIRED)
     public T insert(T entity) {
-        if (entity.getId() <= 0 || !this.existsById(entity.getId())) {
+               if (entity.getId() <= 0 || !this.existsById(entity.getId())) {
             entity.setId(SnowflakeUtil.nextId());
         }
 

@@ -23,8 +23,9 @@ public class FileControllerV1
     private static final Logger log = LoggerFactory.getLogger(FileControllerV1.class);
 
 
+
     @PostMapping("upload")
-    public Result<String> upload(
+    public Result<File> upload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("alt") String alt,
             @RequestParam("userId") long userId,
@@ -33,9 +34,28 @@ public class FileControllerV1
         log.info(alt);
 
 
-        String path = service.store(file, alt, userId);
+//        String name = req.get
+
+        File returnFile = service.store(file, alt,  userId);
 
 
-        return Result.ok("file/v1/download" + path);
+        return Result.ok(returnFile);
+    }
+
+    @PostMapping("uploadProductImage")
+    public Result<File> uploadProductImage(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("alt") String alt,
+            @RequestParam("userId") long userId,
+            @RequestParam("productId") long productId,
+            HttpServletRequest req)
+            throws Exception {
+        log.info(alt);
+
+
+        File returnFile= service.storeProductImage(file, alt,  userId, productId);
+
+
+        return Result.ok(returnFile);
     }
 }

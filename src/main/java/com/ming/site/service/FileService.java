@@ -7,7 +7,9 @@ import java.io.IOException;
 
 public interface FileService extends CrudService<File, Long> {
 
-    String store(MultipartFile file, String alt, long userId) throws Exception;
+    File store(MultipartFile file, String alt, long userId) throws Exception;
+
+    File storeProductImage(MultipartFile file, String alt, long userId, long productId) throws Exception;
 
 
     void delete(String relativePath) throws IOException;
