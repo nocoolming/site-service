@@ -14,7 +14,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 @MapperScan("com.ming.site.repository")
 public class Application {
-
+//	private static final Logger
 	public static void main(String[] args) {
 
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
