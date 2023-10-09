@@ -29,7 +29,6 @@ public class FileControllerV1
     public Result<File> upload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("alt") String alt,
-            @RequestParam("userId") long userId,
             HttpServletRequest req)
             throws Exception {
         log.info(alt);
@@ -37,7 +36,7 @@ public class FileControllerV1
 
 //        String name = req.get
 
-        File returnFile = service.store(file, alt,  userId);
+        File returnFile = service.store(file, alt);
 
 
         return Result.ok(returnFile);

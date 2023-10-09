@@ -45,14 +45,13 @@ public class FileServiceImpl extends AbstractService<File, Long, FileRepository>
 
     @Override
     @Transactional(propagation = Propagation.NESTED)
-    public File store(MultipartFile file, String alt, long userId) throws Exception {
+    public File store(MultipartFile file, String alt) throws Exception {
         String path = this.uploadFile.upload(file);
 
         File f = new File();
         f.setCreateAt(LocalDateTime.now());
         f.setUrl(path);
         f.setAlt(alt);
-        f.setCreateUserId(userId);
         f.setPhysicalName(path);
         f.setLogicalName(file.getOriginalFilename());
 
@@ -65,7 +64,7 @@ public class FileServiceImpl extends AbstractService<File, Long, FileRepository>
     @Override
     @Transactional(propagation = Propagation.NESTED)
     public ProductImage storeProductImage(MultipartFile file, String alt, long userId, long productId) throws Exception {
-        File returnFile = this.store(file, alt, userId);
+        File returnFile = this.store(file, alt);
 
         ProductImage productImage = new ProductImage();
         productImage.setProductId(productId);

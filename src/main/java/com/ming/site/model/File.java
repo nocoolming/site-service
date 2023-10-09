@@ -19,20 +19,6 @@ public class File
     private long size;
     private LocalDateTime createAt;
 
-
-    @TableField(exist = false)
-    private User createUser;
-
-    private long createUserId;
-
-    public long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(long createUserId) {
-        this.createUserId = createUserId;
-    }
-
     @Override
     public Long getId() {
         return id;
@@ -98,11 +84,4 @@ public class File
         this.createAt = createAt;
     }
 
-    public User getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(User createUser) {
-        this.createUser = createUser;
-    }
 }

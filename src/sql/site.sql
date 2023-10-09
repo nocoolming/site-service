@@ -78,6 +78,43 @@ alter table payment_order
        foreign key(order_id) references "order"(id)
        on delete set null;
 
+
+/*==============================================================*/
+/* Table: product                                               */
+/*==============================================================*/
+create table product (
+   id BIGINT not null,
+   category_id BIGINT null,
+   title VARCHAR(256) not null,
+   keywords VARCHAR(256) not null,
+   description VARCHAR(1024) not null,
+   content VARCHAR(4096) not null,
+   slate_content varchar(4096) null,
+   price DECIMAL null,
+   icon varchar(1024) null,
+   count INT4 null,
+   language VARCHAR(128) NULL,
+   create_at timestamp null,
+   upgrade_at timestamp null,
+   create_user_id BIGINT null references "user"(id) on delete set null,
+   upgrade_user_id BIGINT null references "user"(id) on delete set null,
+   site_id BIGINT null references site(id) on delete set null,
+   constraint PK_PRODUCT primary key (id)
+);
+
+
+/*==============================================================*/
+/* Table: product_image                                         */
+/*==============================================================*/
+create table product_image (
+   id BIGINT not null,
+   alt VARCHAR(256) null,
+   url VARCHAR(1024) not null,
+   product_id BIGINT null references product(id) on delete set null,
+   create_at timestamp null,
+   create_user_id BIGINT null references "user"(id) on delete set null,
+   constraint PK_PRODUCT_IMAGE primary key (id)
+);
 /*==============================================================*/
 /* Table: order_detail                                          */
 /*==============================================================*/
@@ -159,42 +196,6 @@ create table cart (
    upgrade_user_id BIGINT null references "user"(id) on delete set null
 );
 
-/*==============================================================*/
-/* Table: product                                               */
-/*==============================================================*/
-create table product (
-   id BIGINT not null,
-   category_id BIGINT null,
-   title VARCHAR(256) not null,
-   keywords VARCHAR(256) not null,
-   description VARCHAR(1024) not null,
-   content VARCHAR(4096) not null,
-   slate_content varchar(4096) null,
-   price DECIMAL null,
-   icon varchar(1024) null,
-   count INT4 null,
-   language VARCHAR(128) NULL,
-   create_at timestamp null,
-   upgrade_at timestamp null,
-   create_user_id BIGINT null references "user"(id) on delete set null,
-   upgrade_user_id BIGINT null references "user"(id) on delete set null,
-   site_id BIGINT null references site(id) on delete set null,
-   constraint PK_PRODUCT primary key (id)
-);
-
-
-/*==============================================================*/
-/* Table: product_image                                         */
-/*==============================================================*/
-create table product_image (
-   id BIGINT not null,
-   alt VARCHAR(256) null,
-   url VARCHAR(1024) not null,
-   product_id BIGINT null references product(id) on delete set null,
-   create_at timestamp null,
-   create_user_id BIGINT null references "user"(id) on delete set null,
-   constraint PK_PRODUCT_IMAGE primary key (id)
-);
 
 /*==============================================================*/
 /* Table: note                                                  */
@@ -206,7 +207,7 @@ create table note (
    description VARCHAR(1024) null,
    content VARCHAR(4096) null,
    slate_content varchar(4096) null,
-   language VARCHAR(128) NULL
+   language VARCHAR(128) NULL,
    icon varchar(1024) null,
    create_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,

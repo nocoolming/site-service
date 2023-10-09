@@ -3,6 +3,8 @@ package com.ming.site;
 import com.ming.site.config.EncryptConfig;
 import com.ming.site.util.encrypt.RSAUtil;
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +16,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 @MapperScan("com.ming.site.repository")
 public class Application {
-//	private static final Logger
+	private static final Logger log = LoggerFactory.getLogger(Application.class);
 	public static void main(String[] args) {
 
 		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
