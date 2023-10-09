@@ -42,3 +42,17 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.named("bootJar") {
+	manifest {
+		attributes 'Start-Class': 'com.ming.site.Application'
+	}
+}
+
+tasks.named("bootRun") {
+	mainClass = 'com.ming.site.Application'
+}
+
+springBoot {
+	mainClass = 'com.ming.site.Application'
+}

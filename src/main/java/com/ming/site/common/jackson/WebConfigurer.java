@@ -27,7 +27,7 @@ public class WebConfigurer
          * 排除掉原来的MappingJackson2HttpMessageConverter
          */
 
-        log.debug("测试");
+//        log.debug("测试");
 
         List<MappingJackson2HttpMessageConverter> originalConverters = new ArrayList<>();
         for (HttpMessageConverter<?> converter : converters) {

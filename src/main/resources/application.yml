@@ -39,7 +39,8 @@ mybatis-plus:
 
 upload:
   size: 6
-  path: "/Users/lmm/Downloads/uploads"
+#  path: "/Users/lmm/Downloads/uploads"
+  path: "E:\\downloads\\uploads"
   types: ".jpg|.png|.gif|.jpeg|.webp"
   token: "jaioscamidamaej"
 
