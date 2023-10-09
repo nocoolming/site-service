@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.Optional;
 
-
 public abstract class AbstractControllerV1<
         T extends IdLongPrimaryKey,
         // 这个是没有用到， 但是由于此版本从spring data jpa重构，所有的controller and service都有，所以先不删 了。
@@ -28,7 +27,7 @@ public abstract class AbstractControllerV1<
 
 
     @PostMapping("insert")
-    Result<T> insert(@RequestBody T o){
+    Result<T> insert(@RequestBody T o) {
 
         log.debug(service.getRepositoryString());
         T r = service.insert(o);
@@ -36,27 +35,27 @@ public abstract class AbstractControllerV1<
     }
 
     @PostMapping("update")
-    Result<T> update(@RequestBody T o){
+    Result<T> update(@RequestBody T o) {
 
         log.debug(service.getRepositoryString());
-         service.update(o);
+        service.update(o);
         return Result.success(o);
     }
 
     @PostMapping("remove")
-    Result remove(@RequestBody long id){
+    Result remove(@RequestBody long id) {
         service.deleteById(id);
         return Result.success(null);
     }
 
     @GetMapping("{id}")
-    Result<T> get(@PathVariable long id){
+    Result<T> get(@PathVariable long id) {
         T value = service.findById(id);
         return Result.success(value);
     }
 
     @GetMapping("all")
-    Result<List<T>> all(){
+    Result<List<T>> all() {
         List<T> value = service.findAll();
         return Result.success(value);
     }
