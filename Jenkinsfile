@@ -3,6 +3,7 @@ pipeline {
     tools {
         jdk "jdk21"
         gradle "8.4"
+        docker "latest docker"
     }
     stages {
         stage('Test') {
