@@ -3,14 +3,14 @@ pipeline {
     tools {
         jdk "jdk21"
         gradle "8.4"
-        docker "latest docker"
+        docker "latest"
     }
     stages {
         stage('Test') {
             steps {
                 echo "hello world"
                 sh 'java --version'
-                sh './gradlew build'
+                sh 'gradle build'
                 sh 'docker -version'
             }
         }
