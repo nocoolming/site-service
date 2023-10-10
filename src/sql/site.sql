@@ -24,6 +24,8 @@ create table site (
    title VARCHAR(256) null,
    keywords VARCHAR(256) null,
    description VARCHAR(256) null,
+   summary varchar(1024) null,
+   content varchar(2048) null,
    domain VARCHAR(128) null,
    language VARCHAR(128) NOT NULL,
    create_at timestamp null,

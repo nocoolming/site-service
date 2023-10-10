@@ -12,6 +12,8 @@ public class Site implements IdLongPrimaryKey {
     private String keywords;
     private String description;
 
+    private String summary;
+    private String content;
     private String language;
     private String domain;
     private LocalDateTime createAt;
@@ -92,6 +94,22 @@ public class Site implements IdLongPrimaryKey {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getLanguage() {
