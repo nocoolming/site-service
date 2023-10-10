@@ -2,6 +2,7 @@ pipeline {
     agent any
     tools {
         jdk "jdk21"
+        gradle "8.4"
     }
     stages {
         stage('Test') {
