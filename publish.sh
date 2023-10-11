@@ -10,8 +10,9 @@ fi
 
 gradle build
 
-docker build -t nocoolming/site-service:$VERSION .
+#docker build -t nocoolming/site-service:$VERSION .
+docker build -t nocoolming/site-service:$(date +%Y%m%d%H%M%S%N) .
 docker login
 
-docker push nocoolming/site-service:$VERSION
+docker push nocoolming/site-service:$(date +%Y%m%d%H%M%S%N)
 

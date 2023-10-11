@@ -10,7 +10,7 @@ pipeline {
                 echo "hello world"
                 sh 'java --version'
                 sh 'gradle build'
-                sh 'docker version'
+                sh 'docker info'
             }
         }
     }
