@@ -14,6 +14,10 @@ public class Site implements IdLongPrimaryKey {
 
     private String summary;
     private String content;
+
+    private String brandCategory;
+    private String brandImageUrl;
+    private String brandText;
     private String language;
     private String domain;
     private LocalDateTime createAt;
@@ -110,6 +114,30 @@ public class Site implements IdLongPrimaryKey {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getBrandCategory() {
+        return brandCategory;
+    }
+
+    public void setBrandCategory(String brandCategory) {
+        this.brandCategory = brandCategory;
+    }
+
+    public String getBrandImageUrl() {
+        return brandImageUrl;
+    }
+
+    public void setBrandImageUrl(String brandImageUrl) {
+        this.brandImageUrl = brandImageUrl;
+    }
+
+    public String getBrandText() {
+        return brandText;
+    }
+
+    public void setBrandText(String brandText) {
+        this.brandText = brandText;
     }
 
     public String getLanguage() {
