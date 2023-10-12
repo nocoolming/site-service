@@ -8,6 +8,8 @@ echo "image name: $imageName"
 
 gradle build
 
+echo "docker build -t $imageName ."
 docker build -t $imageName .
+echo "docker push $imageName"
 docker push $imageName
 
