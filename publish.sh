@@ -10,7 +10,7 @@ ls
 ./gradlew build
 
 
-ls build
+ls build/libs/
 echo "docker build -t $imageName ."
 docker build -t $imageName .
 
