@@ -14,7 +14,7 @@ pipeline {
                 echo "${version}"
                 docker.withRegistry("", "DockerHubCredentials") {
                            def image = docker.image("nocoolming/site-service");
-                           image.push(${version)
+                           image.push(${version})
                          }
             }
         }
