@@ -11,6 +11,12 @@ pipeline {
                 sh 'java --version'
                 sh 'gradle build'
                 sh 'docker info'
+                dev version = sh '$(date +%Y%m%d%H%M%S%N)'
+                echo "${version}"
+                docker.withRegistry("", "DockerHubCredentials") {
+                           def image = docker.image("nocoolming/site-service");
+                           image.push()
+                         }
             }
         }
     }
