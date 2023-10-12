@@ -6,8 +6,7 @@ COPY build/libs/site-0.0.1.jar /app
 COPY src/main/resources/application-product.yml /app/application.yml
 COPY run.sh /app
 
-RUN echo 'Asia/Shanghai' > /etc/timezone && \
-    cat application.yml
+RUN echo 'Asia/Shanghai' > /etc/timezone
 
 ENTRYPOINT ["/app/run.sh"]
 
