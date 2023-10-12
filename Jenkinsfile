@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'version=sh '$(date +%Y%m%d%H%M%S%N)'
+                sh 'version=$(date +%Y%m%d%H%M%S%N)'
                 sh 'imageName=nocoolming/site-service:${version}'
                 sh 'echo $imageName'
                 sh 'docker build -t ${imageName}'
