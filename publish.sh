@@ -6,8 +6,6 @@ gradle build
 imageName="nocoolming/site-service:${date +%Y%m%d%H%M%S%N}"
 
 echo "image name: $imageName"
-docker build -t nocoolming/site-service:$(date +%Y%m%d%H%M%S%N) .
-#docker login
-
-docker push nocoolming/site-service:$(date +%Y%m%d%H%M%S%N)
+#docker build -t nocoolming/site-service:$(date +%Y%m%d%H%M%S%N) .
+#docker push nocoolming/site-service:$(date +%Y%m%d%H%M%S%N)
 
