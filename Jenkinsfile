@@ -20,6 +20,7 @@ pipeline {
                 sh 'echo "version: ${version}"'
                 sh 'imageName="nocoolming/site-service:${version}"'
                 sh 'echo "imagename: $imageName"'
+                sh './publish.sh'
             }
         }
     }
