@@ -17,9 +17,9 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'version=$(date +%Y%m%d%H%M%S%N)'
-                sh 'echo "${version}"'
+                sh 'echo "version: ${version}"'
                 sh 'imageName="nocoolming/site-service:${version}"'
-                sh 'echo "$imageName"'
+                sh 'echo "imagename: $imageName"'
             }
         }
     }
