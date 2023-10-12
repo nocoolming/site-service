@@ -17,5 +17,5 @@ docker build -t $imageName .
 echo "docker push $imageName"
 docker push $imageName
 
-ssh -p 8822 root@sunmoon.zone /root/projects/api/publish.sh $version
+#ssh -p 8822 root@sunmoon.zone /root/projects/api/publish.sh $version
 
