@@ -16,10 +16,6 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'version=$(date +%Y%m%d%H%M%S%N)'
-                sh 'echo "version: ${version}"'
-                sh 'imageName="nocoolming/site-service:${version}"'
-                sh 'echo "imagename: $imageName"'
                 sh './publish.sh'
             }
         }
