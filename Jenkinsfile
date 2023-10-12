@@ -16,7 +16,10 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh './publish.sh'
+                sshagent(['ssh-agent']) {
+                    // some block
+                    sh './publish.sh'
+                }
             }
         }
     }
