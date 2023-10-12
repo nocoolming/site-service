@@ -4,18 +4,22 @@ pipeline {
         jdk "jdk21"
         gradle "8.4"
     }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('DockerhubCredentials')
+    }
     stages {
-        stage('Test') {
+        stage('Login') {
             steps {
-                echo "hello world"
-                sh 'java --version'
-                sh 'gradle build'
-                dev version = sh '$(date +%Y%m%d%H%M%S%N)'
-                echo "${version}"
-                docker.withRegistry("", "DockerHubCredentials") {
-                           def image = docker.image("nocoolming/site-service");
-                           image.push(${version})
-                         }
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'version=sh '$(date +%Y%m%d%H%M%S%N)'
+                sh 'imageName=nocoolming/site-service:${version}'
+                sh 'echo $imageName'
+                sh 'docker build -t ${imageName}'
+                sh 'docker push ${imageName}'
             }
         }
     }
