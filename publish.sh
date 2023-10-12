@@ -6,15 +6,16 @@ imageName="nocoolming/site-service:${version}"
 
 echo "image name: $imageName"
 
-ls
+#ls
 ./gradlew build
 
-
-ls build/libs/
+#ls build/libs/
 echo "docker build -t $imageName ."
 docker build -t $imageName .
 
 
 echo "docker push $imageName"
 docker push $imageName
+
+ssh -p 8822 root@sunmoon.zone /root/projects/api/publish.sh $version
 
