@@ -35,7 +35,7 @@ spring:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.stdout.NoLoggingImpl
   type-aliases-package: com.ming.site.model¡
 
 upload:
@@ -47,6 +47,8 @@ upload:
 
 logging:
   level:
+    com.zaxxer: ERROR
+    org.apache: ERROR
     org.apache.ibatis: ERROR
     org.springframework: ERROR
     com.ming: ERROR

@@ -35,8 +35,9 @@ spring:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  type-aliases-package: com.ming.site.model¡
+    log-impl: org.apache.ibatis.logging.stdout.NoLoggingImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.ming.site.model
 
 upload:
   size: 6
@@ -47,9 +48,11 @@ upload:
 
 logging:
   level:
-    org.apache.ibatis: DEBUG
-    org.springframework: INFO
-    com.ming: DEBUG
+    com.zaxxer: ERROR
+    org.apache: ERROR
+    org.apache.ibatis: ERROR
+    org.springframework: ERROR
+    com.ming: ERROR
   pattern:
     console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
     file: "%d %p %c{1.} [%t] %m%n"
