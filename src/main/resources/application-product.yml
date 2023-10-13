@@ -10,8 +10,8 @@ spring:
 
   datasource:
     driver-class-name:  org.postgresql.Driver
-    #url: jdbc:postgresql://localhost:5432/site_db
-    url: jdbc:postgresql://192.168.8.16:5432/site_db
+    url: jdbc:postgresql://localhost:5432/site_db
+#    url: jdbc:postgresql://192.168.8.16:5432/site_db
     username: postgres
     password: a
     validationQuery: SELECT 1
@@ -40,7 +40,7 @@ mybatis-plus:
 
 upload:
   size: 6
-#  path: "/Users/lmm/Downloads/uploads"
+  #  path: "/Users/lmm/Downloads/uploads"
   path: "E:\\downloads\\uploads"
   types: ".jpg|.png|.gif|.jpeg|.webp"
   token: "jaioscamidamaej"

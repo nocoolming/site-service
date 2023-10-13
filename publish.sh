@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
-VERSION=$1
 
-if [ ! $VERSION  ]; then
-	echo "IS NULL"
-	VERSION=latest
-else
-	echo "Version: $VERSION"
-fi
+version=$(date +%Y%m%d%H%M%S%N)
+imageName="nocoolming/site-service:${version}"
 
-gradle build
+echo "image name: $imageName"
 
-docker build -t nocoolming/site-service:$VERSION .
-docker login
+./gradlew build
 
-docker push nocoolming/site-service:$VERSION
+echo "docker build -t $imageName ."
+docker build -t $imageName .
+
+
+echo "docker push $imageName"
+docker push $imageName
+
+echo "ssh -p 8822 -tt -o StrictHostKeyChecking=no root@sunmoon.zone /root/projects/api/publish.sh $version"
+ssh -p 8822 -tt -o StrictHostKeyChecking=no root@sunmoon.zone /root/projects/api/publish.sh $version
 
