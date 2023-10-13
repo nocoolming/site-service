@@ -5,7 +5,7 @@ imageName="nocoolming/site-service:${version}"
 
 echo "image name: $imageName"
 
-./gradlew build
+./gradlew clean  build
 
 echo "docker build -t $imageName ."
 docker build -t $imageName .
