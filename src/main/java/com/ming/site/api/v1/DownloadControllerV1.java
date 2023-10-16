@@ -33,10 +33,10 @@ public class DownloadControllerV1 {
                 +req.getRequestURI()
                 .replace("/site/v1/download", "");
 
-        log.error(uploadConfig.getPath());
-        log.error(req.getRequestURI());
-        log.error("originPath:");
-        log.error(originPath);
+        log.debug(uploadConfig.getPath());
+        log.debug(req.getRequestURI());
+        log.debug("originPath:");
+        log.debug(originPath);
 
         Path path = Paths.get(originPath);
         Resource resource = null;
