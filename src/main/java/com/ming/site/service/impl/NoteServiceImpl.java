@@ -78,7 +78,11 @@ public class NoteServiceImpl
                 .orderByDesc("upgrade_at")
                 .last("limit 50");
 
-        return repository.selectList(query);
+        List<Note> originNotes = repository.selectList(query);
+
+        List<Note> notes = this.loadForeign(originNotes);
+
+        return notes;
     }
 
 }
