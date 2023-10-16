@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -67,6 +68,17 @@ public class NoteServiceImpl
         note.setCreateUser(createUser);
         note.setUpgradeUser(upgradeUser);
         return note;
+    }
+
+    @Override
+    public List<Note> findByNotesBySiteId(long siteId, LocalDateTime begin) {
+        QueryWrapper<Note> query = new QueryWrapper<>();
+        query.eq("site_id", siteId)
+                .lt("upgrade_at", begin)
+                .orderByDesc("upgrade_at")
+                .last("limit 50");
+
+        return repository.selectList(query);
     }
 
 }

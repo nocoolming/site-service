@@ -2,6 +2,7 @@ package com.ming.site.service;
 
 import com.ming.site.model.Note;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface NoteService
@@ -10,4 +11,6 @@ public interface NoteService
     List<Note> loadForeign(List<Note> notes);
 
     Note loadForeignField(Note note);
+
+    List<Note> findByNotesBySiteId(long siteId, LocalDateTime begin);
 }
