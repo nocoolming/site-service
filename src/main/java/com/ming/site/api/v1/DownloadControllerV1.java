@@ -31,8 +31,10 @@ public class DownloadControllerV1 {
     public ResponseEntity downloadFileFromLocal(HttpServletRequest req) {
         String originPath = uploadConfig.getPath()
                 +req.getRequestURI()
-                .replace("site/v1/download", "");
+                .replace("/site/v1/download", "");
 
+        log.error(uploadConfig.getPath());
+        log.error(req.getRequestURI());
         log.error("originPath:");
         log.error(originPath);
 
