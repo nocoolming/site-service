@@ -67,6 +67,7 @@ paypal:
   cancelUrl: "https://api.sunmoon.zone/site/v1/cancel/orderId"
   callbackUrl: "https://api.sunmoon.zone/site/v1/callback/orderId"
   currency: "USD"
+  mode: "sandbox"
 
 
 

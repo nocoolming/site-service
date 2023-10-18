@@ -26,6 +26,9 @@ public class PaypalConfig {
     @Value("${paypal.currency}")
     private String currency;
 
+    @Value("${paypal.mode}")
+    private String mode;
+
     public String getClientId() {
         return clientId;
     }
@@ -64,5 +67,13 @@ public class PaypalConfig {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 }

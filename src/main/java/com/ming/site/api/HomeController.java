@@ -1,5 +1,6 @@
 package com.ming.site.api;
 
+import com.ming.site.common.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -13,6 +14,12 @@ public class HomeController {
     @GetMapping("/")
     String home(){
         return "Site service";
+    }
+
+
+    @GetMapping("site")
+    Result<String> site(){
+        return Result.ok("Site service");
     }
 
     @GetMapping(value = "/robots.txt", produces = MediaType.TEXT_PLAIN_VALUE)

@@ -5,16 +5,17 @@ import com.ming.site.config.PaypalConfig;
 import com.ming.site.model.Order;
 import com.ming.site.pay.CreatePayment;
 import com.ming.site.util.SnowflakeUtil;
+import com.paypal.api.openidconnect.Session;
+import com.paypal.base.rest.APIContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("site/v1/paypal")
@@ -31,7 +32,7 @@ public class PaypalCreateOrderControllerV1 {
     Result<String> createOrder(@RequestBody long orderId){
 //        PayPalHttpClient client = new PayPalHttpClient(
 //                new SandboxEnvironment("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
-        log.error("order id: " + String.valueOf(orderId));
+        log.info("order id: " + String.valueOf(orderId));
         Order order = new Order();
         order.setId(SnowflakeUtil.nextId());
         order.setCreateAt(LocalDateTime.now());
@@ -41,5 +42,33 @@ public class PaypalCreateOrderControllerV1 {
 
 
         return Result.ok(result);
+    }
+
+    @GetMapping("getUsersConsent")
+    Result<String> getUsersConsent(){
+        APIContext apiContext = new APIContext(
+                paypalConfig.getClientId(),
+                paypalConfig.getSecretKey(),
+                paypalConfig.getMode()
+        );
+        List<String> scopes = new ArrayList<String>() {{
+            /**
+             * 'openid'
+             * 'profile'
+             * 'address'
+             * 'email'
+             * 'phone'
+             * 'https://uri.paypal.com/services/paypalattributes'
+             * 'https://uri.paypal.com/services/expresscheckout'
+             * 'https://uri.paypal.com/services/invoicing'
+             */
+            add("openid");
+            add("profile");
+            add("email");
+        }};
+        String redirectUrl = Session.getRedirectURL("UserConsent", scopes, apiContext);
+        log.info(redirectUrl);
+
+        return Result.ok(redirectUrl);
     }
 }

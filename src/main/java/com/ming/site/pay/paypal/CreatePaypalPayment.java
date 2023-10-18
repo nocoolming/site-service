@@ -42,19 +42,20 @@ public class CreatePaypalPayment
 
         RedirectUrls redirectUrls = new RedirectUrls();
         String cancelUrl = paypalConfig.getCancelUrl().replace("orderId", String.valueOf(order.getId()));
-        log.debug("");
+        log.debug("cancel url: " + cancelUrl);
         redirectUrls.setCancelUrl(cancelUrl);
 
         String callbackUrl = paypalConfig.getCallbackUrl().replace("orderId",  String.valueOf(order.getId()));
-        log.debug("");
+        log.debug("callback url: " + callbackUrl);
         redirectUrls.setReturnUrl(callbackUrl);
 
         payment.setRedirectUrls(redirectUrls);
         try{
-            APIContext apiContext = new APIContext(paypalConfig.getClientId(), paypalConfig.getSecretKey(), "sandbox");
+            APIContext apiContext = new APIContext(paypalConfig.getClientId(), paypalConfig.getSecretKey(), paypalConfig.getMode());
             Payment createdPayment = payment.create(apiContext);
 
             System.out.println(createdPayment.toString());
+            return createdPayment.getId();
         } catch (PayPalRESTException e) {
             log.error(e.getLocalizedMessage());
             throw new RuntimeException(e);
@@ -62,6 +63,5 @@ public class CreatePaypalPayment
             log.error(e.getLocalizedMessage());
             throw new RuntimeException(e);
         }
-        return payment.getId();
     }
 }
