@@ -4,6 +4,8 @@ import com.ming.site.config.PaypalConfig;
 import com.ming.site.model.Order;
 import com.ming.site.pay.CreatePayment;
 import com.paypal.api.payments.*;
+import com.paypal.base.rest.APIContext;
+import com.paypal.base.rest.PayPalRESTException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,17 @@ public class CreatePaypalPayment
         log.debug("");
         redirectUrls.setReturnUrl(callbackUrl);
 
+        payment.setRedirectUrls(redirectUrls);
+        try{
+            APIContext apiContext = new APIContext(paypalConfig.getClientId(), paypalConfig.getSecretKey(), "sandbox");
+            Payment createPayment = payment.create(apiContext);
+        } catch (PayPalRESTException e) {
+            log.error(e.getLocalizedMessage());
+            throw new RuntimeException(e);
+        }catch (Exception e){
+            log.error(e.getLocalizedMessage());
+            throw new RuntimeException(e);
+        }
         return payment.getId();
     }
 }
