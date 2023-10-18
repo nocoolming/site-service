@@ -65,7 +65,7 @@ encrypt:
 
 paypal:
   clientId: "AXfwdAXDOk42sd-sZBKQfFRJlGLwlZGeO0MySL7ZHF35NXcnTgAMS-iS6EJzZfOen9XKuVYma15xxdpO"
-  secretKe: "ENe5ddQKPp9KkqWge9EHsz7MYVPt3ow3mjkF4cNc_qy_YwI-5GD0muoM9bES8XTAK5F8DCPbfMd9jovM"
+  secretKey: "ENe5ddQKPp9KkqWge9EHsz7MYVPt3ow3mjkF4cNc_qy_YwI-5GD0muoM9bES8XTAK5F8DCPbfMd9jovM"
   cancelUrl: "https://api.ras0.com/site/v1/cancel/orderId"
   callbackUrl: "https://api.ras0.com/site/v1/callback/orderId"
   currency: "USD"
