@@ -36,6 +36,9 @@ dependencies {
 
 	implementation "com.stripe:stripe-java:23.8.0"
 
+	implementation 'com.paypal.sdk:rest-api-sdk:+'
+
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
 }
