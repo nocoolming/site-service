@@ -6,6 +6,8 @@ import com.ming.site.model.Order;
 import com.ming.site.pay.CreatePayment;
 import com.ming.site.util.SnowflakeUtil;
 import com.paypal.api.openidconnect.Session;
+import com.paypal.api.payments.Links;
+import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.APIContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,10 +40,15 @@ public class PaypalCreateOrderControllerV1 {
         order.setCreateAt(LocalDateTime.now());
         order.setUpgradeAt(LocalDateTime.now());
         order.setOrderTotal(BigDecimal.valueOf(88.8));
-        String result = createPayment.create(order);
+        Payment payment = createPayment.create(order);
 
-
-        return Result.ok(result);
+        for (Links links : payment.getLinks()) {
+            if (links.getRel().equals("approval_url")) {
+                log.debug("href: " + links.getHref());
+                return Result.ok(links.getHref()) ;
+            }
+        }
+        return Result.ok("/");
     }
 
     @GetMapping("getUsersConsent")
