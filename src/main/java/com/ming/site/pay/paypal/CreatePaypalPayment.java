@@ -22,7 +22,7 @@ public class CreatePaypalPayment
     @Autowired
     PaypalConfig paypalConfig;
     @Override
-    public String create(Order order) {
+    public Payment create(Order order) {
         Amount amount = new Amount();
         amount.setCurrency(paypalConfig.getCurrency());
         amount.setTotal(order.getOrderTotal().toString());
@@ -53,7 +53,7 @@ public class CreatePaypalPayment
             Payment createdPayment = payment.create(apiContext);
 
             System.out.println(createdPayment.toString());
-            return createdPayment.toString();
+            return createdPayment;
         } catch (PayPalRESTException e) {
             log.error(e.getLocalizedMessage());
             throw new RuntimeException(e);
