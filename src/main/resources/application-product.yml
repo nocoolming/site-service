@@ -64,10 +64,11 @@ encrypt:
 paypal:
   clientId: "AUJYDWHcAvaelmTVB7bpYuvDdPEYwJjC6p-8IRVRU_NTy76M4GJ-HAE4EAqqUARxefoDcbITM5UTaOQd"
   secretKey: "EBbB3_zLwgEJwS43G36jn8_tKEKth9-J12FV89IzMl2yRajRrFfwacl6kZLUEI17zTKZoWxXW1sxGuCC"
-  cancelUrl: "https://api.sunmoon.zone/site/v1/cancel/orderId"
-  callbackUrl: "https://api.sunmoon.zone/site/v1/callback/orderId"
+  cancelUrl: "https://api.ras0.com/site/v1/cancel"
+  callbackUrl: "https://api.ras0.com/site/v1/callback"
   currency: "USD"
   mode: "sandbox"
+
 
 
 

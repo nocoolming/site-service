@@ -5,11 +5,13 @@ import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.PaymentExecution;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -21,9 +23,13 @@ public class CallbackPaymentControllerV1 {
     @Autowired
     APIContext apiContext;
 
-    @GetMapping("site/v1/callback/paymentId:{paymentId}/payerId:{payerId}")
-    Result<String> callback(@PathVariable String paymentId, @PathVariable String payerId){
+    @GetMapping("site/v1/callback")
+    Result<String> callback(
+            @RequestParam("paymentId") String paymentId,
+            @RequestParam("PayerID") String payerId,
+            HttpServletRequest request){
         log.debug("paymentId: " + String.valueOf(paymentId));
+        log.info(request.getRequestURI());
         try {
             Payment payment = new Payment();
             payment.setId(paymentId);

@@ -41,13 +41,11 @@ public class CreatePaypalPayment
         payment.setTransactions(transactions);
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        String cancelUrl = paypalConfig.getCancelUrl().replace("orderId", String.valueOf(order.getId()));
+        String cancelUrl = paypalConfig.getCancelUrl().replace("paymentId", String.valueOf(order.getId()));
         log.debug("cancel url: " + cancelUrl);
         redirectUrls.setCancelUrl(cancelUrl);
 
-        String callbackUrl = paypalConfig.getCallbackUrl().replace("orderId",  String.valueOf(order.getId()));
-        log.debug("callback url: " + callbackUrl);
-        redirectUrls.setReturnUrl(callbackUrl);
+        redirectUrls.setReturnUrl(paypalConfig.getCallbackUrl());
 
         payment.setRedirectUrls(redirectUrls);
         try{
