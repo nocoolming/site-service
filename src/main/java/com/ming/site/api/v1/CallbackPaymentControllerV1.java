@@ -26,21 +26,19 @@ public class CallbackPaymentControllerV1 {
     @GetMapping("site/v1/callback")
     Result<String> callback(
             @RequestParam("paymentId") String paymentId,
-            @RequestParam("PayerID") String payerId,
-            HttpServletRequest request){
-        log.debug("paymentId: " + String.valueOf(paymentId));
-        log.info(request.getRequestURI());
+            @RequestParam("PayerID") String payerId){
         try {
             Payment payment = new Payment();
             payment.setId(paymentId);
             PaymentExecution paymentExecute = new PaymentExecution();
             paymentExecute.setPayerId(payerId);
-            payment.execute(apiContext, paymentExecute);
+            payment = payment.execute(apiContext, paymentExecute);
             if (payment.getState().equals("approved")) {
                 return Result.ok("success");
             }
         } catch (PayPalRESTException e) {
             log.error(e.getMessage());
+            return Result.error(e.getMessage());
         }
 
         return Result.ok("done");

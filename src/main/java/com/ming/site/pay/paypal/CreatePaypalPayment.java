@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CreatePaypalPayment
@@ -40,6 +41,7 @@ public class CreatePaypalPayment
         payment.setPayer(payer);
         payment.setTransactions(transactions);
 
+
         RedirectUrls redirectUrls = new RedirectUrls();
         String cancelUrl = paypalConfig.getCancelUrl().replace("paymentId", String.valueOf(order.getId()));
         log.debug("cancel url: " + cancelUrl);
@@ -50,6 +52,8 @@ public class CreatePaypalPayment
         payment.setRedirectUrls(redirectUrls);
         try{
             APIContext apiContext = new APIContext(paypalConfig.getClientId(), paypalConfig.getSecretKey(), paypalConfig.getMode());
+
+            apiContext.setRequestId(UUID.randomUUID().toString());
             Payment createdPayment = payment.create(apiContext);
 
             System.out.println(createdPayment.toString());
