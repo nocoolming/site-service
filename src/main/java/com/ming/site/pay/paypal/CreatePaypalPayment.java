@@ -55,7 +55,7 @@ public class CreatePaypalPayment
             Payment createdPayment = payment.create(apiContext);
 
             System.out.println(createdPayment.toString());
-            return createdPayment.getId();
+            return createdPayment.toString();
         } catch (PayPalRESTException e) {
             log.error(e.getLocalizedMessage());
             throw new RuntimeException(e);
