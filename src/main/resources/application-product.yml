@@ -6,8 +6,12 @@ spring:
     allow-circular-references: true
   application:
     name: site-service
-  jpa:
-
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 500KB
+      max-file-size: 30MB
+      max-request-size: 100MB
   datasource:
     driver-class-name:  org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/site_db
