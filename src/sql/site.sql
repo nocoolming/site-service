@@ -280,3 +280,11 @@ create table comment (
     product_id bigint null references product(id) on delete set null,
     comment_id bigint null references comment(id) on delete set null
 );
+
+create table contact (
+    id bigint not null primary key,
+    name varchar(256) not null,
+    email varchar(256) not null,
+    content varchar(4096) not null,
+    create_at date null default now()
+);

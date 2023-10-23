@@ -3,6 +3,7 @@ package com.ming.site.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ming.site.api.model.SignInModel;
 import com.ming.site.api.model.SignOnModel;
+import com.ming.site.model.Cart;
 import com.ming.site.model.User;
 import com.ming.site.repository.UserRepository;
 import com.ming.site.service.*;
@@ -10,7 +11,10 @@ import com.ming.site.util.SnowflakeUtil;
 import com.ming.site.util.encrypt.RSAUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -24,6 +28,8 @@ public class UserServiceImpl
         implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    @Autowired
+    CartService cartService;
     @Override
     public User findByUsernameOrMailOrMobile(String usernameOrMailOrMobile) {
 
@@ -40,11 +46,11 @@ public class UserServiceImpl
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public User signOn(SignOnModel model) throws UserAlreadyExistsException, PasswordNullException, SiteIdNullException {
         this.validSignOn(model);
 
         String encryptedPassword = RSAUtil.encrypt(model.getPassword());
-//        encryptedPassword = Md5
 
         User user = new User();
         user.setUsername(model.getUsername());
@@ -54,6 +60,10 @@ public class UserServiceImpl
         user.setSiteId(model.getSiteId());
 
         repository.insert(user);
+
+        Cart cart = new Cart();
+        cart.setId(user.getId());
+//        cart.set
         return user;
     }
 
