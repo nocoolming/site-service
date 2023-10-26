@@ -71,7 +71,7 @@ create table "order" (
    city VARCHAR(128) null,
    street VARCHAR(1024) null,
    payment_id VARCHAR(128) references payment_order(id) on delete set null,
-   create_user_id BIGINT not null  references "user"(id) on delete set null,
+   create_user_id BIGINT not null  ,
    create_at timestamp null,
    upgrade_at timestamp null,
    site_id BIGINT null references site(id) on delete set null,
@@ -83,7 +83,46 @@ alter table payment_order
        foreign key(order_id) references "order"(id)
        on delete set null;
 
+create table product_collect (
+    id bigint not null primary key,
+    title varchar(256) not null,
+    keywords varchar(256) not null,
+    description varchar(1024) not null,
+    create_at timestamp not null,
+    upgrade_at timestamp not null,
+    create_user_id  long not null references "user"(id) on delete set null
+    upgrade_user_id BIGINT null references "user"(id) on delete set null,
+    site_id BIGINT null references site(id) on delete set null
+);
 
+create table product_attribute (
+    id bigint not null primary key,
+    title varchar(256) not null,
+    create_at timestamp not null,
+    collect_id long not null references product_collect(id) on delete set null,
+    create_user_id  long not null references "user"(id) on delete set null
+    site_id BIGINT null references site(id) on delete set null
+);
+
+create table product_attribute_value (
+    id bigint not null primary key,
+    value varchar(256) not null,
+    create_at timestamp not null,
+    attribute_id long not null references product_attribute(id) on delete set null,
+    collect_id long not null references product_collect(id) on delete set null,
+    create_user_id  long not null references "user"(id) on delete set null
+    site_id BIGINT null references site(id) on delete set null
+);
+
+create table inventory (
+    id bigint not null primary key,
+    attribute_id long not null references product_attribute_value(id) on delete set null,
+    count long not null default 0,
+    product_id   long not null references product(id) on delete set null,
+    collect_id long not null references product_collect(id) on delete set null,
+    create_user_id  long not null references "user"(id) on delete set null
+    site_id BIGINT null references site(id) on delete set null
+)
 /*==============================================================*/
 /* Table: product                                               */
 /*==============================================================*/
@@ -101,6 +140,7 @@ create table product (
    language VARCHAR(128) NULL,
    create_at timestamp null,
    upgrade_at timestamp null,
+   collect_id long not null references product_collect(id) on delete set null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    upgrade_user_id BIGINT null references "user"(id) on delete set null,
    site_id BIGINT null references site(id) on delete set null,
@@ -126,7 +166,6 @@ create table product_image (
 create table order_detail (
    id BIGINT not null,
    title VARCHAR(256) not null,
-   content VARCHAR(4096) not null,
    price DECIMAL null,
    count INT4 null,
    subtotal DECIMAL null,
@@ -190,11 +229,10 @@ create table category_language(
 /*==============================================================*/
 create table cart (
    id BIGINT not null primary key,
-   title VARCHAR(256) not null,
-   content VARCHAR(4096) not null,
    price DECIMAL null,
    unit VARCHAR(256) null,
-   count INT4 null,
+   quantity INT4 null,
+   product_id bigint not null references product(id) on delete set null,
    create_at timestamp null,
    upgrade_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
