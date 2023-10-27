@@ -222,21 +222,25 @@ create table category_language(
     upgrade_user_id BIGINT null references "user"(id) on delete set null
 );
 
-
-
-/*==============================================================*/
-/* Table: cart                                                  */
-/*==============================================================*/
 create table cart (
+    id BIGINT not null primary key,
+    subtotal decimal not null,
+    create_user_id  bigint  null ,
+   create_at timestamp null,
+   upgrade_at timestamp null,
+);
+
+/*==============================================================*/
+/* Table: cart_item                                                  */
+/*==============================================================*/
+create table cart_item (
    id BIGINT not null primary key,
    price DECIMAL null,
    unit VARCHAR(256) null,
    quantity INT4 null,
    product_id bigint not null references product(id) on delete set null,
    create_at timestamp null,
-   upgrade_at timestamp null,
-   create_user_id BIGINT null references "user"(id) on delete set null,
-   upgrade_user_id BIGINT null references "user"(id) on delete set null
+   upgrade_at timestamp null
 );
 
 

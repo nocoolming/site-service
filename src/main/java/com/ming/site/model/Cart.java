@@ -3,45 +3,45 @@ package com.ming.site.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Cart implements IdLongPrimaryKey {
+public class Cart
+        implements IdLongPrimaryKey {
     private long id;
-    private BigDecimal price;
-    private String unit;
-    private int quantity;
+    private BigDecimal subtotal;
+    private Long createUserId;
+    private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-
-    private Long productId;
-    private Product product;
+    @Override
     public Long getId() {
-        return id;
+        return null;
     }
 
+    @Override
     public void setId(Long id) {
-        this.id = id;
+
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getSubtotal() {
+        return subtotal;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
     }
 
-    public String getUnit() {
-        return unit;
+    public Long getCreateUserId() {
+        return createUserId;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public LocalDateTime getCreateAt() {
+        return createAt;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setCreateAt(LocalDateTime createAt) {
+        this.createAt = createAt;
     }
 
     public LocalDateTime getUpgradeAt() {
@@ -50,21 +50,5 @@ public class Cart implements IdLongPrimaryKey {
 
     public void setUpgradeAt(LocalDateTime upgradeAt) {
         this.upgradeAt = upgradeAt;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 }
