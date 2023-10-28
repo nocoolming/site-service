@@ -1,24 +1,31 @@
 package com.ming.site.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Cart
         implements IdLongPrimaryKey {
-    private long id;
+    private Long id;
     private String currency ;
     private BigDecimal subtotal;
     private Long createUserId;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
+
+    @TableField(exist = false)
+    private List<CartItem> cartItems;
+
     @Override
     public Long getId() {
-        return null;
+        return id;
     }
 
     @Override
     public void setId(Long id) {
-
+        this.id = id;
     }
 
     public String getCurrency() {
@@ -59,5 +66,13 @@ public class Cart
 
     public void setUpgradeAt(LocalDateTime upgradeAt) {
         this.upgradeAt = upgradeAt;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 }
