@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public class CartItem
         implements IdLongPrimaryKey {
     private long id;
+    private String currency ;
     private BigDecimal price;
     private int quantity;
     private LocalDateTime upgradeAt;
@@ -18,6 +19,14 @@ public class CartItem
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public BigDecimal getPrice() {

@@ -224,6 +224,7 @@ create table category_language(
 
 create table cart (
     id BIGINT not null primary key,
+	currency varchar(32) null,
     subtotal decimal not null,
     create_user_id  bigint  null ,
    create_at timestamp null,
@@ -236,6 +237,7 @@ create table cart (
 create table cart_item (
    id BIGINT not null primary key,
    price DECIMAL null,
+	currency varchar(32) null,
    unit VARCHAR(256) null,
    quantity INT4 null,
    product_id bigint not null references product(id) on delete set null,

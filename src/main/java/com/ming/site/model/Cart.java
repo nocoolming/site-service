@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public class Cart
         implements IdLongPrimaryKey {
     private long id;
+    private String currency ;
     private BigDecimal subtotal;
     private Long createUserId;
     private LocalDateTime createAt;
@@ -18,6 +19,14 @@ public class Cart
     @Override
     public void setId(Long id) {
 
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public BigDecimal getSubtotal() {
