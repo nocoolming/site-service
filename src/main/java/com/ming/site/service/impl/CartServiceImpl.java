@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class CartServiceImpl
@@ -54,6 +55,15 @@ public class CartServiceImpl
 
         this.update(cart);
 
+        return cart;
+    }
+
+    @Override
+    public Cart getCartWithRelationship(long id) {
+        Cart cart = this.findById(id);
+        List<CartItem> items = cartItemService.getItemsByCartId(id);
+
+        cart.setCartItems(items);
         return cart;
     }
 }

@@ -6,10 +6,7 @@ import com.ming.site.model.Cart;
 import com.ming.site.service.CartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("site/v1/cart")
@@ -25,5 +22,12 @@ extends AbstractControllerV1<
         Cart cartInDb = service.createCart(cart);
 
         return Result.ok(cartInDb);
+    }
+
+    @GetMapping("get/{id}")
+    Result<Cart> get(@PathVariable long id){
+        Cart cart = service.getCartWithRelationship(id);
+
+        return Result.ok(cart);
     }
 }

@@ -49,7 +49,7 @@ public abstract class AbstractControllerV1<
     }
 
     @GetMapping("{id}")
-    Result<T> get(@PathVariable long id) {
+    Result<T> findById(@PathVariable long id) {
         T value = service.findById(id);
         return Result.success(value);
     }

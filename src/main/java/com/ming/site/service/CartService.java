@@ -10,4 +10,6 @@ public interface CartService
 
 
     Cart createCart(Cart cart);
+
+    Cart getCartWithRelationship(long id);
 }
