@@ -16,7 +16,7 @@ public class OrderDetail
 
     private String title;
     private BigDecimal price;
-    private int count;
+    private int quantity;
     private BigDecimal subtotal;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
@@ -84,12 +84,12 @@ public class OrderDetail
         this.price = price;
     }
 
-    public int getCount() {
-        return count;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public BigDecimal getSubtotal() {

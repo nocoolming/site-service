@@ -43,4 +43,12 @@ public class ProductControllerV1
         Product product = service.setIcon(model.getId(), model.getIcon());
         return Result.ok(product);
     }
+
+//    @Override
+    @GetMapping("/get/{id}")
+    public Result<Product> get(@PathVariable Long id) {
+        Product product = service.getProductWithRelationShip(id);
+
+        return Result.ok(product);
+    }
 }

@@ -15,9 +15,13 @@ public class Cart
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
+    private long siteId;
+
     @TableField(exist = false)
     private List<CartItem> cartItems;
 
+    @TableField(exist = false)
+    private Site site;
     @Override
     public Long getId() {
         return id;
@@ -74,5 +78,21 @@ public class Cart
 
     public void setCartItems(List<CartItem> cartItems) {
         this.cartItems = cartItems;
+    }
+
+    public long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
+    }
+
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
     }
 }

@@ -28,4 +28,11 @@ extends AbstractControllerV1<
 
         return Result.ok(order);
     }
+
+    @PostMapping("createOrderByCartId")
+    Result<Order> createOrderByCartId(@RequestBody long id){
+        Order order = service.createOrderByCartId(id);
+
+        return Result.ok(order);
+    }
 }

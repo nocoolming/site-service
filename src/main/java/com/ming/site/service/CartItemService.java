@@ -8,4 +8,6 @@ public interface CartItemService
     extends CrudService<CartItem, Long> {
 
     List<CartItem> getItemsByCartId(long id);
+
+    CartItem getItemWithRelationship(long id);
 }

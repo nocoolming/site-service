@@ -59,11 +59,28 @@ public class CartServiceImpl
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public Cart getCartWithRelationship(long id) {
         Cart cart = this.findById(id);
         List<CartItem> items = cartItemService.getItemsByCartId(id);
 
         cart.setCartItems(items);
         return cart;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void clean(long id) {
+        Cart cart = this.getCartWithRelationship(id);
+
+        cart.setSubtotal(BigDecimal.ZERO);
+        cart.setCurrency("");
+        cart.setUpgradeAt(LocalDateTime.now());
+
+        this.update(cart);
+
+        for(CartItem item : cart.getCartItems()){
+            cartItemService.deleteById(item.getId());
+        }
     }
 }

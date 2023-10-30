@@ -30,12 +30,6 @@ public class ProductServiceImpl
     ProductImageService productImageService;
 
 
-    @Override
-    public Product findById(long id) {
-        Product product = super.findById(id);
-
-        return this.loadForeignField(product);
-    }
 
     @Override
     public List<Product> findAll() {
@@ -53,6 +47,13 @@ public class ProductServiceImpl
 
 
         return this.loadForeign(products);
+    }
+
+    @Override
+    public Product getProductWithRelationShip(long id) {
+        Product product = this.findById(id);
+
+        return this.loadForeignField(product);
     }
 
 

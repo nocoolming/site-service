@@ -166,8 +166,9 @@ create table product_image (
 create table order_detail (
    id BIGINT not null,
    title VARCHAR(256) not null,
+   currency varchar(32) null,
    price DECIMAL null,
-   count INT4 null,
+   quantity INT4 null,
    subtotal DECIMAL null,
    order_id BIGINT null references "order"(id) on delete set null,
    product_id BIGINT null references product(id) on delete set null,
@@ -229,6 +230,7 @@ create table cart (
     create_user_id  bigint  null ,
    create_at timestamp null,
    upgrade_at timestamp null,
+   site_id bigint not null
 );
 
 /*==============================================================*/
