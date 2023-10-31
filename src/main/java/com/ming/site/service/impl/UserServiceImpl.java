@@ -21,6 +21,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 
 @Service
 public class UserServiceImpl
@@ -32,9 +33,7 @@ public class UserServiceImpl
     CartService cartService;
     @Override
     public User findByUsernameOrMailOrMobile(String usernameOrMailOrMobile) {
-
         QueryWrapper<User> query = new QueryWrapper<>();
-
         query.eq("username", usernameOrMailOrMobile)
                 .or()
                 .eq("mail", usernameOrMailOrMobile);
@@ -63,7 +62,11 @@ public class UserServiceImpl
 
         Cart cart = new Cart();
         cart.setId(user.getId());
-//        cart.set
+        cart.setCreateAt(LocalDateTime.now());
+        cart.setUpgradeAt(LocalDateTime.now());
+        cart.setSiteId(model.getSiteId());
+        cartService.insert(cart);
+
         return user;
     }
 

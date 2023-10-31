@@ -226,7 +226,7 @@ create table category_language(
 create table cart (
     id BIGINT not null primary key,
 	currency varchar(32) null,
-    subtotal decimal not null,
+    subtotal decimal null,
     create_user_id  bigint  null ,
    create_at timestamp null,
    upgrade_at timestamp null,
