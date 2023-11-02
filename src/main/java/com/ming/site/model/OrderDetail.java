@@ -23,32 +23,19 @@ public class OrderDetail
 
     @TableField(exist = false)
     private User createUser;
-
-    @TableField(exist = false)
-    private Product product;
-
     @TableField(exist = false)
     private Order order;
 
 
-    private long createUserId;
-    private long productId;
+    private Long createUserId;
     private long orderId;
 
-    public long getCreateUserId() {
+    public Long getCreateUserId() {
         return createUserId;
     }
 
-    public void setCreateUserId(long createUserId) {
+    public void setCreateUserId(Long createUserId) {
         this.createUserId = createUserId;
-    }
-
-    public long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(long productId) {
-        this.productId = productId;
     }
 
     public long getOrderId() {
@@ -130,14 +117,6 @@ public class OrderDetail
 
     public void setOrder(Order order) {
         this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 
 

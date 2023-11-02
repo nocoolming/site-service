@@ -14,21 +14,22 @@ public class Order
 
     private long id;
     private BigDecimal total;
-    private BigDecimal receivables;
-    private BigDecimal actualPayments;
-    private String contact;
-    private String mobile;
-    private String tel;
+    private String email;
+    private String firstName;
+    private String lastName;
     private String address;
     private String country;
-    private String province;
-    private String street;
+    private String state;
+    private String city;
+    private String phone;
+    private String zip;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-
+    private Long createUserId;
     @TableField(exist = false)
     private User createUser;
 
+    private long siteId;
     @TableField(exist = false)
     private Site site;
 
@@ -37,24 +38,6 @@ public class Order
 
     @TableField(exist = false)
     private List<OrderDetail> orderDetails;
-    private long createUserId;
-    private long siteId;
-
-    public long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
-    }
 
     public Long getId() {
         return id;
@@ -72,44 +55,28 @@ public class Order
         this.total = total;
     }
 
-    public BigDecimal getReceivables() {
-        return receivables;
+    public String getEmail() {
+        return email;
     }
 
-    public void setReceivables(BigDecimal receivables) {
-        this.receivables = receivables;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public BigDecimal getActualPayments() {
-        return actualPayments;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setActualPayments(BigDecimal actualPayments) {
-        this.actualPayments = actualPayments;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getContact() {
-        return contact;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAddress() {
@@ -128,20 +95,36 @@ public class Order
         this.country = country;
     }
 
-    public String getProvince() {
-        return province;
+    public String getState() {
+        return state;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public String getStreet() {
-        return street;
+    public String getCity() {
+        return city;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
     }
 
     public LocalDateTime getCreateAt() {
@@ -190,5 +173,21 @@ public class Order
 
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
+    }
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
     }
 }

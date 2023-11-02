@@ -35,6 +35,30 @@ public class OrderServiceImpl
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Order insert(Order order) {
+        order.setId(SnowflakeUtil.nextId());
+        order.setCreateAt(LocalDateTime.now());
+        order.setUpgradeAt(LocalDateTime.now());
+
+        repository.insert(order);
+
+        for (OrderDetail orderDetail : order.getOrderDetails()) {
+            orderDetail.setId(SnowflakeUtil.nextId());
+            if(order.getCreateUserId() != null && order.getCreateUserId() > 0) {
+                orderDetail.setCreateUserId(order.getCreateUserId());
+            }
+            orderDetail.setUpgradeAt(LocalDateTime.now());
+            orderDetail.setCreateAt(LocalDateTime.now());
+            orderDetail.setOrderId(order.getId());
+
+            orderDetailService.insert(orderDetail);
+        }
+
+        return order;
+    }
+
+    @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public Order createOrderByCartId(long cartId) {
         this.validCreateOrderByCartId(cartId);
@@ -46,13 +70,12 @@ public class OrderServiceImpl
         order.setUpgradeAt(LocalDateTime.now());
         order.setSiteId(cart.getSiteId());
 
-        this.insert(order);
+        repository.insert(order);
 
         List<OrderDetail> list = new ArrayList<>();
         for (CartItem cartItem : cart.getCartItems()) {
             Product product = cartItem.getProduct();
             OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setProductId(product.getId());
             orderDetail.setTitle(product.getTitle());
             orderDetail.setPrice(product.getPrice());
             orderDetail.setQuantity(cartItem.getQuantity());

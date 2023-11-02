@@ -31,15 +31,15 @@ public class PaypalCreateOrderControllerV1 {
     CreatePayment createPayment;
 
     @PostMapping("createOrder")
-    Result<String> createOrder(@RequestBody long orderId){
+    Result<String> createOrder(@RequestBody Order order){
 //        PayPalHttpClient client = new PayPalHttpClient(
 //                new SandboxEnvironment("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
-        log.info("order id: " + String.valueOf(orderId));
-        Order order = new Order();
+        log.info("order id: " + String.valueOf(order.getId()));
+
         order.setId(SnowflakeUtil.nextId());
         order.setCreateAt(LocalDateTime.now());
         order.setUpgradeAt(LocalDateTime.now());
-        order.setTotal(BigDecimal.valueOf(88.8));
+
         Payment payment = createPayment.create(order);
 
         for (Links links : payment.getLinks()) {
