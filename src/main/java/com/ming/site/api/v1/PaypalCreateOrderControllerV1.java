@@ -39,7 +39,7 @@ public class PaypalCreateOrderControllerV1 {
         order.setId(SnowflakeUtil.nextId());
         order.setCreateAt(LocalDateTime.now());
         order.setUpgradeAt(LocalDateTime.now());
-        order.setOrderTotal(BigDecimal.valueOf(88.8));
+        order.setTotal(BigDecimal.valueOf(88.8));
         Payment payment = createPayment.create(order);
 
         for (Links links : payment.getLinks()) {

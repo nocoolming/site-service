@@ -26,7 +26,7 @@ public class CreatePaypalPayment
     public Payment create(Order order) {
         Amount amount = new Amount();
         amount.setCurrency(paypalConfig.getCurrency());
-        amount.setTotal(order.getOrderTotal().toString());
+        amount.setTotal(order.getTotal().toString());
 
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);

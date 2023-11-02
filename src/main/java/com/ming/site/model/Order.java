@@ -13,7 +13,7 @@ public class Order
         implements IdLongPrimaryKey {
 
     private long id;
-    private BigDecimal orderTotal;
+    private BigDecimal total;
     private BigDecimal receivables;
     private BigDecimal actualPayments;
     private String contact;
@@ -64,12 +64,12 @@ public class Order
         this.id = id;
     }
 
-    public BigDecimal getOrderTotal() {
-        return orderTotal;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public void setOrderTotal(BigDecimal orderTotal) {
-        this.orderTotal = orderTotal;
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     public BigDecimal getReceivables() {

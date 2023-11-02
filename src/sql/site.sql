@@ -59,7 +59,7 @@ create table payment_order (
 /*==============================================================*/
 create table "order" (
    id BIGINT not null,
-   order_total DECIMAL not null,
+   total DECIMAL not null,
    receivables DECIMAL null,
    actual_payments DECIMAL null,
    contact VARCHAR(256) null,
