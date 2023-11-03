@@ -58,8 +58,6 @@ public class PaymentOrderServiceImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public PaymentOrder callback(String paymentId, String payerId) throws PayPalRESTException {
-
-
         try {
             Payment payment = new Payment();
             payment.setId(paymentId);
@@ -81,6 +79,8 @@ public class PaymentOrderServiceImpl
                 paymentOrder.setUpgradeAt(LocalDateTime.now());
                 paymentOrder.setStatus("success");
                 paymentOrder.setTotal(transaction.getAmount().getTotal());
+
+                this.update(paymentOrder);
                 return paymentOrder;
             }
         } catch (PayPalRESTException e) {

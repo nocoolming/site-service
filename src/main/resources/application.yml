@@ -71,8 +71,8 @@ encrypt:
 paypal:
   clientId: "AUJYDWHcAvaelmTVB7bpYuvDdPEYwJjC6p-8IRVRU_NTy76M4GJ-HAE4EAqqUARxefoDcbITM5UTaOQd"
   secretKey: "EBbB3_zLwgEJwS43G36jn8_tKEKth9-J12FV89IzMl2yRajRrFfwacl6kZLUEI17zTKZoWxXW1sxGuCC"
-  cancelUrl: "http://192.168.1.18:8080/site/v1/cancel"
-  callbackUrl: "http://192.168.1.18:8080/site/v1/callback"
+  cancelUrl: "http://192.168.1.18:3000/cancel"
+  callbackUrl: "http://192.168.1.18:3000/success"
   currency: "USD"
   mode: "sandbox"
 
