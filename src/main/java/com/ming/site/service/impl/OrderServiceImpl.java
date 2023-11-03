@@ -2,10 +2,7 @@ package com.ming.site.service.impl;
 
 import com.ming.site.model.*;
 import com.ming.site.repository.OrderRepository;
-import com.ming.site.service.AbstractService;
-import com.ming.site.service.CartService;
-import com.ming.site.service.OrderDetailService;
-import com.ming.site.service.OrderService;
+import com.ming.site.service.*;
 import com.ming.site.util.SnowflakeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +26,8 @@ public class OrderServiceImpl
 
     @Autowired
     OrderDetailService orderDetailService;
+    @Autowired
+    PaymentOrderService paymentOrderService;
 
     void validCreateOrderByCartId(long cartId) {
 
@@ -45,7 +44,7 @@ public class OrderServiceImpl
 
         for (OrderDetail orderDetail : order.getOrderDetails()) {
             orderDetail.setId(SnowflakeUtil.nextId());
-            if(order.getCreateUserId() != null && order.getCreateUserId() > 0) {
+            if (order.getCreateUserId() != null && order.getCreateUserId() > 0) {
                 orderDetail.setCreateUserId(order.getCreateUserId());
             }
             orderDetail.setUpgradeAt(LocalDateTime.now());
@@ -91,6 +90,26 @@ public class OrderServiceImpl
 
         order.setOrderDetails(list);
 
+        return order;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Order createOrder(Order order) {
+        if (order.getId() <= 0) {
+            order.setId(SnowflakeUtil.nextId());
+        }
+        order.setCreateAt(LocalDateTime.now());
+        order.setUpgradeAt(LocalDateTime.now());
+
+        repository.insert(order);
+
+        PaymentOrder paymentOrder = order.getPaymentOrder();
+        paymentOrder.setId(order.getId());
+        paymentOrder.setCreateAt(LocalDateTime.now());
+        paymentOrder.setUpgradeAt(LocalDateTime.now());
+
+        paymentOrderService.insert(paymentOrder);
         return order;
     }
 }

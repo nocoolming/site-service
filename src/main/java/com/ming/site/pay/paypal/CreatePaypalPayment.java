@@ -2,8 +2,10 @@ package com.ming.site.pay.paypal;
 
 import com.ming.site.config.PaypalConfig;
 import com.ming.site.model.Order;
+import com.ming.site.model.PaymentOrder;
 import com.ming.site.pay.CreatePayment;
 import com.ming.site.service.OrderService;
+import com.ming.site.util.SnowflakeUtil;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -31,12 +33,15 @@ public class CreatePaypalPayment
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Payment create(Order order) {
+        order.setId(SnowflakeUtil.nextId());
+
         Amount amount = new Amount();
         amount.setCurrency(paypalConfig.getCurrency());
         amount.setTotal(order.getTotal().toString());
 
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
+        transaction.setCustom(String.valueOf(order.getId()));
         List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
 
@@ -48,6 +53,7 @@ public class CreatePaypalPayment
         payment.setPayer(payer);
         payment.setTransactions(transactions);
 
+        payment.setId(UUID.randomUUID().toString());
 
         RedirectUrls redirectUrls = new RedirectUrls();
         String cancelUrl = paypalConfig.getCancelUrl().replace("paymentId", String.valueOf(order.getId()));
@@ -57,13 +63,21 @@ public class CreatePaypalPayment
         redirectUrls.setReturnUrl(paypalConfig.getCallbackUrl());
 
         payment.setRedirectUrls(redirectUrls);
+
+        PaymentOrder paymentOrder = new PaymentOrder();
+        paymentOrder.setChannel("paypal");
+//        paymentOrder.setPayerId(payer.getPayerInfo().getPayerId());
+        paymentOrder.setStatus("pending");
+
         try {
             APIContext apiContext = new APIContext(paypalConfig.getClientId(), paypalConfig.getSecretKey(), paypalConfig.getMode());
 
             apiContext.setRequestId(UUID.randomUUID().toString());
             Payment createdPayment = payment.create(apiContext);
 
-            orderService.insert(order);
+            paymentOrder.setChannel_payment_id(payment.getId());
+            order.setPaymentOrder(paymentOrder);
+            orderService.createOrder(order);
             log.info(createdPayment.toString());
             return createdPayment;
         } catch (PayPalRESTException e) {

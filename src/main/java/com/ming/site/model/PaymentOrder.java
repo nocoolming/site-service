@@ -3,6 +3,7 @@ package com.ming.site.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class PaymentOrder
@@ -10,34 +11,17 @@ public class PaymentOrder
 
     private long id;
     private String channel;
+    private String channel_payment_id;
+    private String payerId;
+    private String total;
+    private String status;
     private LocalDateTime createAt;
-
+    private LocalDateTime upgradeAt;
 
     @TableField(exist = false)
     private Order order;
 
-    @TableField(exist = false)
-    private Site site;
-
-    private long orderId;
-    private long siteId;
-
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
-    }
-
+    @Override
     public Long getId() {
         return id;
     }
@@ -54,6 +38,38 @@ public class PaymentOrder
         this.channel = channel;
     }
 
+    public String getChannel_payment_id() {
+        return channel_payment_id;
+    }
+
+    public void setChannel_payment_id(String channel_payment_id) {
+        this.channel_payment_id = channel_payment_id;
+    }
+
+    public String getPayerId() {
+        return payerId;
+    }
+
+    public void setPayerId(String payerId) {
+        this.payerId = payerId;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public LocalDateTime getCreateAt() {
         return createAt;
     }
@@ -62,19 +78,19 @@ public class PaymentOrder
         this.createAt = createAt;
     }
 
+    public LocalDateTime getUpgradeAt() {
+        return upgradeAt;
+    }
+
+    public void setUpgradeAt(LocalDateTime upgradeAt) {
+        this.upgradeAt = upgradeAt;
+    }
+
     public Order getOrder() {
         return order;
     }
 
     public void setOrder(Order order) {
         this.order = order;
-    }
-
-    public Site getSite() {
-        return site;
-    }
-
-    public void setSite(Site site) {
-        this.site = site;
     }
 }

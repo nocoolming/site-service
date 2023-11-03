@@ -23,6 +23,8 @@ public class Order
     private String city;
     private String phone;
     private String zip;
+
+    private String status;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
     private Long createUserId;
@@ -125,6 +127,14 @@ public class Order
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreateAt() {

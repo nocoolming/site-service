@@ -7,4 +7,6 @@ public interface OrderService
         extends CrudService<Order, Long> {
 
     Order createOrderByCartId(long cartId);
+
+    Order createOrder(Order order);
 }

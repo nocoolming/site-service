@@ -1,6 +1,8 @@
 package com.ming.site.api.v1;
 
 import com.ming.site.common.Result;
+import com.ming.site.model.PaymentOrder;
+import com.ming.site.service.PaymentOrderService;
 import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.PaymentExecution;
 import com.paypal.base.rest.APIContext;
@@ -23,25 +25,18 @@ public class CallbackPaymentControllerV1 {
     @Autowired
     APIContext apiContext;
 
-    @GetMapping("site/v1/callback")
-    Result<String> callback(
-            @RequestParam("paymentId") String paymentId,
-            @RequestParam("PayerID") String payerId){
-        try {
-            Payment payment = new Payment();
-            payment.setId(paymentId);
-            PaymentExecution paymentExecute = new PaymentExecution();
-            paymentExecute.setPayerId(payerId);
-            payment = payment.execute(apiContext, paymentExecute);
-            if (payment.getState().equals("approved")) {
-                return Result.ok("success");
-            }
-        } catch (PayPalRESTException e) {
-            log.error(e.getMessage());
-            return Result.error(e.getMessage());
-        }
+    @Autowired
+    PaymentOrderService paymentOrderService;
 
-        return Result.ok("done");
+    @GetMapping("site/v1/callback")
+    Result<PaymentOrder> callback(
+            @RequestParam("paymentId") String paymentId,
+            @RequestParam("PayerID") String payerId)
+            throws PayPalRESTException {
+        PaymentOrder paymentOrder
+                = paymentOrderService.callback(paymentId, payerId);
+
+        return Result.ok(paymentOrder);
     }
 
 }

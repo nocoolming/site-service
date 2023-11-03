@@ -45,14 +45,16 @@ alter table "user"
 /* Table: payment_order                                         */
 /*==============================================================*/
 create table payment_order (
-   id VARCHAR(128) not null,
-   channel VARCHAR(1024) null,
-   total DECIMAL null,
+   id bigint not null primary key,
+   channel VARCHAR(64) null,
+   channel_payment_id   varchar(128) null,
+   payer_id varchar(128) null,
+   total varchar(64) null,
+   status VARCHAR(32) null,
    create_at timestamp null,
-   order_id BIGINT null ,
-   site_id BIGINT null references site(id) on delete set null,
-   constraint PK_PAYMENT_ORDER primary key (id)
+   upgrade_at timestamp null
 );
+
 
 /*==============================================================*/
 /* Table: "order"                                               */
@@ -69,7 +71,7 @@ create table "order" (
    state varchar(64) null,
    zip  varchar(32) null,
    city VARCHAR(128) null,
-   payment_id VARCHAR(128) references payment_order(id) on delete set null,
+   status VARCHAR(32) null ,
    create_user_id BIGINT not null  ,
    create_at timestamp null,
    upgrade_at timestamp null,
