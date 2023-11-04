@@ -33,7 +33,6 @@ public class CreatePaypalPayment
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Payment create(Order order) {
-        order.setId(SnowflakeUtil.nextId());
 
         Amount amount = new Amount();
         amount.setCurrency(paypalConfig.getCurrency());
@@ -60,22 +59,22 @@ public class CreatePaypalPayment
         redirectUrls.setCancelUrl(cancelUrl);
 
         redirectUrls.setReturnUrl(paypalConfig.getCallbackUrl());
-
         payment.setRedirectUrls(redirectUrls);
 
-        PaymentOrder paymentOrder = new PaymentOrder();
-        paymentOrder.setChannel("paypal");
-//        paymentOrder.setPayerId(payer.getPayerInfo().getPayerId());
-        paymentOrder.setStatus("pending");
-
+        order.setId(SnowflakeUtil.nextId());
         try {
-            APIContext apiContext = new APIContext(paypalConfig.getClientId(), paypalConfig.getSecretKey(), paypalConfig.getMode());
-
-            apiContext.setRequestId(UUID.randomUUID().toString());
-            apiContext.setMaskRequestId(true);
+            APIContext apiContext = new APIContext(
+                    paypalConfig.getClientId(),
+                    paypalConfig.getSecretKey(),
+                    paypalConfig.getMode());
+//            apiContext.setRequestId(UUID.randomUUID().toString());
+            apiContext.setRequestId(order.getId().toString());
 
             Payment createdPayment = payment.create(apiContext);
 
+            PaymentOrder paymentOrder = new PaymentOrder();
+            paymentOrder.setChannel("paypal");
+            paymentOrder.setStatus("pending");
             paymentOrder.setChannel_payment_id(createdPayment.getId());
             paymentOrder.setTotal(order.getTotal().toString());
             order.setPaymentOrder(paymentOrder);
