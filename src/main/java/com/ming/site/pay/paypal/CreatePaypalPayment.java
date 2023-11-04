@@ -40,6 +40,7 @@ public class CreatePaypalPayment
         amount.setTotal(order.getTotal().toString());
 
         Transaction transaction = new Transaction();
+
         transaction.setAmount(amount);
         transaction.setCustom(String.valueOf(order.getId()));
         List<Transaction> transactions = new ArrayList<>();
@@ -52,8 +53,6 @@ public class CreatePaypalPayment
         payment.setIntent("sale");
         payment.setPayer(payer);
         payment.setTransactions(transactions);
-
-        payment.setId(UUID.randomUUID().toString());
 
         RedirectUrls redirectUrls = new RedirectUrls();
         String cancelUrl = paypalConfig.getCancelUrl().replace("paymentId", String.valueOf(order.getId()));
@@ -73,9 +72,12 @@ public class CreatePaypalPayment
             APIContext apiContext = new APIContext(paypalConfig.getClientId(), paypalConfig.getSecretKey(), paypalConfig.getMode());
 
             apiContext.setRequestId(UUID.randomUUID().toString());
+            apiContext.setMaskRequestId(true);
+
             Payment createdPayment = payment.create(apiContext);
 
-            paymentOrder.setChannel_payment_id(payment.getId());
+            paymentOrder.setChannel_payment_id(createdPayment.getId());
+            paymentOrder.setTotal(order.getTotal().toString());
             order.setPaymentOrder(paymentOrder);
             orderService.createOrder(order);
             log.info(createdPayment.toString());

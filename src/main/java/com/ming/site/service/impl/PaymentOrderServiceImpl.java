@@ -2,9 +2,11 @@ package com.ming.site.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ming.site.common.Result;
+import com.ming.site.model.Order;
 import com.ming.site.model.PaymentOrder;
 import com.ming.site.repository.PaymentOrderRepository;
 import com.ming.site.service.AbstractService;
+import com.ming.site.service.OrderService;
 import com.ming.site.service.PaymentOrderService;
 import com.ming.site.util.SnowflakeUtil;
 import com.paypal.api.payments.Payment;
@@ -28,6 +30,8 @@ public class PaymentOrderServiceImpl
     private static final Logger log = LoggerFactory.getLogger(PaymentOrderServiceImpl.class);
     @Autowired
     APIContext apiContext;
+    @Autowired
+    OrderService orderService;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = PayPalRESTException.class)
@@ -43,7 +47,6 @@ public class PaymentOrderServiceImpl
                 PaymentOrder paymentOrder = new PaymentOrder();
                 paymentOrder.setId(SnowflakeUtil.nextId());
                 paymentOrder.setChannel("paypal");
-//                paymentOrder.setOrderId(paymentId);
                 paymentOrder.setCreateAt(LocalDateTime.now());
                 repository.insert(paymentOrder);
                 return paymentOrder;
@@ -66,19 +69,14 @@ public class PaymentOrderServiceImpl
             payment = payment.execute(apiContext, paymentExecute);
             if (payment.getState().equals("approved")) {
 
-                Transaction transaction = payment.getTransactions().get(0);
-                String orderIdString = transaction.getCustom();
-                long id = Long.parseLong(orderIdString);
-                PaymentOrder paymentOrder = this.findById(id);
+                PaymentOrder paymentOrder = this.getPaymentOrderByChannelPaymentId(paymentId);
 
-                if(paymentOrder == null){
+                if (paymentOrder == null) {
                     throw new RuntimeException("not found payment id");
                 }
-                paymentOrder.setChannel_payment_id(paymentId);
                 paymentOrder.setPayerId(payerId);
                 paymentOrder.setUpgradeAt(LocalDateTime.now());
                 paymentOrder.setStatus("success");
-                paymentOrder.setTotal(transaction.getAmount().getTotal());
 
                 this.update(paymentOrder);
                 return paymentOrder;
@@ -100,6 +98,9 @@ public class PaymentOrderServiceImpl
                 .eq("channel_payment_id", paymentId);
 
         PaymentOrder paymentOrder = repository.selectOne(queryWrapper);
+
+        Order order = orderService.findById(paymentOrder.getId());
+        paymentOrder.setOrder(order);
         return paymentOrder;
     }
 }
