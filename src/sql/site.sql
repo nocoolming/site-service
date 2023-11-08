@@ -82,10 +82,6 @@ create table "order" (
    constraint PK_ORDER primary key (id)
 );
 
-alter table payment_order
-    add constraint fk_payment_order
-       foreign key(order_id) references "order"(id)
-       on delete set null;
 /*==============================================================*/
 /* Table: order_detail                                          */
 /*==============================================================*/
@@ -109,7 +105,7 @@ create table product_collect (
     description varchar(1024) not null,
     create_at timestamp not null,
     upgrade_at timestamp not null,
-    create_user_id  long not null references "user"(id) on delete set null
+    create_user_id  bigint not null references "user"(id) on delete set null,
     upgrade_user_id BIGINT null references "user"(id) on delete set null,
     site_id BIGINT null references site(id) on delete set null
 );
@@ -118,8 +114,8 @@ create table product_attribute (
     id bigint not null primary key,
     title varchar(256) not null,
     create_at timestamp not null,
-    collect_id long not null references product_collect(id) on delete set null,
-    create_user_id  long not null references "user"(id) on delete set null
+    collect_id bigint not null references product_collect(id) on delete set null,
+    create_user_id  bigint not null references "user"(id) on delete set null,
     site_id BIGINT null references site(id) on delete set null
 );
 
@@ -127,21 +123,12 @@ create table product_attribute_value (
     id bigint not null primary key,
     value varchar(256) not null,
     create_at timestamp not null,
-    attribute_id long not null references product_attribute(id) on delete set null,
-    collect_id long not null references product_collect(id) on delete set null,
-    create_user_id  long not null references "user"(id) on delete set null
+    attribute_id BIGINT not null references product_attribute(id) on delete set null,
+    collect_id BIGINT not null references product_collect(id) on delete set null,
+    create_user_id  BIGINT not null references "user"(id) on delete set null,
     site_id BIGINT null references site(id) on delete set null
 );
 
-create table inventory (
-    id bigint not null primary key,
-    attribute_id long not null references product_attribute_value(id) on delete set null,
-    count long not null default 0,
-    product_id   long not null references product(id) on delete set null,
-    collect_id long not null references product_collect(id) on delete set null,
-    create_user_id  long not null references "user"(id) on delete set null
-    site_id BIGINT null references site(id) on delete set null
-)
 /*==============================================================*/
 /* Table: product                                               */
 /*==============================================================*/
@@ -159,7 +146,7 @@ create table product (
    language VARCHAR(128) NULL,
    create_at timestamp null,
    upgrade_at timestamp null,
-   collect_id long not null references product_collect(id) on delete set null,
+   collect_id BIGINT not null references product_collect(id) on delete set null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    upgrade_user_id BIGINT null references "user"(id) on delete set null,
    site_id BIGINT null references site(id) on delete set null,
@@ -180,6 +167,15 @@ create table product_image (
    constraint PK_PRODUCT_IMAGE primary key (id)
 );
 
+create table inventory (
+    id bigint not null primary key,
+    attribute_id BIGINT not null references product_attribute_value(id) on delete set null,
+    count BIGINT not null default 0,
+    product_id   BIGINT not null references product(id) on delete set null,
+    collect_id BIGINT not null references product_collect(id) on delete set null,
+    create_user_id  BIGINT not null references "user"(id) on delete set null,
+    site_id BIGINT null references site(id) on delete set null
+);
 /*==============================================================*/
 /* Table: Role                                                  */
 /*==============================================================*/

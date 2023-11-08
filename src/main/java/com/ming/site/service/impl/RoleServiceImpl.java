@@ -1,5 +1,6 @@
 package com.ming.site.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ming.site.model.Role;
 import com.ming.site.model.User;
 import com.ming.site.repository.RoleRepository;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class RoleServiceImpl
@@ -23,13 +25,14 @@ public class RoleServiceImpl
 
     @Autowired
     UserService userService;
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void assignRoleToUser(long userId, long roleId) {
         User user = userService.findById(userId);
         Role role = repository.selectById(roleId);
 
-        if(user != null && role != null){
+        if (user != null && role != null) {
             user.getRoles().add(role);
             user.setUpgradeAt(LocalDateTime.now());
 
@@ -37,4 +40,17 @@ public class RoleServiceImpl
         }
 
     }
+
+    @Override
+    public List<Role> all(long siteId) {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<Role>();
+        queryWrapper.eq("site_id", siteId);
+        queryWrapper.orderByDesc("create_at");
+
+        List<Role> roles = repository.selectList(queryWrapper);
+
+        return roles;
+    }
+
+
 }

@@ -3,6 +3,7 @@ package com.ming.site.api.v1;
 import com.ming.site.api.AbstractControllerV1;
 import com.ming.site.common.Result;
 import com.ming.site.model.Category;
+import com.ming.site.model.Role;
 import com.ming.site.model.Site;
 import com.ming.site.model.User;
 import com.ming.site.service.CategoryService;
@@ -58,4 +59,6 @@ public class  CategoryControllerV1
 
         return Result.ok(category);
     }
+
+
 }

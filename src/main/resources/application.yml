@@ -15,8 +15,8 @@ spring:
 
   datasource:
     driver-class-name:  org.postgresql.Driver
-    #url: jdbc:postgresql://localhost:5432/site_db
-    url: jdbc:postgresql://192.168.1.26:5432/site_db
+    url: jdbc:postgresql://localhost:5432/site_db
+#    url: jdbc:postgresql://192.168.1.26:5432/site_db
     username: postgres
     password: a
     validationQuery: SELECT 1
@@ -71,8 +71,8 @@ encrypt:
 paypal:
   clientId: "AUJYDWHcAvaelmTVB7bpYuvDdPEYwJjC6p-8IRVRU_NTy76M4GJ-HAE4EAqqUARxefoDcbITM5UTaOQd"
   secretKey: "EBbB3_zLwgEJwS43G36jn8_tKEKth9-J12FV89IzMl2yRajRrFfwacl6kZLUEI17zTKZoWxXW1sxGuCC"
-  cancelUrl: "http://192.168.1.18:3000/cancel"
-  callbackUrl: "http://192.168.1.18:3000/callback"
+  cancelUrl: "http://localhost:3000/cancel"
+  callbackUrl: "http://localhost:3000/callback"
   currency: "USD"
   mode: "sandbox"
 

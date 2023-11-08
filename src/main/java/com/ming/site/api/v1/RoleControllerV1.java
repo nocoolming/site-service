@@ -7,10 +7,9 @@ import com.ming.site.model.Role;
 import com.ming.site.service.RoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("site/v1/role")
@@ -22,5 +21,11 @@ public class RoleControllerV1
     Result<String> assignUser(@RequestBody AssignUserModel assignUser) {
         service.assignRoleToUser(assignUser.getUserId(), assignUser.getRoleId());
         return Result.ok("done");
+    }
+
+    @GetMapping("all/{siteId}")
+    Result<List<Role>> all(@PathVariable long siteId){
+        List<Role> value = service.all(siteId);
+        return Result.success(value);
     }
 }
