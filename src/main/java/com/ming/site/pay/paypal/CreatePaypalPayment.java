@@ -68,7 +68,7 @@ public class CreatePaypalPayment
                     paypalConfig.getSecretKey(),
                     paypalConfig.getMode());
 //            apiContext.setRequestId(UUID.randomUUID().toString());
-            apiContext.setRequestId(order.getId().toString());
+
 
             Payment createdPayment = payment.create(apiContext);
 

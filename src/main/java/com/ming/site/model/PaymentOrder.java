@@ -13,6 +13,9 @@ public class PaymentOrder
     private String channel;
     private String channel_payment_id;
     private String payerId;
+    private String payerFirstName;
+    private String payerLastName;
+    private String payerEmail;
     private String total;
     private String status;
     private LocalDateTime createAt;
@@ -52,6 +55,30 @@ public class PaymentOrder
 
     public void setPayerId(String payerId) {
         this.payerId = payerId;
+    }
+
+    public String getPayerFirstName() {
+        return payerFirstName;
+    }
+
+    public void setPayerFirstName(String payerFirstName) {
+        this.payerFirstName = payerFirstName;
+    }
+
+    public String getPayerLastName() {
+        return payerLastName;
+    }
+
+    public void setPayerLastName(String payerLastName) {
+        this.payerLastName = payerLastName;
+    }
+
+    public String getPayerEmail() {
+        return payerEmail;
+    }
+
+    public void setPayerEmail(String payerEmail) {
+        this.payerEmail = payerEmail;
     }
 
     public String getTotal() {

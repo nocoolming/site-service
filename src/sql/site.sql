@@ -49,6 +49,9 @@ create table payment_order (
    channel VARCHAR(64) null,
    channel_payment_id   varchar(128) null,
    payer_id varchar(128) null,
+   payer_first_name varchar(128) null,
+   payer_last_name varchar(128) null,
+   payer_email varchar(128) null,
    total varchar(64) null,
    status VARCHAR(32) null,
    create_at timestamp null,
@@ -62,7 +65,7 @@ create table payment_order (
 create table "order" (
    id BIGINT not null,
    email varchar(256) null,
-   total DECIMAL not null,
+   total DECIMAL  null,
    phone varchar(128) null,
    first_name varchar(32) null,
    last_name varchar(32) null,
@@ -72,7 +75,7 @@ create table "order" (
    zip  varchar(32) null,
    city VARCHAR(128) null,
    status VARCHAR(32) null ,
-   create_user_id BIGINT not null  ,
+   create_user_id BIGINT  null  ,
    create_at timestamp null,
    upgrade_at timestamp null,
    site_id BIGINT null references site(id) on delete set null,
@@ -83,7 +86,22 @@ alter table payment_order
     add constraint fk_payment_order
        foreign key(order_id) references "order"(id)
        on delete set null;
-
+/*==============================================================*/
+/* Table: order_detail                                          */
+/*==============================================================*/
+create table order_detail (
+   id BIGINT not null,
+   title VARCHAR(256) null,
+   currency varchar(32) null,
+   price DECIMAL null,
+   quantity INT4 null,
+   subtotal DECIMAL null,
+   order_id BIGINT null references "order"(id) on delete set null,
+   create_at timestamp null,
+   upgrade_at timestamp null,
+   create_user_id BIGINT null references "user"(id) on delete set null,
+   constraint PK_ORDER_DETAIL primary key (id)
+);
 create table product_collect (
     id bigint not null primary key,
     title varchar(256) not null,
@@ -161,22 +179,7 @@ create table product_image (
    create_user_id BIGINT null references "user"(id) on delete set null,
    constraint PK_PRODUCT_IMAGE primary key (id)
 );
-/*==============================================================*/
-/* Table: order_detail                                          */
-/*==============================================================*/
-create table order_detail (
-   id BIGINT not null,
-   title VARCHAR(256) not null,
-   currency varchar(32) null,
-   price DECIMAL null,
-   quantity INT4 null,
-   subtotal DECIMAL null,
-   order_id BIGINT null references "order"(id) on delete set null,
-   create_at timestamp null,
-   upgrade_at timestamp null,
-   create_user_id BIGINT null references "user"(id) on delete set null,
-   constraint PK_ORDER_DETAIL primary key (id)
-);
+
 /*==============================================================*/
 /* Table: Role                                                  */
 /*==============================================================*/

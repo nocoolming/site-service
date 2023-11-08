@@ -36,7 +36,10 @@ public class OrderServiceImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Order insert(Order order) {
-        order.setId(SnowflakeUtil.nextId());
+        if (order.getId() == null
+                || order.getId() <= 0) {
+            order.setId(SnowflakeUtil.nextId());
+        }
         order.setCreateAt(LocalDateTime.now());
         order.setUpgradeAt(LocalDateTime.now());
 
@@ -96,13 +99,7 @@ public class OrderServiceImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Order createOrder(Order order) {
-        if (order.getId() <= 0) {
-            order.setId(SnowflakeUtil.nextId());
-        }
-        order.setCreateAt(LocalDateTime.now());
-        order.setUpgradeAt(LocalDateTime.now());
-
-        repository.insert(order);
+        this.insert(order);
 
         PaymentOrder paymentOrder = order.getPaymentOrder();
         paymentOrder.setId(order.getId());
@@ -110,6 +107,32 @@ public class OrderServiceImpl
         paymentOrder.setUpgradeAt(LocalDateTime.now());
 
         paymentOrderService.insert(paymentOrder);
+        return order;
+    }
+
+    @Override
+    @Transactional(
+            propagation = Propagation.REQUIRED,
+            rollbackFor = Exception.class
+    )
+    public Order approve(long orderId) {
+        Order order = this.findById(orderId);
+
+        order.setStatus("success");
+        order.setUpgradeAt(LocalDateTime.now());
+
+        this.update(order);
+        return order;
+    }
+
+    @Override
+    public Order cancel(long orderId) {
+        Order order = this.findById(orderId);
+
+        order.setStatus("cancel");
+        order.setUpgradeAt(LocalDateTime.now());
+
+        this.update(order);
         return order;
     }
 }

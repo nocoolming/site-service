@@ -23,10 +23,11 @@ extends AbstractControllerV1<
 
     @PostMapping("createOrder")
     Result<Order> createOrder(@RequestBody Order order){
-        log.debug(order.toString());
 
+        Order newOrder = service.createOrder(order);
+        log.debug(newOrder.toString());
 
-        return Result.ok(order);
+        return Result.ok(newOrder);
     }
 
     @PostMapping("createOrderByCartId")
@@ -35,4 +36,19 @@ extends AbstractControllerV1<
 
         return Result.ok(order);
     }
+
+    @PostMapping("approve")
+    Result<Order> approve(@RequestBody long orderId){
+        Order order = service.approve(orderId);
+
+        return Result.ok(order);
+    }
+
+    @PostMapping("cancel")
+    Result<Order> cancel(@RequestBody long orderId){
+        Order order = service.cancel(orderId);
+
+        return Result.ok(order);
+    }
+
 }

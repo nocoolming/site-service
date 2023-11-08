@@ -9,4 +9,8 @@ public interface OrderService
     Order createOrderByCartId(long cartId);
 
     Order createOrder(Order order);
+
+    Order approve(long orderId);
+
+    Order cancel(long orderId);
 }

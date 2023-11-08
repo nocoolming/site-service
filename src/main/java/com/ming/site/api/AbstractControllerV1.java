@@ -25,7 +25,6 @@ public abstract class AbstractControllerV1<
     @Autowired
     protected S service;
 
-
     @PostMapping("insert")
     Result<T> insert(@RequestBody T o) {
 

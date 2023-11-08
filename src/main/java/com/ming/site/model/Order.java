@@ -12,7 +12,7 @@ import java.util.List;
 public class Order
         implements IdLongPrimaryKey {
 
-    private long id;
+    private Long id;
     private BigDecimal total;
     private String email;
     private String firstName;
@@ -31,7 +31,7 @@ public class Order
     @TableField(exist = false)
     private User createUser;
 
-    private long siteId;
+    private Long siteId;
     @TableField(exist = false)
     private Site site;
 
@@ -193,11 +193,11 @@ public class Order
         this.createUserId = createUserId;
     }
 
-    public long getSiteId() {
+    public Long getSiteId() {
         return siteId;
     }
 
-    public void setSiteId(long siteId) {
+    public void setSiteId(Long siteId) {
         this.siteId = siteId;
     }
 }

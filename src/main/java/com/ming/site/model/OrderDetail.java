@@ -12,7 +12,7 @@ public class OrderDetail
         this.createAt = this.upgradeAt = LocalDateTime.now();
     }
 
-    private long id;
+    private Long id;
 
     private String title;
     private BigDecimal price;
@@ -20,15 +20,14 @@ public class OrderDetail
     private BigDecimal subtotal;
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
-
+    private Long createUserId;
+    private Long orderId;
     @TableField(exist = false)
     private User createUser;
     @TableField(exist = false)
     private Order order;
 
 
-    private Long createUserId;
-    private long orderId;
 
     public Long getCreateUserId() {
         return createUserId;
@@ -38,11 +37,11 @@ public class OrderDetail
         this.createUserId = createUserId;
     }
 
-    public long getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(long orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 

@@ -4,6 +4,7 @@ import com.ming.site.common.Result;
 import com.ming.site.config.PaypalConfig;
 import com.ming.site.model.Order;
 import com.ming.site.pay.CreatePayment;
+import com.ming.site.service.OrderService;
 import com.ming.site.util.SnowflakeUtil;
 import com.paypal.api.openidconnect.Session;
 import com.paypal.api.payments.Links;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("site/v1/paypal")
@@ -29,53 +32,47 @@ public class PaypalCreateOrderControllerV1 {
 
     @Autowired
     CreatePayment createPayment;
+    @Autowired
+    OrderService orderService;
 
     @PostMapping("createOrder")
-    Result<String> createOrder(@RequestBody Order order){
-//        PayPalHttpClient client = new PayPalHttpClient(
-//                new SandboxEnvironment("YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET")
+    Result<String> createOrder(@RequestBody Order order) {
         log.info("order id: " + String.valueOf(order.getId()));
 
         order.setId(SnowflakeUtil.nextId());
         order.setCreateAt(LocalDateTime.now());
         order.setUpgradeAt(LocalDateTime.now());
+        order.setStatus("pending");
 
         Payment payment = createPayment.create(order);
 
         for (Links links : payment.getLinks()) {
             if (links.getRel().equals("approval_url")) {
                 log.debug("href: " + links.getHref());
-                return Result.ok(links.getHref()) ;
+                return Result.ok(links.getHref());
             }
         }
         return Result.ok("/");
     }
 
-    @GetMapping("getUsersConsent")
-    Result<String> getUsersConsent(){
-        APIContext apiContext = new APIContext(
-                paypalConfig.getClientId(),
-                paypalConfig.getSecretKey(),
-                paypalConfig.getMode()
-        );
-        List<String> scopes = new ArrayList<String>() {{
-            /**
-             * 'openid'
-             * 'profile'
-             * 'address'
-             * 'email'
-             * 'phone'
-             * 'https://uri.paypal.com/services/paypalattributes'
-             * 'https://uri.paypal.com/services/expresscheckout'
-             * 'https://uri.paypal.com/services/invoicing'
-             */
-            add("openid");
-            add("profile");
-            add("email");
-        }};
-        String redirectUrl = Session.getRedirectURL("UserConsent", scopes, apiContext);
-        log.info(redirectUrl);
+    @PostMapping("createOrderReturnOrderAndLinks")
+    Result<Map> createOrderReturnOrderAndLinks(
+            @RequestBody Order order) {
+        log.info("order id: " + String.valueOf(order.getId()));
 
-        return Result.ok(redirectUrl);
+        order.setId(SnowflakeUtil.nextId());
+        order.setCreateAt(LocalDateTime.now());
+        order.setUpgradeAt(LocalDateTime.now());
+        order.setStatus("pending");
+
+        Payment payment = createPayment.create(order);
+
+        Order newOrder = orderService.findById(order.getId());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("order", newOrder);
+        map.put("links", payment.getLinks());
+
+        return Result.ok(map);
     }
 }

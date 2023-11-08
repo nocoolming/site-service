@@ -2,6 +2,7 @@ package com.ming.site.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ming.site.common.Result;
+import com.ming.site.config.PaypalConfig;
 import com.ming.site.model.Order;
 import com.ming.site.model.PaymentOrder;
 import com.ming.site.repository.PaymentOrderRepository;
@@ -9,6 +10,7 @@ import com.ming.site.service.AbstractService;
 import com.ming.site.service.OrderService;
 import com.ming.site.service.PaymentOrderService;
 import com.ming.site.util.SnowflakeUtil;
+import com.paypal.api.payments.PayerInfo;
 import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.PaymentExecution;
 import com.paypal.api.payments.Transaction;
@@ -22,14 +24,16 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class PaymentOrderServiceImpl
         extends AbstractService<PaymentOrder, Long, PaymentOrderRepository>
         implements PaymentOrderService {
     private static final Logger log = LoggerFactory.getLogger(PaymentOrderServiceImpl.class);
+
     @Autowired
-    APIContext apiContext;
+    PaypalConfig paypalConfig;
     @Autowired
     OrderService orderService;
 
@@ -41,6 +45,11 @@ public class PaymentOrderServiceImpl
             payment.setId(paymentId);
             PaymentExecution paymentExecute = new PaymentExecution();
             paymentExecute.setPayerId(payerId);
+            APIContext apiContext = new APIContext(
+                    paypalConfig.getClientId(),
+                    paypalConfig.getSecretKey(),
+                    paypalConfig.getMode());
+//            apiContext.setRequestId(UUID.randomUUID().toString());
             payment = payment.execute(apiContext, paymentExecute);
             if (payment.getState().equals("approved")) {
 
@@ -66,6 +75,11 @@ public class PaymentOrderServiceImpl
             payment.setId(paymentId);
             PaymentExecution paymentExecute = new PaymentExecution();
             paymentExecute.setPayerId(payerId);
+            APIContext apiContext = new APIContext(
+                    paypalConfig.getClientId(),
+                    paypalConfig.getSecretKey(),
+                    paypalConfig.getMode());
+//            apiContext.setRequestId(UUID.randomUUID().toString());
             payment = payment.execute(apiContext, paymentExecute);
             if (payment.getState().equals("approved")) {
 
@@ -74,11 +88,21 @@ public class PaymentOrderServiceImpl
                 if (paymentOrder == null) {
                     throw new RuntimeException("not found payment id");
                 }
-                paymentOrder.setPayerId(payerId);
+                PayerInfo payerInfo = payment.getPayer().getPayerInfo();
+                paymentOrder.setPayerId(payerInfo.getPayerId());
+                paymentOrder.setPayerEmail(payerInfo.getEmail());
+                paymentOrder.setPayerFirstName(payerInfo.getFirstName());
+                paymentOrder.setPayerLastName(payerInfo.getLastName());
                 paymentOrder.setUpgradeAt(LocalDateTime.now());
-                paymentOrder.setStatus("success");
+                paymentOrder.setStatus(payment.getState());
 
                 this.update(paymentOrder);
+
+                Order order = orderService.findById(paymentOrder.getId());
+                order.setStatus("paid");
+                order.setUpgradeAt(LocalDateTime.now());
+                orderService.update(order);
+
                 return paymentOrder;
             }
         } catch (PayPalRESTException e) {
