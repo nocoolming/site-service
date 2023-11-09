@@ -1,14 +1,13 @@
 package com.ming.site.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 
-@TableName("\"order\"")
 public class Order
         implements IdLongPrimaryKey {
 
@@ -28,17 +27,17 @@ public class Order
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
     private Long createUserId;
-    @TableField(exist = false)
+
     private User createUser;
 
     private Long siteId;
-    @TableField(exist = false)
+
     private Site site;
 
-    @TableField(exist = false)
+
     private PaymentOrder paymentOrder;
 
-    @TableField(exist = false)
+
     private List<OrderDetail> orderDetails;
 
     public Long getId() {

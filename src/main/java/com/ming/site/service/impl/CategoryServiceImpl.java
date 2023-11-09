@@ -1,7 +1,7 @@
 package com.ming.site.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.ming.site.model.Category;
 import com.ming.site.model.Product;
 import com.ming.site.repository.CategoryRepository;
@@ -22,7 +22,7 @@ public class CategoryServiceImpl
 
     @Override
     public Category getCategoryBySiteIdAndTitle(long siteId, String title) {
-        QueryWrapper<Category> query = new QueryWrapper<>();
+        QueryWrapper query = new QueryWrapper();
         query.eq("site_id", siteId)
                 .eq("title", title);
 
@@ -31,7 +31,7 @@ public class CategoryServiceImpl
 
     @Override
     public List<Category> getCategoriesTreeBySiteId(long siteId) {
-        QueryWrapper<Category> query = new QueryWrapper<>();
+        QueryWrapper query = new QueryWrapper();
         query.eq("site_id", siteId);
 
         List<Category> categories = repository.selectList(query);
@@ -54,7 +54,7 @@ public class CategoryServiceImpl
     public List<Category> getCategoriesTreeBySiteIdAndTitle(long siteId, String title) {
         Category category = this.getCategoryBySiteIdAndTitle(siteId, title);
 
-        QueryWrapper<Category> query = new QueryWrapper<>();
+        QueryWrapper query = new QueryWrapper();
         query.eq("site_id", siteId);
 //                .like("parent_code", category.getCode() );
 

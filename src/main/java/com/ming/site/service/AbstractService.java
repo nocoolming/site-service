@@ -1,9 +1,10 @@
 package com.ming.site.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
 import com.ming.site.model.IdLongPrimaryKey;
 import com.ming.site.util.SnowflakeUtil;
+import com.mybatisflex.core.BaseMapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public abstract class AbstractService<
 
     @Transactional(propagation = Propagation.REQUIRED)
     public T insert(T entity) {
-        if (entity.getId() <= 0 ) {
+        if (entity.getId() <= 0) {
             entity.setId(SnowflakeUtil.nextId());
         }
 
@@ -38,33 +39,33 @@ public abstract class AbstractService<
 
     @Transactional(propagation = Propagation.REQUIRED)
     public int update(T e) {
-        return repository.updateById(e);
+        return repository.update(e);
     }
 
     public T findById(long id) {
-        return repository.selectById(id);
+        return repository.selectOneById(id);
     }
 
-    public boolean existsById(long id) {
-        QueryWrapper<T> query = new QueryWrapper<>();
-        query.eq("id", id);
-        return repository.exists(query);
+    public boolean get(long id) {
+        T o = this.findById(id);
+
+        return o != null;
     }
 
     public List<T> findAll() {
-        QueryWrapper<T> query = new QueryWrapper<>();
+        QueryWrapper query = QueryWrapper.create()
+                .select()
+                .orderBy("id desc");
 
-        query.orderByAsc("id");
-
-        List<T> result = repository.selectList(query);
+        List<T> result = repository.selectListByQuery(query);
 
         return result;
     }
 
     public long count() {
-
-        QueryWrapper<T> query = new QueryWrapper<>();
-        return repository.selectCount(query);
+        QueryWrapper query = QueryWrapper.create()
+                .select();
+        return repository.selectCountByQuery(query);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)

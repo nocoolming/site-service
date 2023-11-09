@@ -1,6 +1,6 @@
 package com.ming.site.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.ming.site.api.model.SignInModel;
 import com.ming.site.api.model.SignOnModel;
 import com.ming.site.model.Cart;
@@ -33,7 +33,7 @@ public class UserServiceImpl
     CartService cartService;
     @Override
     public User findByUsernameOrMailOrMobile(String usernameOrMailOrMobile) {
-        QueryWrapper<User> query = new QueryWrapper<>();
+        QueryWrapper query = new QueryWrapper();
         query.eq("username", usernameOrMailOrMobile)
                 .or()
                 .eq("mail", usernameOrMailOrMobile);

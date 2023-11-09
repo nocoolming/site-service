@@ -1,6 +1,6 @@
 package com.ming.site.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.ming.site.model.Site;
 import com.ming.site.repository.SiteRepository;
 import com.ming.site.service.AbstractService;
@@ -23,7 +23,7 @@ public class SiteServiceImpl
 
     @Override
     public Site findByDomain(String domain) {
-        QueryWrapper<Site> query = new QueryWrapper<>();
+        QueryWrapper query = new QueryWrapper();
 
         query.eq("domain", domain.toLowerCase());
 

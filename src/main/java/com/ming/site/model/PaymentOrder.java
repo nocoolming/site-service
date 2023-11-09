@@ -1,7 +1,7 @@
 package com.ming.site.model;
 
 
-import com.baomidou.mybatisplus.annotation.TableField;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public class PaymentOrder
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @TableField(exist = false)
+
     private Order order;
 
     @Override

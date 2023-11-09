@@ -1,6 +1,6 @@
 package com.ming.site.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,22 +20,22 @@ public class Category implements IdLongPrimaryKey {
     private LocalDateTime createAt;
 
     private LocalDateTime upgradeAt;
-    @TableField(exist = false)
+
     private User createUser;
 
-    @TableField(exist = false)
+
     private User upgradeUser;
 
-    @TableField(exist = false)
+
     private List<Note> notes;
-    @TableField(exist = false)
+
     private List<Product> products;
-    @TableField(exist = false)
+
     private List<CategoryLanguage> categoryLanguages;
-    @TableField(exist = false)
+
     private Site site;
 
-    @TableField(exist = false)
+
     private List<Category> children;
 
     private long createUserId;

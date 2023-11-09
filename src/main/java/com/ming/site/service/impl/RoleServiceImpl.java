@@ -1,12 +1,13 @@
 package com.ming.site.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.ming.site.model.Role;
 import com.ming.site.model.User;
 import com.ming.site.repository.RoleRepository;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.RoleService;
 import com.ming.site.service.UserService;
+import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class RoleServiceImpl
     @Transactional(propagation = Propagation.REQUIRED)
     public void assignRoleToUser(long userId, long roleId) {
         User user = userService.findById(userId);
-        Role role = repository.selectById(roleId);
+        Role role = repository.selectOneById(roleId);
 
         if (user != null && role != null) {
             user.getRoles().add(role);
@@ -43,7 +44,7 @@ public class RoleServiceImpl
 
     @Override
     public List<Role> all(long siteId) {
-        QueryWrapper<Role> queryWrapper = new QueryWrapper<Role>();
+        QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("site_id", siteId);
         queryWrapper.orderByDesc("create_at");
 

@@ -1,6 +1,6 @@
 package com.ming.site.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,19 +22,19 @@ public class Role
     private long upgradeUserId;
     private long siteId;
 
-    @TableField(exist = false)
+
     private User createUser;
 
-    @TableField(exist = false)
+
     private User upgradeUser;
 
-    @TableField(exist = false)
+
     private Site site;
 
-    @TableField(exist = false)
+
     private List<Permission> permissions;
 
-    @TableField(exist = false)
+
     private Set<User> users;
 
     public Long getId() {

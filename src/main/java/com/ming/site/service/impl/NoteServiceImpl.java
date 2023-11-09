@@ -1,11 +1,12 @@
 package com.ming.site.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.ming.site.model.Category;
 import com.ming.site.model.Note;
 import com.ming.site.model.User;
 import com.ming.site.repository.NoteRepository;
 import com.ming.site.service.*;
+import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,11 @@ public class NoteServiceImpl
 
     @Override
     public List<Note> findAll() {
-        QueryWrapper<Note> query = new QueryWrapper<>();
-        query.orderByDesc("upgrade_at");
+        QueryWrapper query = QueryWrapper.create()
+                .select()
+                .orderBy("create_at desc");
 
-        List<Note> notes = repository.selectList(query);
+        List<Note> notes = repository.selectListByQuery(query);
 
 
         return this.loadForeign(notes);
@@ -72,7 +74,7 @@ public class NoteServiceImpl
 
     @Override
     public List<Note> findByNotesBySiteId(long siteId, LocalDateTime begin) {
-        QueryWrapper<Note> query = new QueryWrapper<>();
+        QueryWrapper query = new QueryWrapper();
         query.eq("site_id", siteId)
                 .lt("upgrade_at", begin)
                 .orderByDesc("upgrade_at")

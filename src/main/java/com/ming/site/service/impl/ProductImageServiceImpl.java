@@ -1,12 +1,13 @@
 package com.ming.site.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.ming.site.model.Product;
 import com.ming.site.model.ProductImage;
 import com.ming.site.repository.ProductImageRepository;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.ProductImageService;
+import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class ProductImageServiceImpl extends AbstractService<ProductImage, Long,
 
     @Override
     public List<ProductImage> getImagesByProductId(long productId) {
-        QueryWrapper<ProductImage> query = new QueryWrapper<>();
+        QueryWrapper query = new QueryWrapper();
         query.eq("product_id", productId);
 
         List<ProductImage> images = repository.selectList(query);

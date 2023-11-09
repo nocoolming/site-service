@@ -1,6 +1,6 @@
 package com.ming.site.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ public class CartItem
     private Long productId;
     private long cartId;
 
-    @TableField(exist = false)
+
     private Product product;
     public Long getId() {
         return id;

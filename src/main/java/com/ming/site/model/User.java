@@ -1,14 +1,14 @@
 package com.ming.site.model;
 
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+
+
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@TableName("\"user\"")
+
 public class User implements IdLongPrimaryKey {
     public User(){
         this.createAt = upgradeAt = LocalDateTime.now();
@@ -25,31 +25,31 @@ public class User implements IdLongPrimaryKey {
 
     private long siteId;
 
-    @TableField(exist = false)
+
     private List<Product> productsOfCreateUser;
 
-    @TableField(exist = false)
+
     private List<Product> productsOfUpgradeUser;
 
-    @TableField(exist = false)
+
     private List<Category> categories;
 
-    @TableField(exist = false)
+
     private List<Note> notesOfCreateUser;
 
-    @TableField(exist = false)
+
     private List<Note> notesOfUpgradeUser;
 
-    @TableField(exist = false)
+
     private List<Order> orders;
 
-    @TableField(exist = false)
+
     private Set<Role> roles;
 
-    @TableField(exist = false)
+
     private Site site;
 
-    @TableField(exist = false)
+
     private List<ProductImage> productImageList;
 
     public Long getId() {

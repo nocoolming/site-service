@@ -1,6 +1,6 @@
 package com.ming.site.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.ming.site.model.*;
 import com.ming.site.repository.ProductRepository;
 import com.ming.site.service.*;
@@ -39,12 +39,11 @@ public class ProductServiceImpl
     public List<Product> findAll(LocalDateTime begin) {
         List<Product> products = null;
 
-        QueryWrapper<Product> query = new QueryWrapper<>();
+        QueryWrapper query = new QueryWrapper();
         query.lt("upgrade_at", begin);
         query.orderByDesc("upgrade_at");
 
         products = repository.selectList(query);
-
 
         return this.loadForeign(products);
     }

@@ -1,6 +1,6 @@
 package com.ming.site.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.ming.site.model.CartItem;
 import com.ming.site.model.Product;
 import com.ming.site.repository.CartItemRepository;
@@ -27,7 +27,7 @@ public class CartItemServiceImpl
 
     @Override
     public List<CartItem> getItemsByCartId(long id) {
-        QueryWrapper<CartItem> query = new QueryWrapper<>();
+        QueryWrapper query = new QueryWrapper();
 
         query.eq("cart_id", id)
                 .orderByDesc("upgrade_at");

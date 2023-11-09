@@ -1,6 +1,6 @@
 package com.ming.site.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+
 
 import java.time.LocalDateTime;
 
@@ -16,10 +16,10 @@ public class ProductImage implements IdLongPrimaryKey {
     private LocalDateTime createAt;
 
 
-    @TableField(exist = false)
+
     private User createUser;
 
-    @TableField(exist = false)
+
     private Product product;
 
     private long createUserId;

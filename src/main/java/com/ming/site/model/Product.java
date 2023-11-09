@@ -1,6 +1,6 @@
 package com.ming.site.model;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -26,22 +26,22 @@ public class Product
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @TableField(exist = false)
+
     private Category category;
 
-    @TableField(exist = false)
+
     private User createUser;
 
-    @TableField(exist = false)
+
     private User upgradeUser;
 
-    @TableField(exist = false)
+
     private Site site;
 
-    @TableField(exist = false)
+
     private List<ProductImage> productImageList;
 
-    @TableField(exist = false)
+
     private List<OrderDetail> orderDetails;
 
 

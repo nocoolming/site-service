@@ -1,6 +1,6 @@
 package com.ming.site.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.ming.site.common.Result;
 import com.ming.site.config.PaypalConfig;
 import com.ming.site.model.Order;
@@ -10,6 +10,7 @@ import com.ming.site.service.AbstractService;
 import com.ming.site.service.OrderService;
 import com.ming.site.service.PaymentOrderService;
 import com.ming.site.util.SnowflakeUtil;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.paypal.api.payments.PayerInfo;
 import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.PaymentExecution;
@@ -116,7 +117,7 @@ public class PaymentOrderServiceImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public PaymentOrder getPaymentOrderByChannelPaymentId(String paymentId) {
-        QueryWrapper<PaymentOrder> queryWrapper = new QueryWrapper<>();
+        QueryWrapper queryWrapper = new QueryWrapper();
 
         queryWrapper
                 .eq("channel_payment_id", paymentId);

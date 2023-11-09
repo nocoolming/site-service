@@ -1,7 +1,7 @@
 package com.ming.site.model;
 
 
-import com.baomidou.mybatisplus.annotation.TableField;
+
 
 import java.time.LocalDateTime;
 
@@ -21,16 +21,16 @@ public class Note implements IdLongPrimaryKey {
     private LocalDateTime createAt;
     private LocalDateTime upgradeAt;
 
-    @TableField(exist = false)
+
     private User createUser;
 
-    @TableField(exist = false)
+
     private User upgradeUser;
 
-    @TableField(exist = false)
+
     private Site site;
 
-    @TableField(exist = false)
+
     private Category category;
 
     private long createUserId;
