@@ -1,9 +1,9 @@
 package com.ming.site.service.impl;
 
 
+import com.ming.site.mapper.RoleMapper;
 import com.ming.site.model.Role;
 import com.ming.site.model.User;
-import com.ming.site.repository.RoleRepository;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.RoleService;
 import com.ming.site.service.UserService;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service
 public class RoleServiceImpl
-        extends AbstractService<Role, Long, RoleRepository>
+        extends AbstractService<Role, Long, RoleMapper>
         implements RoleService {
     private static final Logger log = LoggerFactory.getLogger(RoleServiceImpl.class);
 
@@ -31,7 +31,7 @@ public class RoleServiceImpl
     @Transactional(propagation = Propagation.REQUIRED)
     public void assignRoleToUser(long userId, long roleId) {
         User user = userService.findById(userId);
-        Role role = repository.selectOneById(roleId);
+        Role role = mapper.selectOneById(roleId);
 
         if (user != null && role != null) {
             user.getRoles().add(role);
@@ -44,11 +44,17 @@ public class RoleServiceImpl
 
     @Override
     public List<Role> all(long siteId) {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("site_id", siteId);
-        queryWrapper.orderByDesc("create_at");
+//        QueryWrapper queryWrapper = new QueryWrapper();
+//        queryWrapper.eq("site_id", siteId);
+//        queryWrapper.orderByDesc("create_at");
+//
+//        List<Role> roles = mapper.selectList(queryWrapper);
 
-        List<Role> roles = repository.selectList(queryWrapper);
+        QueryWrapper query = QueryWrapper.create()
+                .select()
+                .where("site_id", siteId);
+
+        List<Role> roles = mapper.selectListByQuery(query);
 
         return roles;
     }

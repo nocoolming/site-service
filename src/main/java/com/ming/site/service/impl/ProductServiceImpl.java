@@ -1,9 +1,10 @@
 package com.ming.site.service.impl;
 
 
+import com.ming.site.mapper.ProductMapper;
 import com.ming.site.model.*;
-import com.ming.site.repository.ProductRepository;
 import com.ming.site.service.*;
+import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl
-        extends AbstractService<Product, Long, ProductRepository>
+        extends AbstractService<Product, Long, ProductMapper>
         implements ProductService {
     private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
@@ -39,12 +40,17 @@ public class ProductServiceImpl
     public List<Product> findAll(LocalDateTime begin) {
         List<Product> products = null;
 
-        QueryWrapper query = new QueryWrapper();
-        query.lt("upgrade_at", begin);
-        query.orderByDesc("upgrade_at");
+//        QueryWrapper query = new QueryWrapper();
+//        query.lt("upgrade_at", begin);
+//        query.orderByDesc("upgrade_at");
+//
+//        products =  this.mapper.selectList(query);
 
-        products = repository.selectList(query);
-
+        products = this.mapper.selectListByQuery(
+                QueryWrapper.create()
+                        .lt("upgrade_at", begin)
+                        .orderBy("upgrade_at desc")
+        );
         return this.loadForeign(products);
     }
 

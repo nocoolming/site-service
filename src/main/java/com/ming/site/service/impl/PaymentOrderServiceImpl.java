@@ -3,13 +3,14 @@ package com.ming.site.service.impl;
 
 import com.ming.site.common.Result;
 import com.ming.site.config.PaypalConfig;
+import com.ming.site.mapper.PaymentOrderMapper;
 import com.ming.site.model.Order;
 import com.ming.site.model.PaymentOrder;
-import com.ming.site.repository.PaymentOrderRepository;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.OrderService;
 import com.ming.site.service.PaymentOrderService;
 import com.ming.site.util.SnowflakeUtil;
+import com.mybatisflex.core.query.QueryCondition;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.paypal.api.payments.PayerInfo;
 import com.paypal.api.payments.Payment;
@@ -29,7 +30,7 @@ import java.util.UUID;
 
 @Service
 public class PaymentOrderServiceImpl
-        extends AbstractService<PaymentOrder, Long, PaymentOrderRepository>
+        extends AbstractService<PaymentOrder, Long, PaymentOrderMapper>
         implements PaymentOrderService {
     private static final Logger log = LoggerFactory.getLogger(PaymentOrderServiceImpl.class);
 
@@ -58,7 +59,7 @@ public class PaymentOrderServiceImpl
                 paymentOrder.setId(SnowflakeUtil.nextId());
                 paymentOrder.setChannel("paypal");
                 paymentOrder.setCreateAt(LocalDateTime.now());
-                repository.insert(paymentOrder);
+                 this.mapper.insert(paymentOrder);
                 return paymentOrder;
             }
         } catch (PayPalRESTException e) {
@@ -117,12 +118,12 @@ public class PaymentOrderServiceImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public PaymentOrder getPaymentOrderByChannelPaymentId(String paymentId) {
-        QueryWrapper queryWrapper = new QueryWrapper();
+        PaymentOrder paymentOrder
+                = this.mapper.selectOneByQuery(
+                        QueryWrapper.create()
+                                .eq("channel_payment_id", paymentId)
 
-        queryWrapper
-                .eq("channel_payment_id", paymentId);
-
-        PaymentOrder paymentOrder = repository.selectOne(queryWrapper);
+        );
 
         Order order = orderService.findById(paymentOrder.getId());
         paymentOrder.setOrder(order);

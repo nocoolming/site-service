@@ -3,6 +3,8 @@ package com.ming.site.model;
 
 
 
+import com.mybatisflex.annotation.Id;
+
 import java.time.LocalDateTime;
 
 public class Note implements IdLongPrimaryKey {
@@ -10,6 +12,7 @@ public class Note implements IdLongPrimaryKey {
         this.createAt = this.upgradeAt = LocalDateTime.now();
     }
 
+    @Id
     private long id;
     private String title;
     private String keywords;

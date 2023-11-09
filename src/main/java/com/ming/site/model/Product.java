@@ -2,6 +2,8 @@ package com.ming.site.model;
 
 
 
+import com.mybatisflex.annotation.Id;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +14,7 @@ public class Product
         this.createAt = this.upgradeAt = LocalDateTime.now();
     }
 
+    @Id
     private long id;
     private String title;
     private String keywords;

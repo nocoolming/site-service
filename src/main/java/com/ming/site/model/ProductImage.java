@@ -2,6 +2,8 @@ package com.ming.site.model;
 
 
 
+import com.mybatisflex.annotation.Id;
+
 import java.time.LocalDateTime;
 
 public class ProductImage implements IdLongPrimaryKey {
@@ -9,6 +11,7 @@ public class ProductImage implements IdLongPrimaryKey {
         this.createAt = LocalDateTime.now();
     }
 
+    @Id
     private long id;
 
     private String url;

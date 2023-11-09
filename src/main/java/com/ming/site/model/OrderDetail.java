@@ -3,6 +3,8 @@ package com.ming.site.model;
 
 
 
+import com.mybatisflex.annotation.Id;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -12,6 +14,7 @@ public class OrderDetail
         this.createAt = this.upgradeAt = LocalDateTime.now();
     }
 
+    @Id
     private Long id;
 
     private String title;

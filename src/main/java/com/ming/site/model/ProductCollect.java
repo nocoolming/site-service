@@ -1,11 +1,14 @@
 package com.ming.site.model;
 
+import com.mybatisflex.annotation.Id;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class ProductCollect
         implements IdLongPrimaryKey, Serializable {
 
+    @Id
     private long id;
     private String title;
     private String keywords;

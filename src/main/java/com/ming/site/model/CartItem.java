@@ -2,11 +2,14 @@ package com.ming.site.model;
 
 
 
+import com.mybatisflex.annotation.Id;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class CartItem
         implements IdLongPrimaryKey {
+    @Id
     private Long id;
     private String currency ;
     private BigDecimal price;

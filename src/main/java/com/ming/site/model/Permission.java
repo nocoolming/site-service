@@ -3,12 +3,15 @@ package com.ming.site.model;
 
 
 
+import com.mybatisflex.annotation.Id;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Permission
         implements IdLongPrimaryKey {
 
+    @Id
     private long id;
     private String title;
     private String summary;

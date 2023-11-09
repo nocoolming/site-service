@@ -1,7 +1,7 @@
 package com.ming.site.service.impl;
 
+import com.ming.site.mapper.OrderMapper;
 import com.ming.site.model.*;
-import com.ming.site.repository.OrderRepository;
 import com.ming.site.service.*;
 import com.ming.site.util.SnowflakeUtil;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl
-        extends AbstractService<Order, Long, OrderRepository>
+        extends AbstractService<Order, Long, OrderMapper>
         implements OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
@@ -43,7 +43,7 @@ public class OrderServiceImpl
         order.setCreateAt(LocalDateTime.now());
         order.setUpgradeAt(LocalDateTime.now());
 
-        repository.insert(order);
+         this.mapper.insert(order);
 
         for (OrderDetail orderDetail : order.getOrderDetails()) {
             orderDetail.setId(SnowflakeUtil.nextId());
@@ -72,7 +72,7 @@ public class OrderServiceImpl
         order.setUpgradeAt(LocalDateTime.now());
         order.setSiteId(cart.getSiteId());
 
-        repository.insert(order);
+         this.mapper.insert(order);
 
         List<OrderDetail> list = new ArrayList<>();
         for (CartItem cartItem : cart.getCartItems()) {

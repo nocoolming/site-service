@@ -1,11 +1,12 @@
 package com.ming.site.service.impl;
 
 
+import com.ming.site.mapper.NoteMapper;
 import com.ming.site.model.Category;
 import com.ming.site.model.Note;
 import com.ming.site.model.User;
-import com.ming.site.repository.NoteRepository;
 import com.ming.site.service.*;
+import com.mybatisflex.core.query.QueryCondition;
 import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Service
 public class NoteServiceImpl
-        extends AbstractService<Note, Long, NoteRepository>
+        extends AbstractService<Note, Long, NoteMapper>
         implements NoteService {
     private static final Logger log = LoggerFactory.getLogger(NoteServiceImpl.class);
 
@@ -37,12 +38,15 @@ public class NoteServiceImpl
 
     @Override
     public List<Note> findAll() {
-        QueryWrapper query = QueryWrapper.create()
-                .select()
-                .orderBy("create_at desc");
+//        QueryWrapper query = QueryWrapper.create()
+//                .select()
+//                .orderBy("create_at desc");
+//
+//        List<Note> notes =  this.mapper.selectListByQuery(query);
 
-        List<Note> notes = repository.selectListByQuery(query);
-
+        List<Note> notes = this.mapper.selectListByQuery(
+                QueryWrapper.create().orderBy("create_at desc")
+        );
 
         return this.loadForeign(notes);
     }
@@ -74,13 +78,21 @@ public class NoteServiceImpl
 
     @Override
     public List<Note> findByNotesBySiteId(long siteId, LocalDateTime begin) {
-        QueryWrapper query = new QueryWrapper();
-        query.eq("site_id", siteId)
-                .lt("upgrade_at", begin)
-                .orderByDesc("upgrade_at")
-                .last("limit 50");
+//        QueryWrapper query = new QueryWrapper();
+//        query.eq("site_id", siteId)
+//                .lt("upgrade_at", begin)
+//                .orderByDesc("upgrade_at")
+//                .last("limit 50");
+//
+//        List<Note> originNotes =  this.mapper.selectList(query);
 
-        List<Note> originNotes = repository.selectList(query);
+        List<Note> originNotes = this.mapper.selectListByQuery(
+          QueryWrapper.create()
+                  .lt("upgrade_at", begin)
+                  .eq("site_id", siteId)
+                  .orderBy("upgrade desc")
+                  .limit(50)
+        );
 
         List<Note> notes = this.loadForeign(originNotes);
 

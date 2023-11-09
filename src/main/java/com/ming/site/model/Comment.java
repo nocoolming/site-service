@@ -2,10 +2,13 @@ package com.ming.site.model;
 
 
 
+import com.mybatisflex.annotation.Id;
+
 import java.time.LocalDateTime;
 
 public class Comment implements IdLongPrimaryKey {
 
+    @Id
     private  long id;
     private String content;
     private LocalDateTime createAt;

@@ -4,6 +4,8 @@ package com.ming.site.model;
 
 
 
+import com.mybatisflex.annotation.Id;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +15,7 @@ public class User implements IdLongPrimaryKey {
     public User(){
         this.createAt = upgradeAt = LocalDateTime.now();
     }
+    @Id
     private long id;
     private String username;
     private String password;

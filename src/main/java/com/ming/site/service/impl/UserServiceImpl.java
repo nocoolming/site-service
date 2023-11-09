@@ -3,12 +3,13 @@ package com.ming.site.service.impl;
 
 import com.ming.site.api.model.SignInModel;
 import com.ming.site.api.model.SignOnModel;
+import com.ming.site.mapper.UserMapper;
 import com.ming.site.model.Cart;
 import com.ming.site.model.User;
-import com.ming.site.repository.UserRepository;
 import com.ming.site.service.*;
 import com.ming.site.util.SnowflakeUtil;
 import com.ming.site.util.encrypt.RSAUtil;
+import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import java.time.LocalDateTime;
 
 @Service
 public class UserServiceImpl
-        extends AbstractService<User, Long, UserRepository>
+        extends AbstractService<User, Long, UserMapper>
         implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -33,14 +34,19 @@ public class UserServiceImpl
     CartService cartService;
     @Override
     public User findByUsernameOrMailOrMobile(String usernameOrMailOrMobile) {
-        QueryWrapper query = new QueryWrapper();
-        query.eq("username", usernameOrMailOrMobile)
-                .or()
-                .eq("mail", usernameOrMailOrMobile);
+//        QueryWrapper query = new QueryWrapper();
+//        query.eq("username", usernameOrMailOrMobile)
 //                .or()
-//                .eq("mobile", usernameOrMailOrMobile);
+//                .eq("mail", usernameOrMailOrMobile);
+//
+//        User user =  this.mapper.selectOne(query);
 
-        User user = repository.selectOne(query);
+        User user = this.mapper
+                .selectOneByQuery(
+                        QueryWrapper.create()
+                                .eq("username", usernameOrMailOrMobile)
+                                .or("mail", usernameOrMailOrMobile)
+                );
         return user;
     }
 
@@ -58,7 +64,7 @@ public class UserServiceImpl
         user.setId(SnowflakeUtil.nextId());
         user.setSiteId(model.getSiteId());
 
-        repository.insert(user);
+         this.mapper.insert(user);
 
         Cart cart = new Cart();
         cart.setId(user.getId());

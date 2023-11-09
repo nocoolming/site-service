@@ -1,11 +1,11 @@
 package com.ming.site.service.impl;
 
 
+import com.ming.site.mapper.SiteMapper;
 import com.ming.site.model.Site;
-import com.ming.site.repository.SiteRepository;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.SiteService;
-import com.ming.site.util.SnowflakeUtil;
+import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -13,21 +13,20 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class SiteServiceImpl
-    extends AbstractService<Site, Long, SiteRepository>
-    implements SiteService {
+        extends AbstractService<Site, Long, SiteMapper>
+        implements SiteService {
     private  static final Logger log = LoggerFactory.getLogger(SiteServiceImpl.class);
 
     @Override
     public Site findByDomain(String domain) {
-        QueryWrapper query = new QueryWrapper();
+        QueryWrapper query = QueryWrapper.create()
+                .select()
+                .where("domain", domain.toLowerCase());
 
-        query.eq("domain", domain.toLowerCase());
-
-        Site site =  repository.selectOne(query);
+        Site site =  mapper.selectOneByQuery(query);
 
         return site;
     }
@@ -36,12 +35,12 @@ public class SiteServiceImpl
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Site insert(Site site){
         if(site.getId()<= 0){
-            site.setId(SnowflakeUtil.nextId());
+            site.setId(System.currentTimeMillis());
         }
         site.setCreateAt(LocalDateTime.now());
         site.setUpgradeAt(LocalDateTime.now());
 
-        repository.insert(site);
+        mapper.insert(site);
         return site;
     }
 }

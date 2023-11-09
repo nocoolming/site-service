@@ -3,12 +3,14 @@ package com.ming.site.model;
 
 
 
-import java.math.BigDecimal;
+import com.mybatisflex.annotation.Id;
+
 import java.time.LocalDateTime;
 
 public class PaymentOrder
         implements IdLongPrimaryKey {
 
+    @Id
     private long id;
     private String channel;
     private String channel_payment_id;

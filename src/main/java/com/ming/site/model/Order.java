@@ -3,6 +3,8 @@ package com.ming.site.model;
 
 
 
+import com.mybatisflex.annotation.Id;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 public class Order
         implements IdLongPrimaryKey {
 
+    @Id
     private Long id;
     private BigDecimal total;
     private String email;

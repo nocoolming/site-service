@@ -2,6 +2,8 @@ package com.ming.site.model;
 
 
 
+import com.mybatisflex.annotation.Id;
+
 import java.time.LocalDateTime;
 
 public class File
@@ -10,6 +12,7 @@ public class File
         this.createAt = LocalDateTime.now();
     }
 
+    @Id
     private long id;
     private String logicalName;
     private String physicalName;

@@ -2,7 +2,6 @@ package com.ming.site.service;
 
 
 import com.ming.site.model.IdLongPrimaryKey;
-import com.ming.site.util.SnowflakeUtil;
 import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
@@ -14,36 +13,34 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public abstract class AbstractService<
-        T extends IdLongPrimaryKey, I,
+        T extends IdLongPrimaryKey, ID,
         R extends BaseMapper<T>>
-        implements CrudService<T, I> {
+        implements CrudService<T, ID> {
     private static final Logger log = LoggerFactory.getLogger(AbstractService.class);
 
     @Autowired
-    protected R repository;
+    protected R mapper;
 
-    public String getRepositoryString() {
-        return this.repository.toString();
-    }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public T insert(T entity) {
-        if (entity.getId() <= 0) {
-            entity.setId(SnowflakeUtil.nextId());
+        if (entity.getId() == null || entity.getId() <= 0) {
+            entity.setId(System.currentTimeMillis());
         }
 
-        repository.insert(entity);
+        mapper.insert(entity);
 
         return entity;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public int update(T e) {
-        return repository.update(e);
+
+        return mapper.update(e);
     }
 
     public T findById(long id) {
-        return repository.selectOneById(id);
+        return mapper.selectOneById(id);
     }
 
     public boolean get(long id) {
@@ -57,19 +54,32 @@ public abstract class AbstractService<
                 .select()
                 .orderBy("id desc");
 
-        List<T> result = repository.selectListByQuery(query);
+        List<T> result = mapper.selectListByQuery(query);
 
         return result;
     }
 
+    @Override
+    public boolean existsById(long id) {
+
+        return false;
+    }
+
+
     public long count() {
         QueryWrapper query = QueryWrapper.create()
                 .select();
-        return repository.selectCountByQuery(query);
+        return mapper.selectCountByQuery(query);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteById(long id) {
-        repository.deleteById(id);
+        mapper.deleteById(id);
+    }
+
+
+    @Override
+    public String getRepositoryString() {
+        return null;
     }
 }

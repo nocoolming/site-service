@@ -1,10 +1,10 @@
 package com.ming.site.service.impl;
 
 import com.ming.site.config.UploadConfig;
+import com.ming.site.mapper.FileMapper;
 import com.ming.site.model.File;
 import com.ming.site.model.Product;
 import com.ming.site.model.ProductImage;
-import com.ming.site.repository.FileRepository;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.CrudService;
 import com.ming.site.service.FileService;
@@ -26,7 +26,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 @Service
-public class FileServiceImpl extends AbstractService<File, Long, FileRepository> implements FileService {
+public class FileServiceImpl extends AbstractService<File, Long, FileMapper> implements FileService {
     private static final Logger log = LoggerFactory.getLogger(FileService.class);
 
     @Autowired

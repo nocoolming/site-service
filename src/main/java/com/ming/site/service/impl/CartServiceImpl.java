@@ -1,14 +1,12 @@
 package com.ming.site.service.impl;
 
+import com.ming.site.mapper.CartMapper;
 import com.ming.site.model.Cart;
 import com.ming.site.model.CartItem;
-import com.ming.site.repository.CartRepository;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.CartItemService;
 import com.ming.site.service.CartService;
 import com.ming.site.util.SnowflakeUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,12 +18,27 @@ import java.util.List;
 
 @Service
 public class CartServiceImpl
-        extends AbstractService<Cart, Long, CartRepository>
-        implements CartService {
-    private static final Logger log = LoggerFactory.getLogger(CartServiceImpl.class);
+        extends AbstractService<Cart, Long, CartMapper>
+    implements CartService {
 
     @Autowired
     CartItemService cartItemService;
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public int update(Cart cart){
+        Cart old = this.findById(cart.getId());
+
+        cart.setCreateAt(old.getCreateAt());
+        cart.setUpgradeAt(LocalDateTime.now());
+        return mapper.update(cart);
+    }
+
+    @Override
+    public Cart findById(long id){
+        Cart cart =  mapper.selectOneById(id);
+
+        return cart;
+    }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
@@ -34,7 +47,7 @@ public class CartServiceImpl
         cart.setCreateAt(LocalDateTime.now());
         cart.setUpgradeAt(LocalDateTime.now());
 
-        this.repository.insert(cart);
+        this.mapper.insert(cart);
 
         BigDecimal subtotal = BigDecimal.ZERO;
 
