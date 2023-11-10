@@ -3,6 +3,7 @@ package com.ming.site.model;
 
 
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.RelationManyToMany;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,21 +25,20 @@ public class Role
     private long createUserId;
     private long upgradeUserId;
     private long siteId;
-
-
     private User createUser;
-
 
     private User upgradeUser;
 
-
     private Site site;
-
 
     private List<Permission> permissions;
 
-
-    private Set<User> users;
+    @RelationManyToMany(
+            joinTable = "user_role", // 中间表
+            selfField = "id", joinSelfColumn = "role_id",
+            targetField = "id", joinTargetColumn = "user_id"
+    )
+    private List<User> users;
 
     public Long getId() {
         return id;
@@ -140,11 +140,11 @@ public class Role
         this.permissions = permissions;
     }
 
-    public Set<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Set<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 }

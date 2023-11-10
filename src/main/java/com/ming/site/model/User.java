@@ -5,6 +5,7 @@ package com.ming.site.model;
 
 
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.RelationManyToMany;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -46,7 +47,11 @@ public class User implements IdLongPrimaryKey {
 
     private List<Order> orders;
 
-
+    @RelationManyToMany(
+            joinTable = "user_role", // 中间表
+            selfField = "id", joinSelfColumn = "user_id",
+            targetField = "id", joinTargetColumn = "role_id"
+    )
     private Set<Role> roles;
 
 

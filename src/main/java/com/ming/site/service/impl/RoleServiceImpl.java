@@ -7,6 +7,7 @@ import com.ming.site.model.User;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.RoleService;
 import com.ming.site.service.UserService;
+import com.mybatisflex.core.query.QueryCondition;
 import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,9 @@ public class RoleServiceImpl
 
         QueryWrapper query = QueryWrapper.create()
                 .select()
-                .where("site_id", siteId);
+                .eq("site_id", siteId)
+                .orderBy("create_at desc")
+                ;
 
         List<Role> roles = mapper.selectListByQuery(query);
 

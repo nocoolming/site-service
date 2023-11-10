@@ -50,11 +50,11 @@ public abstract class AbstractService<
     }
 
     public List<T> findAll() {
-        QueryWrapper query = QueryWrapper.create()
-                .select()
-                .orderBy("id desc");
+//        QueryWrapper query = QueryWrapper.create()
+//                .select()
+//                .orderBy("id desc");
 
-        List<T> result = mapper.selectListByQuery(query);
+        List<T> result = mapper.selectAllWithRelations();
 
         return result;
     }
