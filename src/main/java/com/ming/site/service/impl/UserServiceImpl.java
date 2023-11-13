@@ -32,14 +32,20 @@ public class UserServiceImpl
 
     @Autowired
     CartService cartService;
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public User insert(User user){
+
+        user.setId(SnowflakeUtil.nextId());
+        user.setCreateAt(LocalDateTime.now());
+        user.setUpgradeAt(LocalDateTime.now());
+        mapper.insertSelective(user);
+
+        return user;
+    }
     @Override
     public User findByUsernameOrMailOrMobile(String usernameOrMailOrMobile) {
-//        QueryWrapper query = new QueryWrapper();
-//        query.eq("username", usernameOrMailOrMobile)
-//                .or()
-//                .eq("mail", usernameOrMailOrMobile);
-//
-//        User user =  this.mapper.selectOne(query);
 
         User user = this.mapper
                 .selectOneByQuery(

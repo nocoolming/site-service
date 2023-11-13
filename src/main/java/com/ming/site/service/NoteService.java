@@ -12,5 +12,5 @@ public interface NoteService
 
     Note loadForeignField(Note note);
 
-    List<Note> findByNotesBySiteId(long siteId, LocalDateTime begin);
+    List<Note> findByNotesBySiteId(Long siteId, LocalDateTime begin);
 }

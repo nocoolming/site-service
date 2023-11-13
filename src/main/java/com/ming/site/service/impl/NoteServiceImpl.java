@@ -29,7 +29,7 @@ public class NoteServiceImpl
     CategoryService categoryService;
 
     @Override
-    public Note findById(long id) {
+    public Note findById(Long id) {
         Note note = super.findById(id);
 
         note = this.loadForeignField(note);
@@ -77,7 +77,7 @@ public class NoteServiceImpl
     }
 
     @Override
-    public List<Note> findByNotesBySiteId(long siteId, LocalDateTime begin) {
+    public List<Note> findByNotesBySiteId(Long siteId, LocalDateTime begin) {
 //        QueryWrapper query = new QueryWrapper();
 //        query.eq("site_id", siteId)
 //                .lt("upgrade_at", begin)

@@ -12,14 +12,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractControllerV1<
         T extends IdLongPrimaryKey,
         // 这个是没有用到， 但是由于此版本从spring data jpa重构，所有的controller and service都有，所以先不删 了。
-        I,
-        S extends CrudService<T, Long>> {
+        ID extends Serializable,
+        S extends CrudService<T, ID>> {
     private static final Logger log = LoggerFactory.getLogger(AbstractControllerV1.class);
 
     @Autowired
@@ -42,13 +43,13 @@ public abstract class AbstractControllerV1<
     }
 
     @PostMapping("remove")
-    Result remove(@RequestBody long id) {
+    Result remove(@RequestBody ID id) {
         service.deleteById(id);
         return Result.success(null);
     }
 
     @GetMapping("{id}")
-    Result<T> findById(@PathVariable long id) {
+    Result<T> findById(@PathVariable ID id) {
         T value = service.findById(id);
         return Result.success(value);
     }

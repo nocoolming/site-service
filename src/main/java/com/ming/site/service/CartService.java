@@ -11,7 +11,7 @@ public interface CartService
 
     Cart createCart(Cart cart);
 
-    Cart getCartWithRelationship(long id);
+    Cart getCartWithRelationship(Long id);
 
-    void clean(long id);
+    void clean(Long id);
 }

@@ -34,7 +34,7 @@ public class CartServiceImpl
     }
 
     @Override
-    public Cart findById(long id){
+    public Cart findById(Long id){
         Cart cart =  mapper.selectOneById(id);
 
         return cart;
@@ -73,7 +73,7 @@ public class CartServiceImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public Cart getCartWithRelationship(long id) {
+    public Cart getCartWithRelationship(Long id) {
         Cart cart = this.findById(id);
         List<CartItem> items = cartItemService.getItemsByCartId(id);
 
@@ -83,7 +83,7 @@ public class CartServiceImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public void clean(long id) {
+    public void clean(Long id) {
         Cart cart = this.getCartWithRelationship(id);
 
         cart.setSubtotal(BigDecimal.ZERO);

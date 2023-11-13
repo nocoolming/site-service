@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.List;
 
 public abstract class AbstractService<
-        T extends IdLongPrimaryKey, ID,
+        T extends IdLongPrimaryKey,
+        ID extends Serializable,
         R extends BaseMapper<T>>
         implements CrudService<T, ID> {
     private static final Logger log = LoggerFactory.getLogger(AbstractService.class);
@@ -28,7 +30,7 @@ public abstract class AbstractService<
             entity.setId(System.currentTimeMillis());
         }
 
-        mapper.insert(entity);
+        mapper.insertSelective(entity);
 
         return entity;
     }
@@ -39,20 +41,17 @@ public abstract class AbstractService<
         return mapper.update(e);
     }
 
-    public T findById(long id) {
-        return mapper.selectOneById(id);
+    public T findById(ID id) {
+        return mapper.selectOneWithRelationsById(id);
     }
 
-    public boolean get(long id) {
+    public boolean get(ID id) {
         T o = this.findById(id);
 
         return o != null;
     }
 
     public List<T> findAll() {
-//        QueryWrapper query = QueryWrapper.create()
-//                .select()
-//                .orderBy("id desc");
 
         List<T> result = mapper.selectAllWithRelations();
 
@@ -60,7 +59,7 @@ public abstract class AbstractService<
     }
 
     @Override
-    public boolean existsById(long id) {
+    public boolean existsById(ID id) {
 
         return false;
     }
@@ -73,7 +72,7 @@ public abstract class AbstractService<
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteById(long id) {
+    public void deleteById(ID id) {
         mapper.deleteById(id);
     }
 
