@@ -23,6 +23,19 @@ public class CartServiceImpl
 
     @Autowired
     CartItemService cartItemService;
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Cart insert(Cart o){
+        o.setId(SnowflakeUtil.nextId());
+        o.setCreateAt(LocalDateTime.now());
+        o.setUpgradeAt(LocalDateTime.now());
+        this.mapper.insertSelective(o);
+
+        return o;
+    }
+
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public int update(Cart cart){

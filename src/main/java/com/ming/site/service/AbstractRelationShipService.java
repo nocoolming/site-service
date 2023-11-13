@@ -1,7 +1,5 @@
 package com.ming.site.service;
 
-
-import com.ming.site.model.IdLongPrimaryKey;
 import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
@@ -13,24 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class AbstractService<
-        T extends IdLongPrimaryKey ,
-        ID extends Serializable,
-        R extends BaseMapper<T>>
+public abstract class AbstractRelationShipService<
+        T,
+        ID extends Serializable>
         implements CrudService<T, ID> {
-    private static final Logger log = LoggerFactory.getLogger(AbstractService.class);
+
+    private static final Logger
+            log = LoggerFactory.getLogger(AbstractRelationShipService.class);
+
 
     @Autowired
-    protected R mapper;
-
+    protected BaseMapper<T> mapper;
 
     @Transactional(propagation = Propagation.REQUIRED)
     public T insert(T entity) {
-
-        if (entity.getId() == null || entity.getId() <= 0) {
-            entity.setId(System.currentTimeMillis());
-        }
-
         mapper.insertSelective(entity);
 
         return entity;

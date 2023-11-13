@@ -56,7 +56,7 @@ logging:
     com.zaxxer: INFO
     org.apache: INFO
     org.apache.ibatis: INFO
-    org.springframework: INFO
+    org.springframework: DEBUG
     com.ming: DEBUG
   pattern:
     console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"

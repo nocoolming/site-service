@@ -2,16 +2,21 @@ package com.ming.site.service.impl;
 
 
 import com.ming.site.mapper.CategoryMapper;
+import com.ming.site.model.CartItem;
 import com.ming.site.model.Category;
 import com.ming.site.model.Product;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.CategoryService;
+import com.ming.site.util.SnowflakeUtil;
 import com.mybatisflex.core.query.QueryCondition;
 import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,6 +25,17 @@ public class CategoryServiceImpl
         implements CategoryService {
     private static final Logger log = LoggerFactory.getLogger(CategoryServiceImpl.class);
 
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Category insert(Category o){
+        o.setId(SnowflakeUtil.nextId());
+        o.setCreateAt(LocalDateTime.now());
+        o.setUpgradeAt(LocalDateTime.now());
+        this.mapper.insertSelective(o);
+
+        return o;
+    }
 
     @Override
     public Category getCategoryBySiteIdAndTitle(long siteId, String title) {

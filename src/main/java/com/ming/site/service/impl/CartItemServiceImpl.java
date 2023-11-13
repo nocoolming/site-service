@@ -4,15 +4,20 @@ package com.ming.site.service.impl;
 import com.ming.site.mapper.CartItemMapper;
 import com.ming.site.model.CartItem;
 import com.ming.site.model.Product;
+import com.ming.site.model.User;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.CartItemService;
 import com.ming.site.service.ProductService;
+import com.ming.site.util.SnowflakeUtil;
 import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,6 +30,17 @@ public class CartItemServiceImpl
 
     @Autowired
     ProductService productService;
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public CartItem insert(CartItem o){
+        o.setId(SnowflakeUtil.nextId());
+        o.setCreateAt(LocalDateTime.now());
+        o.setUpgradeAt(LocalDateTime.now());
+        this.mapper.insertSelective(o);
+
+        return o;
+    }
 
     @Override
     public List<CartItem> getItemsByCartId(long id) {
