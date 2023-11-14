@@ -5,7 +5,9 @@ import com.ming.site.api.model.SignInModel;
 import com.ming.site.api.model.SignOnModel;
 import com.ming.site.mapper.UserMapper;
 import com.ming.site.model.Cart;
+import com.ming.site.model.Role;
 import com.ming.site.model.User;
+import com.ming.site.model.UserRole;
 import com.ming.site.service.*;
 import com.ming.site.util.SnowflakeUtil;
 import com.ming.site.util.encrypt.RSAUtil;
@@ -23,19 +25,25 @@ import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Service
-public class UserServiceImpl
-        extends AbstractService<User, Long, UserMapper>
-        implements UserService {
+public class UserServiceImpl extends AbstractService<User, Long, UserMapper> implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     CartService cartService;
 
+    @Autowired
+    UserRoleService userRoleService;
+
+    @Autowired
+    RoleService roleService;
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public User insert(User user){
+    public User insert(User user) {
 
         user.setId(SnowflakeUtil.nextId());
         user.setCreateAt(LocalDateTime.now());
@@ -44,15 +52,11 @@ public class UserServiceImpl
 
         return user;
     }
+
     @Override
     public User findByUsernameOrMailOrMobile(String usernameOrMailOrMobile) {
 
-        User user = this.mapper
-                .selectOneByQuery(
-                        QueryWrapper.create()
-                                .eq("username", usernameOrMailOrMobile)
-                                .or("mail", usernameOrMailOrMobile)
-                );
+        User user = this.mapper.selectOneWithRelationsByQuery(QueryWrapper.create().where("username=?", usernameOrMailOrMobile).or("mail=?", usernameOrMailOrMobile));
         return user;
     }
 
@@ -70,7 +74,7 @@ public class UserServiceImpl
         user.setId(SnowflakeUtil.nextId());
         user.setSiteId(model.getSiteId());
 
-         this.mapper.insert(user);
+        this.mapper.insert(user);
 
         Cart cart = new Cart();
         cart.setId(user.getId());
@@ -78,6 +82,9 @@ public class UserServiceImpl
         cart.setUpgradeAt(LocalDateTime.now());
         cart.setSiteId(model.getSiteId());
         cartService.insert(cart);
+
+        List<Role> allRoles = roleService.findAll();
+
 
         return user;
     }
@@ -95,15 +102,14 @@ public class UserServiceImpl
             throw new UserAlreadyExistsException();
         }
 
-        if(model.getPassword().isEmpty()){
+        if (model.getPassword().isEmpty()) {
             throw new PasswordNullException();
         }
 
-        if(model.getSiteId() < 0){
+        if (model.getSiteId() < 0) {
             throw new SiteIdNullException();
         }
     }
-
 
 
     @Override
@@ -112,20 +118,20 @@ public class UserServiceImpl
 
         User user = this.findByUsernameOrMailOrMobile(model.getUsername());
 
-        if(user == null){
-            throw  new UserNotFoundException();
+        if (user == null) {
+            throw new UserNotFoundException();
         }
 
         String originPassword = RSAUtil.decrypt(user.getPassword());
 
-        if(!originPassword.equals(model.getPassword())){
+        if (!originPassword.equals(model.getPassword())) {
             throw new PasswordIsWrongException();
         }
 
         return user;
     }
 
-    void validSignIn(SignInModel model){
+    void validSignIn(SignInModel model) {
 
     }
 

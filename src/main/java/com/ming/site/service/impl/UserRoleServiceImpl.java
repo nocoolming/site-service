@@ -18,6 +18,7 @@ import java.util.List;
 public class UserRoleServiceImpl extends AbstractRelationShipService<UserRole, UserRole> implements UserRoleService {
     private static final Logger log = LoggerFactory.getLogger(UserRoleServiceImpl.class);
 
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public UserRole insert(UserRole o) {

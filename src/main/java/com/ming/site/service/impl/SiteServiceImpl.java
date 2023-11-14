@@ -24,7 +24,7 @@ public class SiteServiceImpl
     public Site findByDomain(String domain) {
         QueryWrapper query = QueryWrapper.create()
                 .select()
-                .where("domain", domain.toLowerCase());
+                .where("domain=?", domain.toLowerCase());
 
         Site site =  mapper.selectOneByQuery(query);
 
