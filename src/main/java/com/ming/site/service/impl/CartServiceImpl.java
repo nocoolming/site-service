@@ -17,17 +17,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class CartServiceImpl
-        extends AbstractService<Cart, Long, CartMapper>
-    implements CartService {
+public class CartServiceImpl extends AbstractService<Cart, Long, CartMapper> implements CartService {
 
     @Autowired
     CartItemService cartItemService;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Cart insert(Cart o){
-        o.setId(SnowflakeUtil.nextId());
+    public Cart insert(Cart o) {
+        if (o.getId() <= 0) {
+            o.setId(SnowflakeUtil.nextId());
+        }
         o.setCreateAt(LocalDateTime.now());
         o.setUpgradeAt(LocalDateTime.now());
         this.mapper.insertSelective(o);
@@ -38,7 +38,7 @@ public class CartServiceImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
-    public int update(Cart cart){
+    public int update(Cart cart) {
         Cart old = this.findById(cart.getId());
 
         cart.setCreateAt(old.getCreateAt());
@@ -47,8 +47,8 @@ public class CartServiceImpl
     }
 
     @Override
-    public Cart findById(Long id){
-        Cart cart =  mapper.selectOneById(id);
+    public Cart findById(Long id) {
+        Cart cart = mapper.selectOneById(id);
 
         return cart;
     }
@@ -70,8 +70,7 @@ public class CartServiceImpl
             cartItem.setCreateAt(LocalDateTime.now());
             cartItem.setUpgradeAt(LocalDateTime.now());
 
-            BigDecimal subtotalItem =
-                    cartItem.getPrice().multiply(new BigDecimal(cartItem.getQuantity()));
+            BigDecimal subtotalItem = cartItem.getPrice().multiply(new BigDecimal(cartItem.getQuantity()));
             subtotal = subtotal.add(subtotalItem);
 
             cartItemService.insert(cartItem);
@@ -105,7 +104,7 @@ public class CartServiceImpl
 
         this.update(cart);
 
-        for(CartItem item : cart.getCartItems()){
+        for (CartItem item : cart.getCartItems()) {
             cartItemService.deleteById(item.getId());
         }
     }

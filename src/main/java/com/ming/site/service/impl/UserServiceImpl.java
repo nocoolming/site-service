@@ -45,7 +45,9 @@ public class UserServiceImpl extends AbstractService<User, Long, UserMapper> imp
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public User insert(User user) {
 
-        user.setId(SnowflakeUtil.nextId());
+        if (user.getId() <= 0) {
+            user.setId(SnowflakeUtil.nextId());
+        }
         user.setCreateAt(LocalDateTime.now());
         user.setUpgradeAt(LocalDateTime.now());
         mapper.insertSelective(user);
@@ -68,13 +70,14 @@ public class UserServiceImpl extends AbstractService<User, Long, UserMapper> imp
         String encryptedPassword = RSAUtil.encrypt(model.getPassword());
 
         User user = new User();
+        user.setId(SnowflakeUtil.nextId());
         user.setUsername(model.getUsername());
         user.setPassword(encryptedPassword);
         user.setMail(model.getMail());
         user.setId(SnowflakeUtil.nextId());
         user.setSiteId(model.getSiteId());
 
-        this.mapper.insert(user);
+        this.insert(user);
 
         Cart cart = new Cart();
         cart.setId(user.getId());
@@ -84,7 +87,12 @@ public class UserServiceImpl extends AbstractService<User, Long, UserMapper> imp
         cartService.insert(cart);
 
         List<Role> allRoles = roleService.findAll();
+        Role guest = allRoles.stream().filter(role -> role.getTitle().equals("Buyer")).findFirst().get();
 
+        UserRole userRole = new UserRole();
+        userRole.setUserId(user.getId());
+        userRole.setRoleId(guest.getId());
+        userRoleService.insert(userRole);
 
         return user;
     }
