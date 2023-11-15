@@ -26,6 +26,7 @@ public class SiteControllerV1
 
     @GetMapping("domain/{domain}")
     Result<Site> findByDomain(@PathVariable String domain){
+        log.error("domain:{}",domain);
         Site site = service.findByDomain(domain);
 
 
