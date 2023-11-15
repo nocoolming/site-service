@@ -26,6 +26,10 @@ public class SiteControllerV1
 
     @GetMapping("domain/{domain}")
     Result<Site> findByDomain(@PathVariable String domain){
+
+        if(domain.startsWith("www.")){
+            domain = domain.substring(4);
+        }
         log.error("domain:{}",domain);
         Site site = service.findByDomain(domain);
 
