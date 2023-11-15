@@ -90,7 +90,7 @@ public class NoteServiceImpl
           QueryWrapper.create()
                   .lt("upgrade_at", begin)
                   .eq("site_id", siteId)
-                  .orderBy("upgrade desc")
+                  .orderBy("upgrade_at desc")
                   .limit(50)
         );
 
