@@ -30,7 +30,7 @@ public class SiteControllerV1
         if (domain.startsWith("www.")) {
             domain = domain.substring(4);
         }
-        log.error("domain:{}", domain);
+        log.debug("domain:{}", domain);
         Site site = service.findByDomain(domain);
 
 
