@@ -28,9 +28,16 @@ public class UserControllerV1
 
     @PostMapping("signOn")
     Result<User> signOn(@RequestBody SignOnModel model) throws UserAlreadyExistsException, SiteIdNullException, PasswordNullException {
-        User user = service.signOn(model);
+        try {
 
-        return Result.ok(user);
+            User user = service.signOn(model);
+
+            return Result.ok(user);
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
+
+            throw e;
+        }
     }
 
     @PostMapping("signIn")
