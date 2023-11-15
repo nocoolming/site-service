@@ -50,10 +50,10 @@ upload:
 
 logging:
   level:
-    com.zaxxer: ERROR
-    org.apache: ERROR
-    org.apache.ibatis: ERROR
-    org.springframework: ERROR
+    com.zaxxer: INFO
+    org.apache: INFO
+    org.apache.ibatis: INFO
+    org.springframework: INFO
     com.ming: INFO
   pattern:
     console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
