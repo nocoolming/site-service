@@ -25,12 +25,12 @@ public class SiteControllerV1
     private static final Logger log = LoggerFactory.getLogger(SiteControllerV1.class);
 
     @GetMapping("domain/{domain}")
-    Result<Site> findByDomain(@PathVariable String domain){
-
-        if(domain.startsWith("www.")){
+    Result<Site> findByDomain(@PathVariable String domain) {
+        domain = domain.toLowerCase();
+        if (domain.startsWith("www.")) {
             domain = domain.substring(4);
         }
-        log.error("domain:{}",domain);
+        log.error("domain:{}", domain);
         Site site = service.findByDomain(domain);
 
 
