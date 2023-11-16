@@ -24,12 +24,10 @@ public class Role
 
     private long createUserId;
     private long upgradeUserId;
-    private long siteId;
     private User createUser;
 
     private User upgradeUser;
 
-    private Site site;
 
     private List<Permission> permissions;
 
@@ -100,14 +98,6 @@ public class Role
         this.upgradeUserId = upgradeUserId;
     }
 
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
-    }
-
     public User getCreateUser() {
         return createUser;
     }
@@ -122,14 +112,6 @@ public class Role
 
     public void setUpgradeUser(User upgradeUser) {
         this.upgradeUser = upgradeUser;
-    }
-
-    public Site getSite() {
-        return site;
-    }
-
-    public void setSite(Site site) {
-        this.site = site;
     }
 
     public List<Permission> getPermissions() {

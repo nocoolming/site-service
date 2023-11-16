@@ -15,7 +15,6 @@ spring:
   datasource:
     driver-class-name:  org.postgresql.Driver
     url: jdbc:postgresql://174.137.56.192:8989/site_db
-#    url: jdbc:postgresql://192.168.8.16:5432/site_db
     username: user
     password: "#F}YmM#+*CsFj=y1a8~G"
     validationQuery: SELECT 1

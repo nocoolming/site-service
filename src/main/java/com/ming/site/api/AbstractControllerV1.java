@@ -28,16 +28,12 @@ public abstract class AbstractControllerV1<
 
     @PostMapping("insert")
     Result<T> insert(@RequestBody T o) {
-
-        log.debug(service.getRepositoryString());
         T r = service.insert(o);
         return Result.success(r);
     }
 
     @PostMapping("update")
     Result<T> update(@RequestBody T o) {
-
-        log.debug(service.getRepositoryString());
         service.update(o);
         return Result.success(o);
     }

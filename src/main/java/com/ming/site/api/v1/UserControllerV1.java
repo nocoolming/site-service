@@ -1,5 +1,7 @@
 package com.ming.site.api.v1;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ming.site.api.AbstractControllerV1;
 import com.ming.site.api.model.SignInModel;
 import com.ming.site.api.model.SignOnModel;
@@ -9,6 +11,7 @@ import com.ming.site.service.*;
 import com.ming.site.util.encrypt.RSAUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.BadPaddingException;
@@ -26,10 +29,13 @@ public class UserControllerV1
         UserService> {
     private static final Logger log = LoggerFactory.getLogger(UserControllerV1.class);
 
-    @PostMapping("signOn")
-    Result<User> signOn(@RequestBody SignOnModel model) throws UserAlreadyExistsException, SiteIdNullException, PasswordNullException {
-        try {
+    @Autowired
+    ObjectMapper objectMapper;
 
+    @PostMapping("signOn")
+    Result<User> signOn(@RequestBody SignOnModel model) throws UserAlreadyExistsException, SiteIdNullException, PasswordNullException, JsonProcessingException {
+        try {
+            log.info(objectMapper.writeValueAsString(model));
             User user = service.signOn(model);
 
             return Result.ok(user);
