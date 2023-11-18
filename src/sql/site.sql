@@ -312,14 +312,14 @@ create table file (
     physical_name varchar(256) null,
     extension varchar(32) null,
     size bigint null,
-    create_at date null default now(),
+    create_at timestamp null default now(),
     create_user_id  bigint null references "user"(id) on delete set null
 );
 
 create table comment (
     id BIGINT not null primary key,
     content varchar(2048) null,
-    create_at date null default now(),
+    create_at timestamp null default now(),
     create_user_id bigint null references "user"(id) on delete set null,
     note_id bigint null references note(id) on delete set null,
     product_id bigint null references product(id) on delete set null,
@@ -331,5 +331,20 @@ create table contact (
     name varchar(256) not null,
     email varchar(256) not null,
     content varchar(4096) not null,
-    create_at date null default now()
+    create_at timestamp null default now()
+);
+
+create table address (
+    id bigint not null primary key,
+    country varchar(128) not null,)
+    address varchar(1024) not null,
+    phone varchar(64) not null,
+    first_name varchar(64) null,
+    last_name   varchar(64) null,
+    city varchar(128) null,
+    state varchar(128) null,
+    zip_code varchar(32) null,
+    create_user_id bigint null ,
+    create_at timestamp null default now()
+
 );

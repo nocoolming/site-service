@@ -1,11 +1,9 @@
 package com.ming.site.model;
 
 
-
-
-
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.RelationManyToMany;
+import com.mybatisflex.annotation.RelationOneToMany;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,9 +11,10 @@ import java.util.Set;
 
 
 public class User implements IdLongPrimaryKey {
-    public User(){
+    public User() {
         this.createAt = upgradeAt = LocalDateTime.now();
     }
+
     @Id
     private long id;
     private String username;
@@ -59,6 +58,10 @@ public class User implements IdLongPrimaryKey {
 
 
     private List<ProductImage> productImageList;
+
+
+    @RelationOneToMany(selfField = "id", targetField = "createUserId")
+    private List<Address> addresses;
 
     public Long getId() {
         return id;
@@ -206,5 +209,13 @@ public class User implements IdLongPrimaryKey {
 
     public void setSiteId(long siteId) {
         this.siteId = siteId;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 }

@@ -2,12 +2,15 @@ package com.ming.site.service.impl;
 
 
 import com.ming.site.mapper.CartItemMapper;
+import com.ming.site.model.Cart;
 import com.ming.site.model.CartItem;
 import com.ming.site.model.Product;
 import com.ming.site.model.User;
 import com.ming.site.service.AbstractService;
 import com.ming.site.service.CartItemService;
+import com.ming.site.service.CartService;
 import com.ming.site.service.ProductService;
+import com.ming.site.service.model.AddToCartModel;
 import com.ming.site.util.SnowflakeUtil;
 import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
@@ -30,6 +33,8 @@ public class CartItemServiceImpl
 
     @Autowired
     ProductService productService;
+    @Autowired
+    CartService cartService;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -40,6 +45,24 @@ public class CartItemServiceImpl
         this.mapper.insertSelective(o);
 
         return o;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public CartItem addToCart(AddToCartModel model) {
+        Cart cart = cartService.getCartWithRelationship(model.getCartId());
+        CartItem cartItem = new CartItem();
+
+        cartItem.setCartId( model.getCartId());
+        cartItem.setId(SnowflakeUtil.nextId());
+        cartItem.setUpgradeAt(LocalDateTime.now());
+        cartItem.setCreateAt(LocalDateTime.now());
+        cartItem.setCurrency(model.getCurrency());
+
+        this.insert(cartItem);
+        cart.getCartItems().add(cartItem);
+
+        return cartItem;
     }
 
     @Override
@@ -59,7 +82,7 @@ public class CartItemServiceImpl
                 .eq("cart_id", id)
                 .orderBy("upgrade_at desc");
 
-        return mapper.selectListByQuery(query);
+        return mapper.selectListWithRelationsByQuery(query);
     }
 
     @Override

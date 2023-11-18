@@ -25,7 +25,7 @@ public class CartServiceImpl extends AbstractService<Cart, Long, CartMapper> imp
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Cart insert(Cart o) {
-        if (o.getId() <= 0) {
+        if (o.getId() == null || o.getId() <= 0) {
             o.setId(SnowflakeUtil.nextId());
         }
         o.setCreateAt(LocalDateTime.now());
@@ -48,7 +48,7 @@ public class CartServiceImpl extends AbstractService<Cart, Long, CartMapper> imp
 
     @Override
     public Cart findById(Long id) {
-        Cart cart = mapper.selectOneById(id);
+        Cart cart = mapper.selectOneWithRelationsById(id);
 
         return cart;
     }
@@ -60,7 +60,7 @@ public class CartServiceImpl extends AbstractService<Cart, Long, CartMapper> imp
         cart.setCreateAt(LocalDateTime.now());
         cart.setUpgradeAt(LocalDateTime.now());
 
-        this.mapper.insert(cart);
+        this.insert(cart);
 
         BigDecimal subtotal = BigDecimal.ZERO;
 
@@ -87,9 +87,9 @@ public class CartServiceImpl extends AbstractService<Cart, Long, CartMapper> imp
     @Transactional(propagation = Propagation.REQUIRED)
     public Cart getCartWithRelationship(Long id) {
         Cart cart = this.findById(id);
-        List<CartItem> items = cartItemService.getItemsByCartId(id);
-
-        cart.setCartItems(items);
+//        List<CartItem> items = cartItemService.getItemsByCartId(id);
+//
+//        cart.setCartItems(items);
         return cart;
     }
 

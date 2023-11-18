@@ -1,8 +1,8 @@
 package com.ming.site.model;
 
 
-
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.RelationOneToMany;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ public class Cart
         implements IdLongPrimaryKey {
     @Id
     private Long id;
-    private String currency ;
+    private String currency;
     private BigDecimal subtotal;
 
     private Long createUserId;
@@ -21,11 +21,12 @@ public class Cart
 
     private long siteId;
 
-
+    @RelationOneToMany(selfField = "id", targetField = "cartId")
     private List<CartItem> cartItems;
 
 
     private Site site;
+
     @Override
     public Long getId() {
         return id;
