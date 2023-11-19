@@ -8,7 +8,9 @@ import java.util.List;
 public interface CartItemService
     extends CrudService<CartItem, Long> {
 
-    CartItem addToCart(AddToCartModel model);
+
+    CartItem addToCart(CartItem o);
+
     List<CartItem> getItemsByCartId(long id);
 
     CartItem getItemWithRelationship(long id);

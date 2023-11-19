@@ -4,12 +4,10 @@ import com.ming.site.api.AbstractControllerV1;
 import com.ming.site.common.Result;
 import com.ming.site.model.CartItem;
 import com.ming.site.service.CartItemService;
+import com.ming.site.service.model.AddToCartModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +27,12 @@ extends AbstractControllerV1<
         List<CartItem> list = service.getItemsByCartId(cartId);
         return Result.ok(list);
     }
+
+    @PostMapping("addToCart")
+    Result<CartItem> addToCart(@RequestBody CartItem o){
+        return Result.ok(service.addToCart(o));
+    }
+
 
 
 }

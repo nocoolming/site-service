@@ -10,6 +10,7 @@ public interface CrudService<
         ID extends Serializable> {
     T insert(T e);
 
+
     int update(T e);
 
     T findById(ID id);

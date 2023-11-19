@@ -47,22 +47,37 @@ public class CartItemServiceImpl
         return o;
     }
 
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public CartItem addToCart(AddToCartModel model) {
-        Cart cart = cartService.getCartWithRelationship(model.getCartId());
-        CartItem cartItem = new CartItem();
+    public CartItem addToCart(CartItem o) {
+        List<CartItem> items = this.getItemsByCartId(o.getCartId());
 
-        cartItem.setCartId( model.getCartId());
-        cartItem.setId(SnowflakeUtil.nextId());
-        cartItem.setUpgradeAt(LocalDateTime.now());
-        cartItem.setCreateAt(LocalDateTime.now());
-        cartItem.setCurrency(model.getCurrency());
+        List<CartItem> result =
+                items.stream()
+                        .filter(
+                                i -> i.getProductId()
+                                    .equals(o.getProductId()))
+                        .toList();
 
-        this.insert(cartItem);
-        cart.getCartItems().add(cartItem);
+        // 这里处理之前已经添加到购物车的相同product
+        if(result!= null && !result.isEmpty()){
+            int quantity = o.getQuantity();
 
-        return cartItem;
+            for(CartItem i : result){
+                quantity += i.getQuantity();
+
+                this.deleteById(i.getId());
+            }
+
+            o.setQuantity(quantity);
+        }
+
+        o.setCreateAt(LocalDateTime.now());
+        o.setUpgradeAt(LocalDateTime.now());
+
+        this.insert(o);
+        return o;
     }
 
     @Override
