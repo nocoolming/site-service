@@ -11,19 +11,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class OrderServiceImpl
-        extends AbstractService<Order, Long, OrderMapper>
-        implements OrderService {
+public class OrderServiceImpl extends AbstractService<Order, Long, OrderMapper> implements OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
     CartService cartService;
-
+    @Autowired
+    CartItemService cartItemService;
     @Autowired
     OrderDetailService orderDetailService;
     @Autowired
@@ -36,14 +37,13 @@ public class OrderServiceImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Order insert(Order order) {
-        if (order.getId() == null
-                || order.getId() <= 0) {
+        if (order.getId() == null || order.getId() <= 0) {
             order.setId(SnowflakeUtil.nextId());
         }
         order.setCreateAt(LocalDateTime.now());
         order.setUpgradeAt(LocalDateTime.now());
 
-         this.mapper.insert(order);
+        this.mapper.insert(order);
 
         for (OrderDetail orderDetail : order.getOrderDetails()) {
             orderDetail.setId(SnowflakeUtil.nextId());
@@ -72,7 +72,7 @@ public class OrderServiceImpl
         order.setUpgradeAt(LocalDateTime.now());
         order.setSiteId(cart.getSiteId());
 
-         this.mapper.insert(order);
+        this.mapper.insert(order);
 
         List<OrderDetail> list = new ArrayList<>();
         for (CartItem cartItem : cart.getCartItems()) {
@@ -111,10 +111,41 @@ public class OrderServiceImpl
     }
 
     @Override
-    @Transactional(
-            propagation = Propagation.REQUIRED,
-            rollbackFor = Exception.class
-    )
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public Order createOrder(long cartId) {
+        Cart cart = cartService.getCartWithRelationship(cartId);
+        Order order = new Order();
+        order.setId(SnowflakeUtil.nextId());
+        BigDecimal subtotal = BigDecimal.ZERO;
+
+        List<OrderDetail> orderDetails =
+                cart.getCartItems()
+                        .stream()
+                        .map(item -> {
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setId(SnowflakeUtil.nextId());
+            orderDetail.setCreateAt(LocalDateTime.now());
+            orderDetail.setUpgradeAt(LocalDateTime.now());
+            orderDetail.setPrice(item.getPrice());
+            orderDetail.setSubtotal(item.getPrice().multiply(new BigDecimal(item.getQuantity())));
+            orderDetail.setQuantity(item.getQuantity());
+            orderDetail.setOrderId(order.getId());
+
+            orderDetailService.insert(orderDetail);
+
+            subtotal.add(orderDetail.getSubtotal());
+
+            return orderDetail;
+        }).collect(Collectors.toList());
+
+        order.setTotal(subtotal);
+
+        this.insert(order);
+        return order;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Order approve(long orderId) {
         Order order = this.findById(orderId);
 

@@ -1,6 +1,9 @@
 package com.ming.site.service;
 
+import com.ming.site.model.CartItem;
 import com.ming.site.model.Order;
+
+import java.util.List;
 
 
 public interface OrderService
@@ -9,6 +12,9 @@ public interface OrderService
     Order createOrderByCartId(long cartId);
 
     Order createOrder(Order order);
+
+
+    Order createOrder(long cartId);
 
     Order approve(long orderId);
 
