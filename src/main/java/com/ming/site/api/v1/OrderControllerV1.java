@@ -5,6 +5,7 @@ import com.ming.site.common.Result;
 import com.ming.site.model.Order;
 import com.ming.site.service.OrderService;
 import com.ming.site.service.ProductImageService;
+import com.ming.site.service.model.CreateOrderModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +23,9 @@ extends AbstractControllerV1<
     private static final Logger log = LoggerFactory.getLogger(ProductImageService.class);
 
     @PostMapping("createOrder")
-    Result<Order> createOrder(@RequestBody Order order){
+    Result<Order> createOrder(@RequestBody CreateOrderModel model){
 
-        Order newOrder = service.createOrder(order);
+        Order newOrder = service.createOrder(model);
         log.debug(newOrder.toString());
 
         return Result.ok(newOrder);

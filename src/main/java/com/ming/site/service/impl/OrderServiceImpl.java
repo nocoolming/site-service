@@ -3,6 +3,7 @@ package com.ming.site.service.impl;
 import com.ming.site.mapper.OrderMapper;
 import com.ming.site.model.*;
 import com.ming.site.service.*;
+import com.ming.site.service.model.CreateOrderModel;
 import com.ming.site.util.SnowflakeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderServiceImpl extends AbstractService<Order, Long, OrderMapper> implements OrderService {
+public class OrderServiceImpl
+        extends AbstractService<Order, Long, OrderMapper>
+        implements OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
@@ -29,6 +32,8 @@ public class OrderServiceImpl extends AbstractService<Order, Long, OrderMapper> 
     OrderDetailService orderDetailService;
     @Autowired
     PaymentOrderService paymentOrderService;
+    @Autowired
+    UserService userService;
 
     void validCreateOrderByCartId(long cartId) {
 
@@ -122,23 +127,70 @@ public class OrderServiceImpl extends AbstractService<Order, Long, OrderMapper> 
                 cart.getCartItems()
                         .stream()
                         .map(item -> {
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setId(SnowflakeUtil.nextId());
-            orderDetail.setCreateAt(LocalDateTime.now());
-            orderDetail.setUpgradeAt(LocalDateTime.now());
-            orderDetail.setPrice(item.getPrice());
-            orderDetail.setSubtotal(item.getPrice().multiply(new BigDecimal(item.getQuantity())));
-            orderDetail.setQuantity(item.getQuantity());
-            orderDetail.setOrderId(order.getId());
+                            OrderDetail orderDetail = new OrderDetail();
+                            orderDetail.setId(SnowflakeUtil.nextId());
+                            orderDetail.setCreateAt(LocalDateTime.now());
+                            orderDetail.setUpgradeAt(LocalDateTime.now());
+                            orderDetail.setPrice(item.getPrice());
+                            orderDetail.setSubtotal(item.getPrice().multiply(new BigDecimal(item.getQuantity())));
+                            orderDetail.setQuantity(item.getQuantity());
+                            orderDetail.setOrderId(order.getId());
 
-            orderDetailService.insert(orderDetail);
+                            orderDetailService.insert(orderDetail);
 
-            subtotal.add(orderDetail.getSubtotal());
+                            subtotal.add(orderDetail.getSubtotal());
 
-            return orderDetail;
-        }).collect(Collectors.toList());
+                            return orderDetail;
+                        }).collect(Collectors.toList());
 
         order.setTotal(subtotal);
+
+        this.insert(order);
+        return order;
+    }
+
+    @Override
+    public Order createOrder(CreateOrderModel model) {
+        List<CartItem> cartItemList = cartItemService.getItemsByIds(model.getCartItems());
+        Order order = new Order();
+        order.setId(SnowflakeUtil.nextId());
+
+        BigDecimal subTotal = BigDecimal.ZERO;
+        List<OrderDetail> orderDetails = new ArrayList<>();
+
+        for (var cartItem : cartItemList) {
+            BigDecimal price = cartItem.getProduct().getPrice();
+            int quantity = cartItem.getQuantity();
+
+            BigDecimal total = price.multiply(new BigDecimal(quantity));
+            subTotal = subTotal.add(total);
+
+            OrderDetail orderDetail = new OrderDetail();
+
+            orderDetail.setSubtotal(subTotal);
+            orderDetail.setOrderId(order.getId());
+            orderDetail.setQuantity(quantity);
+            orderDetail.setPrice(price);
+            orderDetail.setSubtotal(total);
+            orderDetail.setCreateUserId(model.getUserId());
+            orderDetail.setTitle(cartItem.getProduct().getTitle());
+
+            orderDetails.add(orderDetail);
+
+            // this.insert 已经处理了order and orderDetails id createAt upgradeAt and id
+            // 这里不需要再去做重复的操作
+        }
+        order.setTotal(subTotal);
+        order.setOrderDetails(orderDetails);
+        order.setState(model.getState());
+        order.setAddress(model.getAddress());
+        order.setCity(model.getCity());
+        order.setCountry(model.getCountry());
+        order.setFirstName(model.getFirstName());
+        order.setLastName(model.getLastName());
+        order.setPhone(model.getPhone());
+        order.setZip(model.getZip());
+        order.setCreateUserId(model.getUserId());
 
         this.insert(order);
         return order;

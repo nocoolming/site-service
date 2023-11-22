@@ -14,4 +14,6 @@ public interface CartItemService
     List<CartItem> getItemsByCartId(long id);
 
     CartItem getItemWithRelationship(long id);
+
+    List<CartItem> getItemsByIds(List<Long> ids);
 }

@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,17 +83,6 @@ public class CartItemServiceImpl
 
     @Override
     public List<CartItem> getItemsByCartId(long id) {
-//        QueryWrapper query = new QueryWrapper();
-//
-//        query.eq("cart_id", id)
-//                .orderByDesc("upgrade_at");
-//        List<CartItem> list =  this.mapper.selectList(query);
-//        for (CartItem cartItem : list) {
-//            Product product = productService.findById(cartItem.getProductId());
-//            cartItem.setProduct(product);
-//        }
-//        return list;
-
         QueryWrapper query = QueryWrapper.create()
                 .eq("cart_id", id)
                 .orderBy("upgrade_at desc");
@@ -109,6 +99,19 @@ public class CartItemServiceImpl
         cartItem.setProduct(product);
 
         return cartItem;
+    }
+
+    @Override
+    public List<CartItem> getItemsByIds(List<Long> ids) {
+        List<CartItem> list = new ArrayList<>();
+
+        ids.stream().forEach(
+                id -> {
+                    var cartItem = this.getItemWithRelationship(id);
+                    list.add(cartItem);
+                }
+        );
+        return list;
     }
 
 
