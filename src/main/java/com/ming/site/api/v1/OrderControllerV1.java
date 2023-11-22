@@ -16,37 +16,44 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("site/v1/order")
 public class OrderControllerV1
-extends AbstractControllerV1<
+        extends AbstractControllerV1<
         Order,
         Long,
         OrderService> {
     private static final Logger log = LoggerFactory.getLogger(ProductImageService.class);
 
     @PostMapping("createOrder")
-    Result<Order> createOrder(@RequestBody CreateOrderModel model){
+    Result<Order> createOrder(@RequestBody Order order) {
 
-        Order newOrder = service.createOrder(model);
+        Order newOrder = service.createOrder(order);
         log.debug(newOrder.toString());
 
         return Result.ok(newOrder);
     }
 
+    @PostMapping("createOrderByCartItemIds")
+    Result<Order> createOrderByCartItemIds(@RequestBody CreateOrderModel model) {
+        Order order = service.createOrder(model);
+
+        return Result.ok(order);
+    }
+
     @PostMapping("createOrderByCartId")
-    Result<Order> createOrderByCartId(@RequestBody long id){
+    Result<Order> createOrderByCartId(@RequestBody long id) {
         Order order = service.createOrderByCartId(id);
 
         return Result.ok(order);
     }
 
     @PostMapping("approve")
-    Result<Order> approve(@RequestBody long orderId){
+    Result<Order> approve(@RequestBody long orderId) {
         Order order = service.approve(orderId);
 
         return Result.ok(order);
     }
 
     @PostMapping("cancel")
-    Result<Order> cancel(@RequestBody long orderId){
+    Result<Order> cancel(@RequestBody long orderId) {
         Order order = service.cancel(orderId);
 
         return Result.ok(order);

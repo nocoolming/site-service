@@ -104,14 +104,16 @@ public class OrderServiceImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Order createOrder(Order order) {
-        this.insert(order);
+        order.setId(SnowflakeUtil.nextId());
+        order = this.insert(order);
 
-        PaymentOrder paymentOrder = order.getPaymentOrder();
+        PaymentOrder paymentOrder = new PaymentOrder();
         paymentOrder.setId(order.getId());
         paymentOrder.setCreateAt(LocalDateTime.now());
         paymentOrder.setUpgradeAt(LocalDateTime.now());
 
         paymentOrderService.insert(paymentOrder);
+        order.setPaymentOrder(paymentOrder);
         return order;
     }
 
@@ -191,6 +193,7 @@ public class OrderServiceImpl
         order.setPhone(model.getPhone());
         order.setZip(model.getZip());
         order.setCreateUserId(model.getUserId());
+        order.setEmail(model.getEmail());
 
         this.insert(order);
         return order;

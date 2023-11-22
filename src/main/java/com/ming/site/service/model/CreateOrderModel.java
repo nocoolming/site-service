@@ -16,6 +16,7 @@ public class CreateOrderModel
     private String city;
     private String phone;
     private String zip;
+    private String email;
 
     public List<Long> getCartItems() {
         return cartItems;
@@ -95,5 +96,13 @@ public class CreateOrderModel
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
