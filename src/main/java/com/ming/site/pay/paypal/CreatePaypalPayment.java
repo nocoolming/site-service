@@ -33,7 +33,6 @@ public class CreatePaypalPayment
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public Payment create(Order order) {
-
         Amount amount = new Amount();
         amount.setCurrency(paypalConfig.getCurrency());
         amount.setTotal(order.getTotal().toString());

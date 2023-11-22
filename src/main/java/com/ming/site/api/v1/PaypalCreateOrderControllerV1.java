@@ -39,9 +39,6 @@ public class PaypalCreateOrderControllerV1 {
     Result<String> createOrder(@RequestBody Order order) {
         log.info("order id: " + String.valueOf(order.getId()));
 
-        order.setId(SnowflakeUtil.nextId());
-        order.setCreateAt(LocalDateTime.now());
-        order.setUpgradeAt(LocalDateTime.now());
         order.setStatus("pending");
 
         Payment payment = createPayment.create(order);

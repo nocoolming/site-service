@@ -90,6 +90,7 @@ public class OrderServiceImpl
             orderDetail.setOrderId(order.getId());
             orderDetail.setCreateAt(LocalDateTime.now());
             orderDetail.setUpgradeAt(LocalDateTime.now());
+            orderDetail.setCreateUserId(order.getCreateUserId());
 
             orderDetailService.insert(orderDetail);
 
