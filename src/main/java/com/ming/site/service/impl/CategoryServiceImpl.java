@@ -28,7 +28,7 @@ public class CategoryServiceImpl
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Category insert(Category o){
+    public Category insert(Category o) {
         o.setId(SnowflakeUtil.nextId());
         o.setCreateAt(LocalDateTime.now());
         o.setUpgradeAt(LocalDateTime.now());
@@ -45,11 +45,10 @@ public class CategoryServiceImpl
 //
 //        return  this.mapper.selectOne(query);
 
-        return this.mapper.selectOneByCondition(
-                QueryCondition
-                        .createEmpty()
-                        .and("site_id", siteId)
-                        .and("title", title)
+        return this.mapper.selectOneByQuery(
+                QueryWrapper.create()
+                        .eq("site_id", siteId)
+                        .and("title=?", title)
         );
     }
 
@@ -76,19 +75,22 @@ public class CategoryServiceImpl
 
     @Override
     public List<Category> getCategoriesTreeBySiteIdAndTitle(long siteId, String title) {
-        Category category = this.getCategoryBySiteIdAndTitle(siteId, title);
-
         List<Category> categories = this.mapper.
                 selectListByQuery(
                         QueryWrapper.create()
                                 .eq("site_id", siteId)
                 );
 
-        List<Category> childrenOfProductCategories =
+        Category category = categories.stream().filter(c -> c.getTitle().equals(title)).findFirst().get();
+        if (category == null) {
+            return null;
+        }
+
+        List<Category> childrenOfTitleCategories =
                 categories.stream().filter(c -> c.getParentCode().startsWith(category.getCode())).toList();
 
         List<Category> roots =
-                childrenOfProductCategories.stream()
+                childrenOfTitleCategories.stream()
                         .filter(c -> c.getParentCode().equals(category.getCode())).toList();
 
         roots.forEach(root -> {
