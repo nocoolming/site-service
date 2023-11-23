@@ -94,9 +94,6 @@ public class CartItemServiceImpl
     public CartItem getItemWithRelationship(long id) {
         CartItem cartItem = this.findById(id);
 
-        Product product = productService.findById(cartItem.getProductId());
-
-        cartItem.setProduct(product);
 
         return cartItem;
     }
