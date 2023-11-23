@@ -1,16 +1,15 @@
 package com.ming.site.model;
 
-
-
-
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.RelationManyToOne;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+
 public class OrderDetail
         implements IdLongPrimaryKey {
-    public OrderDetail(){
+    public OrderDetail() {
         this.createAt = this.upgradeAt = LocalDateTime.now();
     }
 
@@ -26,32 +25,22 @@ public class OrderDetail
     private Long createUserId;
     private Long orderId;
 
+    private String icon;
+    private Long productId;
     private User createUser;
 
     private Order order;
 
+    @RelationManyToOne(selfField = "productId", targetField = "id")
+    private Product product;
 
 
-    public Long getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(Long createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -63,7 +52,6 @@ public class OrderDetail
     public void setTitle(String title) {
         this.title = title;
     }
-
 
     public BigDecimal getPrice() {
         return price;
@@ -105,6 +93,38 @@ public class OrderDetail
         this.upgradeAt = upgradeAt;
     }
 
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
     public User getCreateUser() {
         return createUser;
     }
@@ -121,5 +141,11 @@ public class OrderDetail
         this.order = order;
     }
 
+    public Product getProduct() {
+        return product;
+    }
 
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

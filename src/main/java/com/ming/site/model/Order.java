@@ -4,6 +4,7 @@ package com.ming.site.model;
 
 
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.RelationOneToMany;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -40,7 +41,7 @@ public class Order
 
     private PaymentOrder paymentOrder;
 
-
+    @RelationOneToMany(selfField = "id", targetField = "orderId")
     private List<OrderDetail> orderDetails;
 
     public Long getId() {

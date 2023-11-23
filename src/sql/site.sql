@@ -92,6 +92,8 @@ create table order_detail (
    price DECIMAL null,
    quantity INT4 null,
    subtotal DECIMAL null,
+   icon varchar(1024) null,
+   product_id bigint null references product(id) on delete set null,
    order_id BIGINT null references "order"(id) on delete set null,
    create_at timestamp null,
    upgrade_at timestamp null,

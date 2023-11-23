@@ -46,10 +46,10 @@ public abstract class AbstractService<
         return mapper.selectOneWithRelationsById(id);
     }
 
-    public boolean get(ID id) {
+    public T get(ID id) {
         T o = this.findById(id);
 
-        return o != null;
+        return o ;
     }
 
     public List<T> findAll() {
