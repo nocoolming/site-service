@@ -12,18 +12,16 @@ import com.paypal.base.rest.PayPalRESTException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-@Service
-public class CreatePaypalPayment
+//@Service
+public class CreatePaypalPaymentImpl
         implements CreatePayment {
-    private static final Logger log = LoggerFactory.getLogger(CreatePaypalPayment.class);
+    private static final Logger log = LoggerFactory.getLogger(CreatePaypalPaymentImpl.class);
 
     @Autowired
     PaypalConfig paypalConfig;

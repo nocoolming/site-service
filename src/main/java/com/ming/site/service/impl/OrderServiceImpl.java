@@ -50,18 +50,33 @@ public class OrderServiceImpl
 
         this.mapper.insert(order);
 
+        BigDecimal subTotal = BigDecimal.ZERO;
+
         for (OrderDetail orderDetail : order.getOrderDetails()) {
             orderDetail.setId(SnowflakeUtil.nextId());
             if (order.getCreateUserId() != null && order.getCreateUserId() > 0) {
                 orderDetail.setCreateUserId(order.getCreateUserId());
             }
+
+
+            BigDecimal price = orderDetail.getPrice();
+            int quantity = orderDetail.getQuantity();
+
+            BigDecimal total = price.multiply(new BigDecimal(quantity));
+            subTotal = subTotal.add(total);
+
+            orderDetail.setSubtotal(orderDetail.getPrice().multiply(new BigDecimal(orderDetail.getQuantity())));
             orderDetail.setUpgradeAt(LocalDateTime.now());
             orderDetail.setCreateAt(LocalDateTime.now());
             orderDetail.setOrderId(order.getId());
 
             orderDetailService.insert(orderDetail);
+
         }
 
+        order.setTotal(subTotal);
+
+        this.mapper.update(order);
         return order;
     }
 
@@ -86,6 +101,7 @@ public class OrderServiceImpl
             orderDetail.setTitle(product.getTitle());
             orderDetail.setPrice(product.getPrice());
             orderDetail.setQuantity(cartItem.getQuantity());
+
             orderDetail.setId(SnowflakeUtil.nextId());
             orderDetail.setOrderId(order.getId());
             orderDetail.setCreateAt(LocalDateTime.now());
