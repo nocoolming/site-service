@@ -33,7 +33,7 @@ public class HomeController {
         return "User-agent: *\n" + "Disallow: /\n";
     }
 
-    @GetMapping("site/dataSource")
+//    @GetMapping("site/dataSource")
     Result<DataSource> dataSource() {
         return Result.ok(dataSource);
     }
