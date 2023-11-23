@@ -106,6 +106,7 @@ public class OrderServiceImpl
             orderDetail.setOrderId(order.getId());
             orderDetail.setCreateAt(LocalDateTime.now());
             orderDetail.setUpgradeAt(LocalDateTime.now());
+            orderDetail.setIcon(cartItem.getProduct().getIcon());
             orderDetail.setCreateUserId(order.getCreateUserId());
 
             orderDetailService.insert(orderDetail);
@@ -193,6 +194,7 @@ public class OrderServiceImpl
             orderDetail.setSubtotal(total);
             orderDetail.setCreateUserId(model.getUserId());
             orderDetail.setTitle(cartItem.getProduct().getTitle());
+            orderDetail.setIcon(cartItem.getProduct().getIcon());
 
             orderDetails.add(orderDetail);
 
