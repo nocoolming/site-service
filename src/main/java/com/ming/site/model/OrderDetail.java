@@ -27,12 +27,15 @@ public class OrderDetail
 
     private String icon;
     private Long productId;
+    private Long stockId;
     private User createUser;
 
     private Order order;
 
     @RelationManyToOne(selfField = "productId", targetField = "id")
     private Product product;
+    @RelationManyToOne(selfField = "stockId", targetField = "id")
+    private Stock stock;
 
 
     @Override
@@ -147,5 +150,21 @@ public class OrderDetail
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Long getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(Long stockId) {
+        this.stockId = stockId;
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
 }

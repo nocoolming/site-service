@@ -81,6 +81,66 @@ create table "order" (
    site_id BIGINT null references site(id) on delete set null,
    constraint PK_ORDER primary key (id)
 );
+/*==============================================================*/
+/* Table: product                                               */
+/*==============================================================*/
+create table product (
+   id BIGINT not null,
+   category_id BIGINT null,
+   title VARCHAR(256) not null,
+   keywords VARCHAR(256) not null,
+   description VARCHAR(1024) not null,
+   content VARCHAR(4096) not null,
+   slate_content varchar(4096) null,
+   price DECIMAL null,
+   icon varchar(1024) null,
+   sku  varchar(128) null,
+   count INT4 null,
+   language VARCHAR(128) NULL,
+   create_at timestamp null,
+   upgrade_at timestamp null,
+   collect_id BIGINT not null references product_collect(id) on delete set null,
+   create_user_id BIGINT null references "user"(id) on delete set null,
+   upgrade_user_id BIGINT null references "user"(id) on delete set null,
+   site_id BIGINT null references site(id) on delete set null,
+   constraint PK_PRODUCT primary key (id)
+);
+/*==============================================================*/
+/* Table: product_image                                         */
+/*==============================================================*/
+create table product_image (
+   id BIGINT not null,
+   alt VARCHAR(256) null,
+   url VARCHAR(1024) not null,
+   product_id BIGINT null references product(id) on delete set null,
+   create_at timestamp null,
+   create_user_id BIGINT null references "user"(id) on delete set null,
+   constraint PK_PRODUCT_IMAGE primary key (id)
+);
+create table variant(
+	id bigint not null primary key,
+	title	varchar(128) null,
+	product_id bigint null references product(id) on delete set null
+);
+
+create table variant_value(
+	id bigint not null primary key,
+	title	varchar(128) null,
+	icon	varchar(256) null,
+	variant_id	bigint not null references variant(id) on delete set  null
+);
+
+create table stock(
+	id bigint not null primary key,
+	price decimal null,
+	quantity int null
+);
+
+create table stock_variant_value(
+	stock_id bigint not null references stock(id) on delete  set null,
+	variant_value_id bigint not null references variant_value(id) on delete set  null,
+	constraint pk_stock_variant_value primary key(stock_id, variant_value_id)
+);
 
 /*==============================================================*/
 /* Table: order_detail                                          */
@@ -95,89 +155,13 @@ create table order_detail (
    icon varchar(1024) null,
    product_id bigint null references product(id) on delete set null,
    order_id BIGINT null references "order"(id) on delete set null,
+   stock_id bigint null references stock(id) on delete set null,
    create_at timestamp null,
    upgrade_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    constraint PK_ORDER_DETAIL primary key (id)
 );
-create table product_collect (
-    id bigint not null primary key,
-    title varchar(256) not null,
-    keywords varchar(256) not null,
-    description varchar(1024) not null,
-    create_at timestamp not null,
-    upgrade_at timestamp not null,
-    create_user_id  bigint not null references "user"(id) on delete set null,
-    upgrade_user_id BIGINT null references "user"(id) on delete set null,
-    site_id BIGINT null references site(id) on delete set null
-);
 
-create table product_attribute (
-    id bigint not null primary key,
-    title varchar(256) not null,
-    create_at timestamp not null,
-    collect_id bigint not null references product_collect(id) on delete set null,
-    create_user_id  bigint not null references "user"(id) on delete set null,
-    site_id BIGINT null references site(id) on delete set null
-);
-
-create table product_attribute_value (
-    id bigint not null primary key,
-    value varchar(256) not null,
-    create_at timestamp not null,
-    attribute_id BIGINT not null references product_attribute(id) on delete set null,
-    collect_id BIGINT not null references product_collect(id) on delete set null,
-    create_user_id  BIGINT not null references "user"(id) on delete set null,
-    site_id BIGINT null references site(id) on delete set null
-);
-
-/*==============================================================*/
-/* Table: product                                               */
-/*==============================================================*/
-create table product (
-   id BIGINT not null,
-   category_id BIGINT null,
-   title VARCHAR(256) not null,
-   keywords VARCHAR(256) not null,
-   description VARCHAR(1024) not null,
-   content VARCHAR(4096) not null,
-   slate_content varchar(4096) null,
-   price DECIMAL null,
-   icon varchar(1024) null,
-   count INT4 null,
-   language VARCHAR(128) NULL,
-   create_at timestamp null,
-   upgrade_at timestamp null,
-   collect_id BIGINT not null references product_collect(id) on delete set null,
-   create_user_id BIGINT null references "user"(id) on delete set null,
-   upgrade_user_id BIGINT null references "user"(id) on delete set null,
-   site_id BIGINT null references site(id) on delete set null,
-   constraint PK_PRODUCT primary key (id)
-);
-
-
-/*==============================================================*/
-/* Table: product_image                                         */
-/*==============================================================*/
-create table product_image (
-   id BIGINT not null,
-   alt VARCHAR(256) null,
-   url VARCHAR(1024) not null,
-   product_id BIGINT null references product(id) on delete set null,
-   create_at timestamp null,
-   create_user_id BIGINT null references "user"(id) on delete set null,
-   constraint PK_PRODUCT_IMAGE primary key (id)
-);
-
-create table inventory (
-    id bigint not null primary key,
-    attribute_id BIGINT not null references product_attribute_value(id) on delete set null,
-    count BIGINT not null default 0,
-    product_id   BIGINT not null references product(id) on delete set null,
-    collect_id BIGINT not null references product_collect(id) on delete set null,
-    create_user_id  BIGINT not null references "user"(id) on delete set null,
-    site_id BIGINT null references site(id) on delete set null
-);
 /*==============================================================*/
 /* Table: Role                                                  */
 /*==============================================================*/
