@@ -25,7 +25,7 @@ public class VariantServiceImpl
     public List<Variant> getVariantsByProductId(long productId) {
         List<Variant> list = variantMapper.selectListByQuery(
                 QueryWrapper.create().where(
-                        "product_id", productId
+                        "product_id=?", productId
                 )
         );
         return list;
