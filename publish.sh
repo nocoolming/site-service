@@ -4,7 +4,7 @@ version=$(date +%Y%m%d%H%M%S%N)
 imageName="nocoolming/site-service:${version}"
 
 
-edho './gradlew clean build'
+echo './gradlew clean build'
 ls -l build/libs
 ./gradlew clean  build
 
