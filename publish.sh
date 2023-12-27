@@ -5,6 +5,7 @@ imageName="nocoolming/site-service:${version}"
 
 echo "image name: $imageName"
 
+edho './gradlew clean build'
 ls -l build/libs
 ./gradlew clean  build
 
