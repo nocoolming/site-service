@@ -46,11 +46,11 @@ public class Option implements IdLongPrimaryKey {
         this.product = product;
     }
 
-    public List<Value> getVariantValueList() {
+    public List<Value> getValueList() {
         return valueList;
     }
 
-    public void setVariantValueList(List<Value> valueList) {
+    public void setValueList(List<Value> valueList) {
         this.valueList = valueList;
     }
 }
