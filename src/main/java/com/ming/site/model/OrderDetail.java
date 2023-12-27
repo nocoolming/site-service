@@ -35,7 +35,7 @@ public class OrderDetail
     @RelationManyToOne(selfField = "productId", targetField = "id")
     private Product product;
     @RelationManyToOne(selfField = "stockId", targetField = "id")
-    private Stock stock;
+    private Variant variant;
 
 
     @Override
@@ -160,11 +160,11 @@ public class OrderDetail
         this.stockId = stockId;
     }
 
-    public Stock getStock() {
-        return stock;
+    public Variant getStock() {
+        return variant;
     }
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
+    public void setStock(Variant variant) {
+        this.variant = variant;
     }
 }

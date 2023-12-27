@@ -117,30 +117,85 @@ create table product_image (
    create_user_id BIGINT null references "user"(id) on delete set null,
    constraint PK_PRODUCT_IMAGE primary key (id)
 );
-create table variant(
-	id bigint not null primary key,
-	title	varchar(128) null,
-	product_id bigint null references product(id) on delete set null
+
+CREATE TABLE IF NOT EXISTS public.option
+(
+    id BIGINT not null,
+    title varchar(128) not null,
+    product_id bigint null,
+    CONSTRAINT option_pkey PRIMARY KEY (id)
+);
+CREATE TABLE IF NOT EXISTS public.value
+(
+    id BIGINT not null,
+    title varchar(128) not null,
+    value varchar(256) null default '';
+    product_id bigint null,
+    option_id bigint null,
+    CONSTRAINT value_pkey PRIMARY KEY (id)
 );
 
-create table variant_value(
-	id bigint not null primary key,
-	title	varchar(128) null,
-	icon	varchar(256) null,
-	variant_id	bigint not null references variant(id) on delete set  null
+CREATE TABLE IF NOT EXISTS public.variant
+(
+    id BIGINT not null,
+    price money not null,
+    quantity int4   not null,
+    product_id not null,
+    CONSTRAINT variant_pkey PRIMARY KEY (id)
 );
 
-create table stock(
-	id bigint not null primary key,
-	price decimal null,
-	quantity int null
+CREATE TABLE IF NOT EXISTS public.variant_value
+(
+    variant_id bigint not null,
+    value_id bigint not null,
+    CONSTRAINT variant_value_pkey PRIMARY KEY (variant_id, value_id)
 );
 
-create table stock_variant_value(
-	stock_id bigint not null references stock(id) on delete  set null,
-	variant_value_id bigint not null references variant_value(id) on delete set  null,
-	constraint pk_stock_variant_value primary key(stock_id, variant_value_id)
-);
+ALTER TABLE IF EXISTS public.option
+    ADD CONSTRAINT fk_product_options FOREIGN KEY (product_id)
+    REFERENCES public.product (id) MATCH SIMPLE
+    ON UPDATE SET NULL
+    ON DELETE SET NULL
+    NOT VALID;
+ALTER TABLE IF EXISTS public.value
+    ADD CONSTRAINT fk_option_values FOREIGN KEY (option_id)
+    REFERENCES public.option (id) MATCH SIMPLE
+    ON UPDATE SET NULL
+    ON DELETE SET NULL
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.value
+    ADD CONSTRAINT fk_product_values FOREIGN KEY (product_id)
+    REFERENCES public.product (id) MATCH SIMPLE
+    ON UPDATE SET NULL
+    ON DELETE SET NULL
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.variant
+    ADD CONSTRAINT variant_product_id_fkey FOREIGN KEY (id)
+    REFERENCES public.product (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE SET NULL;
+CREATE INDEX IF NOT EXISTS variant_pkey
+    ON public.variant(id);
+
+
+ALTER TABLE IF EXISTS public.variant_value
+    ADD CONSTRAINT fk_value_variant FOREIGN KEY (variant_id)
+    REFERENCES public.variant (id) MATCH SIMPLE
+    ON UPDATE SET NULL
+    ON DELETE SET NULL
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.variant_value
+    ADD CONSTRAINT fk_variant_value FOREIGN KEY (value_id)
+    REFERENCES public.value (id) MATCH SIMPLE
+    ON UPDATE SET NULL
+    ON DELETE SET NULL
+    NOT VALID;
 
 /*==============================================================*/
 /* Table: order_detail                                          */

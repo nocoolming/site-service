@@ -1,39 +1,11 @@
 package com.ming.site.model;
 
-import com.mybatisflex.annotation.Id;
+import java.io.Serializable;
 
 public class VariantValue
-        implements IdLongPrimaryKey {
-    @Id
-    private Long id;
-    private String title;
-    private String icon;
+        implements Serializable {
     private Long variantId;
-    private Variant variant;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+    private Long valueId;
 
     public Long getVariantId() {
         return variantId;
@@ -43,11 +15,11 @@ public class VariantValue
         this.variantId = variantId;
     }
 
-    public Variant getVariant() {
-        return variant;
+    public Long getValueId() {
+        return valueId;
     }
 
-    public void setVariant(Variant variant) {
-        this.variant = variant;
+    public void setValueId(Long valueId) {
+        this.valueId = valueId;
     }
 }
