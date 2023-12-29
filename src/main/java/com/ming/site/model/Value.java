@@ -12,10 +12,12 @@ public class Value
     private long productId;
     private Option option;
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -57,14 +59,6 @@ public class Value
     }
 
     public void setOption(Option option) {
-        this.option = option;
-    }
-
-    public Option getVariant() {
-        return option;
-    }
-
-    public void setVariant(Option option) {
         this.option = option;
     }
 }
