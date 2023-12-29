@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS public.value
 (
     id BIGINT not null,
     title varchar(128) not null,
-    value varchar(256) null default '';
+    icon varchar(256) null default '';
     product_id bigint null,
     option_id bigint null,
     CONSTRAINT value_pkey PRIMARY KEY (id)

@@ -1,6 +1,7 @@
 package com.ming.site.model;
 
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.RelationOneToMany;
 
 import java.util.List;
 
@@ -10,7 +11,8 @@ public class Option implements IdLongPrimaryKey {
     private String title;
     private Long productId;
     private Product product;
-    private List<Value> valueList;
+    @RelationOneToMany(selfField = "id", targetField = "optionId")
+    private List<Value> values;
 
     @Override
     public Long getId() {
@@ -46,11 +48,11 @@ public class Option implements IdLongPrimaryKey {
         this.product = product;
     }
 
-    public List<Value> getValueList() {
-        return valueList;
+    public List<Value> getValues() {
+        return values;
     }
 
-    public void setValueList(List<Value> valueList) {
-        this.valueList = valueList;
+    public void setValues(List<Value> values) {
+        this.values = values;
     }
 }

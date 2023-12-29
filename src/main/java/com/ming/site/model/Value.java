@@ -9,6 +9,7 @@ public class Value
     private String title;
     private String icon;
     private Long optionId;
+    private long productId;
     private Option option;
 
     public Long getId() {
@@ -41,6 +42,22 @@ public class Value
 
     public void setOptionId(Long optionId) {
         this.optionId = optionId;
+    }
+
+    public long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(long productId) {
+        this.productId = productId;
+    }
+
+    public Option getOption() {
+        return option;
+    }
+
+    public void setOption(Option option) {
+        this.option = option;
     }
 
     public Option getVariant() {

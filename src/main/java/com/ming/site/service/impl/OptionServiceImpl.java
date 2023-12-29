@@ -23,7 +23,7 @@ public class OptionServiceImpl
 
     @Override
     public List<Option> getOptionsByProductId(long productId) {
-        List<Option> list = optionMapper.selectListByQuery(
+        List<Option> list = optionMapper.selectListWithRelationsByQuery(
                 QueryWrapper.create().where(
                         "product_id=?", productId
                 )
