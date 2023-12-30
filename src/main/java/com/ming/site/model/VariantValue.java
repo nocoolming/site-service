@@ -7,6 +7,7 @@ public class VariantValue
     private Long variantId;
     private Long valueId;
 
+    private Value value;
     public Long getVariantId() {
         return variantId;
     }
@@ -21,5 +22,13 @@ public class VariantValue
 
     public void setValueId(Long valueId) {
         this.valueId = valueId;
+    }
+
+    public Value getValue() {
+        return value;
+    }
+
+    public void setValue(Value value) {
+        this.value = value;
     }
 }

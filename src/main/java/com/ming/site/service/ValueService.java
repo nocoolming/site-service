@@ -4,4 +4,6 @@ import com.ming.site.model.Value;
 
 public interface ValueService
         extends CrudService<Value, Long> {
+
+    void removeValuesByProductId(long productId);
 }
