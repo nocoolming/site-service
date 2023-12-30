@@ -99,7 +99,6 @@ create table product (
    language VARCHAR(128) NULL,
    create_at timestamp null,
    upgrade_at timestamp null,
-   collect_id BIGINT not null references product_collect(id) on delete set null,
    create_user_id BIGINT null references "user"(id) on delete set null,
    upgrade_user_id BIGINT null references "user"(id) on delete set null,
    site_id BIGINT null references site(id) on delete set null,
@@ -129,7 +128,7 @@ CREATE TABLE IF NOT EXISTS public.value
 (
     id BIGINT not null,
     title varchar(128) not null,
-    icon varchar(256) null default '';
+    icon varchar(256) null default '',
     product_id bigint null,
     option_id bigint null,
     CONSTRAINT value_pkey PRIMARY KEY (id)
@@ -137,11 +136,10 @@ CREATE TABLE IF NOT EXISTS public.value
 
 CREATE TABLE IF NOT EXISTS public.variant
 (
-    id BIGINT not null,
+    id BIGINT not null PRIMARY KEY,
     price money not null,
     quantity int4   not null,
-    product_id not null,
-    CONSTRAINT variant_pkey PRIMARY KEY (id)
+    product_id bigint  null
 );
 
 CREATE TABLE IF NOT EXISTS public.variant_value
@@ -178,8 +176,6 @@ ALTER TABLE IF EXISTS public.variant
     REFERENCES public.product (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE SET NULL;
-CREATE INDEX IF NOT EXISTS variant_pkey
-    ON public.variant(id);
 
 
 ALTER TABLE IF EXISTS public.variant_value
@@ -210,7 +206,6 @@ create table order_detail (
    icon varchar(1024) null,
    product_id bigint null references product(id) on delete set null,
    order_id BIGINT null references "order"(id) on delete set null,
-   stock_id bigint null references stock(id) on delete set null,
    create_at timestamp null,
    upgrade_at timestamp null,
    create_user_id BIGINT null references "user"(id) on delete set null,
@@ -377,7 +372,7 @@ create table contact (
 
 create table address (
     id bigint not null primary key,
-    country varchar(128) not null,)
+    country varchar(128) not null,
     address varchar(1024) not null,
     phone varchar(64) not null,
     first_name varchar(64) null,
