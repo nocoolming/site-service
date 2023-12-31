@@ -29,11 +29,11 @@ public class VariantValueServiceImpl
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void removeVariantValueByVariantIds(List<Long> variantIds) {
-        variantIds.stream().forEach(
+         variantIds.stream().forEach(
                 id -> {
                     mapper.deleteByQuery(
                             QueryWrapper.create()
-                                    .where("product_id=?", id)
+                                    .where("variant_id=?", id)
                     );
                 }
         );

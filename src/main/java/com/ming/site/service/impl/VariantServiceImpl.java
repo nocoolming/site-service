@@ -73,6 +73,17 @@ public class VariantServiceImpl extends AbstractService<Variant, Long, VariantMa
 
         this.forEachValues(map, 0, 0, productId, null, resultMap);
 
+        for (Variant variant : resultMap.keySet()) {
+            mapper.insert(variant);
+
+            List<VariantValue> list = resultMap.get(variant);
+
+            for (VariantValue variantValue : list) {
+                variantValueService.insert(variantValue);
+            }
+        }
+
+
         return this.getVariantsByProductId(productId);
     }
 

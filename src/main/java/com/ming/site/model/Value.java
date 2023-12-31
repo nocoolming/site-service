@@ -1,6 +1,7 @@
 package com.ming.site.model;
 
 import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.RelationManyToOne;
 
 public class Value
         implements IdLongPrimaryKey {
@@ -10,6 +11,7 @@ public class Value
     private String icon;
     private Long optionId;
     private long productId;
+    @RelationManyToOne(selfField = "optionId", targetField = "id")
     private Option option;
 
     @Override
