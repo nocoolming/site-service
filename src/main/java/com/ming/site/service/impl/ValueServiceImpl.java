@@ -54,6 +54,12 @@ public class ValueServiceImpl
     }
 
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteById(Long id) {
+        variantValueService.removeVariantValueByValueId(id);
+        super.deleteById(id);
+    }
 
     @Override
     public void removeValuesByProductId(long productId) {

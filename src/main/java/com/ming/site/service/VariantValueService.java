@@ -8,5 +8,7 @@ public interface VariantValueService
         extends CrudService<VariantValue, VariantValue> {
     void removeVariantValueByVariantIds(List<Long> variantIds);
 
+    void removeVariantValueByValueId(long valueId);
+
     void removeVariantValueByProductId(long productId);
 }
