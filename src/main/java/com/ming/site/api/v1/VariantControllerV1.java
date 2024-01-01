@@ -13,7 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("site/v1/variant")
-public class VariantControllerV1 extends AbstractControllerV1<Variant, Long, VariantService> {
+public class VariantControllerV1
+        extends AbstractControllerV1<Variant, Long, VariantService> {
     private static final Logger log = LoggerFactory.getLogger(VariantControllerV1.class);
 
     @PostMapping("buildVariants")

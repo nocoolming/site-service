@@ -47,7 +47,9 @@ public class VariantServiceImpl extends AbstractService<Variant, Long, VariantMa
         List<Variant> list =
                 this.mapper.selectListWithRelationsByQuery(
                         QueryWrapper.create()
-                                .where("product_id=?", productId));
+                                .where("product_id=?", productId)
+                                .orderBy("id asc")
+                );
 
         return list;
     }
