@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS public.value
 CREATE TABLE IF NOT EXISTS public.variant
 (
     id BIGINT not null PRIMARY KEY,
-    price money not null,
+    price decimal not null,
     quantity int4   not null,
     product_id bigint  null
 );
