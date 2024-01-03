@@ -29,7 +29,8 @@ public class ProductServiceImpl
     SiteService siteService;
     @Autowired
     ProductImageService productImageService;
-
+    @Autowired
+    VariantService variantService;
 
 
     @Override
@@ -39,12 +40,6 @@ public class ProductServiceImpl
 
     public List<Product> findAll(LocalDateTime begin) {
         List<Product> products = null;
-
-//        QueryWrapper query = new QueryWrapper();
-//        query.lt("upgrade_at", begin);
-//        query.orderByDesc("upgrade_at");
-//
-//        products =  this.mapper.selectList(query);
 
         products = this.mapper.selectListByQuery(
                 QueryWrapper.create()
@@ -100,7 +95,7 @@ public class ProductServiceImpl
     public Product setIcon(long id, String icon) throws ProductNotFoundException {
         Product product = this.findById(id);
 
-        if(product == null){
+        if (product == null) {
             throw new ProductNotFoundException();
         }
         product.setUpgradeAt(LocalDateTime.now());
