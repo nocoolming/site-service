@@ -16,7 +16,7 @@ spring:
   datasource:
     driver-class-name:  org.postgresql.Driver
 #    url: jdbc:postgresql://localhost:5432/site_db
-    url: jdbc:postgresql://192.168.1.30:5432/site_db
+    url: jdbc:postgresql://192.168.1.30:5433/site_db
     username: postgres
     password: a
     validationQuery: SELECT 1
