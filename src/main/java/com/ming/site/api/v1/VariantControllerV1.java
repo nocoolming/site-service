@@ -35,16 +35,16 @@ public class VariantControllerV1
     }
 
     @GetMapping("getValuesMapVariants/productId/{productId}")
-    Result<Map<Map<String, Value>, Variant>> getValuesMapVariants(@PathVariable long productId) {
+    Result<Map<Map<String, String>, Variant>> getValuesMapVariants(@PathVariable long productId) {
         List<Variant> list = service.getVariantsByProductId(productId);
 
-        Map<Map<String, Value>, Variant> result = new ConcurrentHashMap<>();
+        Map<Map<String, String>, Variant> result = new ConcurrentHashMap<>();
 
         for (Variant variant : list) {
-            Map<String, Value> map = new ConcurrentHashMap<>();
+            Map<String, String> map = new ConcurrentHashMap<>();
 
             for (Value value : variant.getValues()) {
-                map.put(value.getTitle(), value);
+                map.put(value.getOption().getTitle(), value.getTitle());
             }
 
             result.put(map, variant);
