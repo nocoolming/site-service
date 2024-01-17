@@ -19,7 +19,7 @@ public class Application {
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 	public static void main(String[] args) {
 
-		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
+//		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
 		SpringApplication.run(Application.class, args);
 	}
 
