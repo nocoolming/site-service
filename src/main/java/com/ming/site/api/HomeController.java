@@ -19,7 +19,7 @@ public class HomeController {
 
     @GetMapping("/")
     String home() {
-        return "Site service 666";
+        return "Site service v0.0.1";
     }
 
 
