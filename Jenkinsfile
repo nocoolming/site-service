@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {
         jdk "jdk21"
-        gradle "8.4"
+        gradle "gradle"
     }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('DockerHubCredentials')
