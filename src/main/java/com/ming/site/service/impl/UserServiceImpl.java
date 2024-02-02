@@ -74,7 +74,6 @@ public class UserServiceImpl extends AbstractService<User, Long, UserMapper> imp
         user.setUsername(model.getUsername());
         user.setPassword(encryptedPassword);
         user.setMail(model.getMail());
-        user.setId(SnowflakeUtil.nextId());
         user.setSiteId(model.getSiteId());
 
         this.insert(user);

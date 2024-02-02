@@ -17,6 +17,13 @@ public class RoleControllerV1
         extends AbstractControllerV1<Role, Long, RoleService> {
     private static final Logger log = LoggerFactory.getLogger(RoleControllerV1.class);
 
+    @PostMapping("initialRoles")
+    Result<List<Role>> initialRoles(@RequestBody long userId) {
+        List<Role> roles = service.initialRoles(userId);
+
+        return Result.ok(roles);
+    }
+
     @PostMapping("assignUser")
     Result<String> assignUser(@RequestBody AssignUserModel assignUser) {
         service.assignRoleToUser(assignUser.getUserId(), assignUser.getRoleId());
@@ -24,11 +31,10 @@ public class RoleControllerV1
     }
 
     @GetMapping("all/{siteId}")
-    Result<List<Role>> all(@PathVariable long siteId){
+    Result<List<Role>> all(@PathVariable long siteId) {
         List<Role> value = service.all(siteId);
         return Result.success(value);
     }
-
 
 
 }
