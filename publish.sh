@@ -4,9 +4,11 @@ version=$(date +%Y%m%d%H%M%S%N)
 imageName="nocoolming/site-service:${version}"
 
 
-echo './gradlew clean build'
-ls -l build/libs
-./gradlew clean  build
+#echo './gradlew clean build'
+#ls -l build/libs
+#./gradlew clean  build
+echo 'gradle clean build'
+gradle clean build
 
 echo "image name: $imageName"
 echo "docker build -t $imageName ."
