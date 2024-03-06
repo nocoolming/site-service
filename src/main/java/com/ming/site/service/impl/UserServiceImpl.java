@@ -86,7 +86,7 @@ public class UserServiceImpl extends AbstractService<User, Long, UserMapper> imp
         cartService.insert(cart);
 
         List<Role> allRoles = roleService.findAll();
-        Role guest = allRoles.stream().filter(role -> role.getTitle().equals("Buyer")).findFirst().get();
+        Role guest = allRoles.stream().filter(role -> role.getTitle().equals("Buyers")).findFirst().get();
 
         UserRole userRole = new UserRole();
         userRole.setUserId(user.getId());
