@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractControllerV1<
-        T ,
+        T,
         // 这个是没有用到， 但是由于此版本从spring data jpa重构，所有的controller and service都有，所以先不删 了。
         ID extends Serializable,
         S extends CrudService<T, ID>> {
@@ -40,8 +40,8 @@ public abstract class AbstractControllerV1<
 
     @PostMapping("remove")
     Result remove(@RequestBody ID id) {
-        service.deleteById(id);
-        return Result.success(null);
+        int rowsCount = service.deleteById(id);
+        return Result.success(rowsCount);
     }
 
     @GetMapping("{id}")

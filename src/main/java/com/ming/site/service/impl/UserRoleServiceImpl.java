@@ -32,12 +32,12 @@ public class UserRoleServiceImpl extends AbstractRelationShipService<UserRole, U
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void deleteById(UserRole userRole) {
+    public int deleteById(UserRole userRole) {
         QueryWrapper query = QueryWrapper.create()
                 .where("user_id=? ", userRole.getUserId())
                 .and("role_id=?", userRole.getRoleId());
 
-        mapper.deleteByQuery(query);
+        return mapper.deleteByQuery(query);
     }
 
     @Override

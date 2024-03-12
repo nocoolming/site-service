@@ -384,3 +384,9 @@ create table address (
     create_at timestamp null default now()
 
 );
+
+create table domain (
+    id bigint not null primary key,
+    domain varchar(256) not null,
+    site_id bigint not null references site(id) on delete set null
+);

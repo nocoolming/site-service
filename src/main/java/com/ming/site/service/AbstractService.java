@@ -73,8 +73,8 @@ public abstract class AbstractService<
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteById(ID id) {
-        mapper.deleteById(id);
+    public int deleteById(ID id) {
+        return mapper.deleteById(id);
     }
 
 

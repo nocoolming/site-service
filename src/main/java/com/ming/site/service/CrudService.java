@@ -21,7 +21,7 @@ public interface CrudService<
 
     long count();
 
-    void deleteById(ID id);
+    int deleteById(ID id);
 
     String getRepositoryString();
 
