@@ -17,15 +17,17 @@ public class HomeController {
     @Autowired
     DataSource dataSource;
 
+    private String message = "Site service v0.0.2";
+
     @GetMapping("/")
     String home() {
-        return "Site service v0.0.2";
+        return message;
     }
 
 
     @GetMapping("site")
     Result<String> site() {
-        return Result.ok("Site service");
+        return Result.ok(message);
     }
 
     @GetMapping(value = "/robots.txt", produces = MediaType.TEXT_PLAIN_VALUE)
