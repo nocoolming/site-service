@@ -10,8 +10,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-
-import java.util.TimeZone;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.SecurityFilterChain;
 
 @SpringBootApplication
 @MapperScan("com.ming.site.mapper")
@@ -19,10 +22,24 @@ public class Application {
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 	public static void main(String[] args) {
 
-//		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
 		SpringApplication.run(Application.class, args);
 	}
 
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
+						authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
+								.requestMatchers("/admin/**").hasAnyRole("ADMIN")
+								.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+								.requestMatchers("/login/**").permitAll()
+								.anyRequest().authenticated())
+				.httpBasic(Customizer.withDefaults())
+				.sessionManagement(httpSecuritySessionManagementConfigurer ->
+						httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+		return http.build();
+	}
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {

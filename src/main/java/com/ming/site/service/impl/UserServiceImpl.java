@@ -33,13 +33,13 @@ public class UserServiceImpl extends AbstractService<User, Long, UserMapper> imp
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
-    CartService cartService;
+    protected CartService cartService;
 
     @Autowired
-    UserRoleService userRoleService;
+    protected UserRoleService userRoleService;
 
     @Autowired
-    RoleService roleService;
+    protected RoleService roleService;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)

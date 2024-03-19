@@ -76,7 +76,9 @@ paypal:
   currency: "USD"
   mode: "sandbox"
 
-
+app:
+  jwt-security: "asdf1234"
+  expiration-milliseconds: 604800000
 
 
 
