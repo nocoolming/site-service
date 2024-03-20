@@ -29,8 +29,7 @@ public class ProductServiceImpl
     SiteService siteService;
     @Autowired
     ProductImageService productImageService;
-    @Autowired
-    VariantService variantService;
+
 
 
     @Override

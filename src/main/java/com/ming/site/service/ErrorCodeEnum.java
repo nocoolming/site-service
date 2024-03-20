@@ -1,0 +1,13 @@
+package com.ming.site.service;
+
+public enum ErrorCodeEnum {
+    USER_NOT_FOUND,
+    PASSWORD_NOT_MATCH,
+    USER_ALREADY_EXIST,
+    USER_NOT_EXIST,
+    USER_NOT_LOGIN,
+    USER_NOT_AUTHORIZED,
+    USER_NOT_LOGIN_OR_NOT_AUTHORIZED,
+
+    TOKEN_HAS_EXPIRED,
+}

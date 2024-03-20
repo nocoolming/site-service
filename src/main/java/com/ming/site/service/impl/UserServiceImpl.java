@@ -3,6 +3,7 @@ package com.ming.site.service.impl;
 
 import com.ming.site.api.model.SignInModel;
 import com.ming.site.api.model.SignOnModel;
+import com.ming.site.mapper.RoleMapper;
 import com.ming.site.mapper.UserMapper;
 import com.ming.site.model.Cart;
 import com.ming.site.model.Role;
@@ -39,7 +40,9 @@ public class UserServiceImpl extends AbstractService<User, Long, UserMapper> imp
     UserRoleService userRoleService;
 
     @Autowired
-    RoleService roleService;
+    RoleMapper roleMapper;
+//    @Autowired
+//    RoleService roleService;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -85,7 +88,7 @@ public class UserServiceImpl extends AbstractService<User, Long, UserMapper> imp
         cart.setSiteId(model.getSiteId());
         cartService.insert(cart);
 
-        List<Role> allRoles = roleService.findAll();
+        List<Role> allRoles = roleMapper.selectAll();
         Role guest = allRoles.stream().filter(role -> role.getTitle().equals("Buyers")).findFirst().get();
 
         UserRole userRole = new UserRole();

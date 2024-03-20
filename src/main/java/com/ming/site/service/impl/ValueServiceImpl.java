@@ -11,6 +11,7 @@ import com.mybatisflex.core.query.QueryWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +28,11 @@ public class ValueServiceImpl
         implements ValueService {
     private static final Logger log = LoggerFactory.getLogger(ValueServiceImpl.class);
 
-    @Autowired
-    VariantService variantService;
+
+    @Lazy
     @Autowired
     VariantValueService variantValueService;
+    @Lazy
     @Autowired
     OptionService optionService;
 

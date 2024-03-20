@@ -1,5 +1,6 @@
 package com.ming.site.service.impl;
 
+import com.ming.site.mapper.CartItemMapper;
 import com.ming.site.mapper.CartMapper;
 import com.ming.site.model.Cart;
 import com.ming.site.model.CartItem;
@@ -7,6 +8,7 @@ import com.ming.site.service.AbstractService;
 import com.ming.site.service.CartItemService;
 import com.ming.site.service.CartService;
 import com.ming.site.util.SnowflakeUtil;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,8 +21,11 @@ import java.util.List;
 @Service
 public class CartServiceImpl extends AbstractService<Cart, Long, CartMapper> implements CartService {
 
-    @Autowired
-    CartItemService cartItemService;
+//    @Autowired
+//    CartItemService cartItemService;
+
+    @Resource
+    CartItemMapper cartItemMapper;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -73,7 +78,7 @@ public class CartServiceImpl extends AbstractService<Cart, Long, CartMapper> imp
             BigDecimal subtotalItem = cartItem.getPrice().multiply(new BigDecimal(cartItem.getQuantity()));
             subtotal = subtotal.add(subtotalItem);
 
-            cartItemService.insert(cartItem);
+            cartItemMapper.insert(cartItem);
         }
 
         cart.setSubtotal(subtotal);
@@ -105,7 +110,7 @@ public class CartServiceImpl extends AbstractService<Cart, Long, CartMapper> imp
         this.update(cart);
 
         for (CartItem item : cart.getCartItems()) {
-            cartItemService.deleteById(item.getId());
+            cartItemMapper.deleteById(item.getId());
         }
     }
 }
