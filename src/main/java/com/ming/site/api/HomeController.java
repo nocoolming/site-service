@@ -1,6 +1,7 @@
 package com.ming.site.api;
 
 import com.ming.site.common.Result;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class HomeController {
     @GetMapping("/")
     String home() {
         return message;
+    }
+
+    @RequiresAuthentication
+    @GetMapping("/hello")
+    String hello() {
+        return "hello";
     }
 
 

@@ -50,7 +50,7 @@ public class ShiroConfig {
 
         // 拦截器
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        map.put("/login", "anon");
+        map.put("/site/v2/signIn", "anon");
         map.put("/**", "jwt");
         shiroFilter.setFilterChainDefinitionMap(map);
         return shiroFilter;
