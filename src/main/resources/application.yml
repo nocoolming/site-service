@@ -14,8 +14,8 @@ spring:
       max-request-size: 100MB
 
   datasource:
-    driver-class-name:  org.postgresql.Driver
-#    url: jdbc:postgresql://localhost:5432/site_db
+    driver-class-name: org.postgresql.Driver
+    #    url: jdbc:postgresql://localhost:5432/site_db
     url: jdbc:postgresql://192.168.8.66:5432/site_db
     username: postgres
     password: a
@@ -40,13 +40,13 @@ spring:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
-#    log-impl: org.apache.ibatis.logging.stdout.NoLoggingImpl
+    #    log-impl: org.apache.ibatis.logging.stdout.NoLoggingImpl
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.ming.site.model
 
 upload:
   size: 6
-#  path: "/Users/lmm/Downloads/uploads"
+  #  path: "/Users/lmm/Downloads/uploads"
   path: "E:\\downloads\\uploads"
   types: ".jpg|.png|.gif|.jpeg|.webp"
   token: "jaioscamidamaej"
@@ -75,6 +75,12 @@ paypal:
   callbackUrl: "http://localhost:3000/callback"
   currency: "USD"
   mode: "sandbox"
+
+shiro:
+  loginUrl: "site/v2/auth/signIn"
+  userNativeSessionManager: true
+  sessionManager:
+    sessionIdUrlRewritingEnabled: false
 
 
 

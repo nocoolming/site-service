@@ -1,7 +1,5 @@
 package com.ming.site.api.v2;
 
-
-
 import com.ming.site.api.model.SignInModel;
 import com.ming.site.common.Result;
 import com.ming.site.service.AuthenticationService;
@@ -44,5 +42,12 @@ public class AuthenticationControllerV2 {
     }
 
 
+    @RequestMapping("signOut")
+    public Result<String> signOut() {
+
+//        String accessToken = authenticationService.sign
+
+        return Result.ok("accessToken");
+    }
 }
 
