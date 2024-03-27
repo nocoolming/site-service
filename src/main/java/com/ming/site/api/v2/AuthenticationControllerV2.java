@@ -36,6 +36,9 @@ public class AuthenticationControllerV2 {
             InvalidKeyException,
             PasswordIsWrongException {
 
+        log.debug("username: " + model.getUsername());
+        log.debug("password: " + model.getPassword());
+
         String accessToken = authenticationService.signIn(model);
 
         return Result.ok(accessToken);
