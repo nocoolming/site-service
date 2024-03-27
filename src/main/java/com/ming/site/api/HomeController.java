@@ -4,6 +4,7 @@ import com.ming.site.common.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,9 @@ public class HomeController {
     @Autowired
     DataSource dataSource;
 
-    private String message = "Site service v0.0.2";
+
+
+    private String message = "Site service v0.0.2" ;
 
     @GetMapping("/")
     String home() {
@@ -35,7 +38,7 @@ public class HomeController {
         return "User-agent: *\n" + "Disallow: /\n";
     }
 
-//    @GetMapping("site/dataSource")
+    //    @GetMapping("site/dataSource")
     Result<DataSource> dataSource() {
         return Result.ok(dataSource);
     }
