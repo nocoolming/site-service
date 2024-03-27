@@ -1,6 +1,5 @@
 package com.ming.site.model;
 
-import lombok.Data;
 
 import java.io.Serializable;
 

@@ -3,6 +3,7 @@ package com.ming.site.api.v2;
 
 import com.ming.site.api.model.SignInModel;
 import com.ming.site.common.Result;
+import com.ming.site.jwt.JwtService;
 import com.ming.site.service.AuthenticationService;
 import com.ming.site.service.PasswordIsWrongException;
 import com.ming.site.service.UserNotFoundException;
@@ -26,6 +27,8 @@ public class AuthenticationControllerV2 {
 
     @Resource
     AuthenticationService authenticationService;
+    @Resource
+    JwtService jwtService;
 
     @RequestMapping("signIn")
     public Result<String> signIn(@RequestBody SignInModel model)
